@@ -1,0 +1,56 @@
+/* 4K */
+@media (min-width: 2560px){
+	body{
+		font-size: 30px;
+	}
+	.btn{
+		font-size: 30px;
+	}
+	th{
+		font-size: 30px;
+	}
+	.bottom{
+		border-bottom-width: 13px;
+	}
+	.navbar-brand{
+		font-size: 30px;
+	}
+	.h5, h5{
+		font-size: 30px;
+	}
+	.search input{
+		font-size: 30px;
+	}
+	.col-md-2{
+		margin-top: 3%;
+	}
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px){
+	
+}
+@media (max-width: 768px){
+	.col-sm-8 {
+		width: 100%;
+		float: none;
+	}
+	.filter{
+		display: block;
+		position: fixed;
+		z-index: 10000;
+		right: 0;
+		top: 50%;
+	}
+	.col-md-3{
+		display: none;
+	}
+	.col-md-3{
+		position: fixed;
+		z-index: 9999;
+		right: 91.02px;
+		top: 40%;
+		background-color: #fff;
+		padding: 15px;
+	}
+}
