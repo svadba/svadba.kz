@@ -55,7 +55,7 @@ class AdvertController extends Controller
         
         //DB::table('adverts')->whereExists
         
-        return View('advert.adverts_my', ['adverts' => $adverts, 'cities' => $cities, 'categories' => $categories, 'city' => $city, 'category'=> $category, 'sort' => $sort]);
+        return View('advert.adverts', ['adverts' => $adverts, 'cities' => $cities, 'categories' => $categories, 'city' => $city, 'category'=> $category, 'sort' => $sort]);
     }
     
     
@@ -91,7 +91,7 @@ class AdvertController extends Controller
                 ->paginate(10)
                 ;   
                 
-        return View('advert.adverts_all', ['adverts' => $adverts, 'cities' => $cities, 'categories' => $categories, 'city' => $city, 'category'=> $category, 'sort' => $sort]);
+        return View('advert.adverts', ['adverts' => $adverts, 'cities' => $cities, 'categories' => $categories, 'city' => $city, 'category'=> $category, 'sort' => $sort]);
     }
     
     
@@ -106,12 +106,12 @@ class AdvertController extends Controller
     public function save(Request $request)
     {
         $vr = Validator::make($request->all(), [
-            'contractor_id' => 'required|numeric',
+            'contractor_id' => 'required|numeric|exists:contractors,id',
             'name' => 'required|max:100',
-            'description' => 'max:1000',
-            'adv_cat' => 'required|numeric|max:3',
+            'description' => 'max:2000',
+            'adv_cat' => 'required|numeric|max:30,unique:adverts,advert_categor_id,NULL,id,contractor_id,'.$request->id,
             'advert_cits.*' => 'numeric|exists:cits,id',
-            'prices.*' => 'numeric|max:10000000',
+            'prices.*' => 'numeric|max:100000000',
             'photos.*' => 'image',
             'videos.*' => 'active_url',
             
@@ -165,9 +165,10 @@ class AdvertController extends Controller
                 $extension = $photo-> guessExtension();
                 IF($photo->isValid())
                 {   
-                    IF($photo->getClientSize() <= 5*1024*1024)
+                    IF($photo->getClientSize() <= 20*1024*1024)
                     {   
-                        $name = 'photo'.$count;
+                        
+                        $name = str_random(10).$count;
                         $photo->move($directory.'/photos/', $name.'.'.$extension);
                         Photo::create([
                             'name' => $name,
@@ -236,18 +237,32 @@ class AdvertController extends Controller
     
     public function edit_go(Request $request)
     {
-       $this->validate($request, [
-            'advert_id' => 'required|numeric',
+
+        $vr = Validator::make($request->all(),[
+            'advert_id' => 'required|numeric|exists:adverts,id',
             'name' => 'required|max:100',
-            'description' => 'max:1000',
-            'adv_cat' => 'required|numeric|max:100',
-            'advert_cits.*' => 'numeric|exists:cits,id',
-            'prices.*' => 'numeric|max:10000000',
+            'description' => 'max:2000',
+            'adv_cat' => 'required|numeric|max:30|exists:advert_categors,id',
+            'advert_cits.*' => 'numeric|exists:cits,id|unique:advert_cits,cit_id,NULL,id,advert_id,'.$request->advert_id,
+            'prices.*' => 'numeric|max:100000000',
             'photos.*' => 'image',
             'videos.*' => 'active_url',
         ]);
         
+        IF($vr->fails())
+        {
+            return redirect()->back()->withErrors($vr)->withInput($request->all());
+        }
+        
         $advert = Advert::findOrFail($request->advert_id);
+        //$contractor_adverts = Advert::where('contractor_id', $advert->contractor_id);
+        
+        //IF(!$request->adv_cat == $advert->advert_categor_id)
+        //{
+        //    foreach($contractor_adverts as $adver):
+        //       if($adver->advert_categor_id == $request->adv_cat) return redirect()->back()->withInput($request->all())->withErrors ('')
+        //    endforeach;
+        //}
         
         $advert->name = $request->name;
         $advert->description = $request->description;
@@ -263,9 +278,9 @@ class AdvertController extends Controller
                 $extension = $photo-> guessExtension();
                 IF($photo->isValid())
                 {   
-                    IF($photo->getClientSize() <= 5*1024*1024)
+                    IF($photo->getClientSize() <= 20*1024*1024)
                     {   
-                        $name = 'photo'.$count;
+                        $name = str_random(10).$count;
                         $photo->move($directory.'/photos/', $name.'.'.$extension);
                         Photo::create([
                             'name' => $name,
@@ -302,6 +317,7 @@ class AdvertController extends Controller
             foreach($request->videos as $video):
                 IF($video)
                 {   
+                    
                     $video_rev = strrev($video);
                     $video_rev = explode('/', $video_rev);
                     $uniq_link = strrev($video_rev[0]);

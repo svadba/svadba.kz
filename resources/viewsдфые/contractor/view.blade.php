@@ -70,8 +70,8 @@
                                                     @foreach ($contractor->adverts as $adv)
                                                         <tr>
                                                             <td><?php echo  $count ; ?></td>
-                                                            <td>{{str_limit($adv->name,15)}}</td>
-                                                            <td>{{str_limit($adv->description,60)}}</td>
+                                                            <td>{{$adv->name}}</td>
+                                                            <td>{{$adv->description}}</td>
                                                             <td>{{$adv->advert_categor->name}}</td>
                                                             <td>{{count($adv->photos)}}</td>
                                                             <td>{{count($adv->musics)}}</td>

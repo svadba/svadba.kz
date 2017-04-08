@@ -73,8 +73,8 @@
                                     <th style="background: #e6e6e6;">Функции</th>
                                     @foreach($contr->adverts as $adv)
                                     <tr>
-                                        <td>{{str_limit($adv->name, 20)}}</td>
-                                        <td>{{str_limit($adv->description,60)}}</td>
+                                        <td>{{$adv->name}}</td>
+                                        <td>{{$adv->description}}</td>
                                         <td>{{$adv->advert_categor->name}}</td>
                                         <td>{{count($adv->photos)}}</td>
                                         <td>{{count($adv->musics)}}</td>

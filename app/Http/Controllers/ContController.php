@@ -41,7 +41,7 @@ class ContController extends Controller
             'birthday' => 'max:10',
             'email' => 'email|max:255|unique:contractors,email',
             'address' => 'max:100',
-            'phones.0' => 'required|digits_between:6,12|unique:phones,phone',
+            'phones.0' => 'digits_between:6,12|unique:phones,phone',
             'phones.*' => 'digits_between:6,12|unique:phones,phone',
             'contype' => 'required|numeric|max:3',
         ]);
@@ -98,18 +98,17 @@ class ContController extends Controller
             'surname' => 'max:100',
             'middlename' => 'max:100',
             'birthday' => 'max:10',
-            'email' => 'required|email|max:255|unique:contractors,email,'.$request->contractor_id,
+            'email' => 'email|max:255|unique:contractors,email,'.$request->contractor_id.',id',
             'address' => 'max:100',
             'contype' => 'required|numeric|max:3',
-            'phones.0' => 'required|digits_between:6,12|unique:phones,phone',
             'phones.*' => 'digits_between:6,12|unique:phones,phone',
         ]);
         
         $contractor = Contractor::findOrFail($request->contractor_id);
         
-        $vr->sometimes('phones.*', 'required|digits_between:6,12|unique:phones, phone', function ($contractor){
-            return count($contractor->phones) < 1;
-        });
+        //$vr->sometimes('phones.*', 'required|digits_between:6,12|unique:phones, phone', function ($contractor){
+        //    return count($contractor->phones) < 1;
+        //});
         
         IF($vr->fails())
         {
