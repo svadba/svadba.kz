@@ -35,7 +35,7 @@ class Advert extends Model
     
     public function cits()
     {
-        return $this->belongsToMany('App\Cit', 'advert_cit', 'advert_id', 'cit_id');
+        return $this->belongsToMany('App\Cit', 'advert_cits', 'advert_id', 'cit_id');
     }
     
     public function advert_cits()
@@ -61,9 +61,16 @@ class Advert extends Model
         return $this->hasMany('App\Video');
     }
     
+    public function advert_tops()
+    {
+        return $this->hasMany('App\Advert_top');
+    }
     
-    
-    
+    public function cit_tops()
+    {
+        return $this->hasMany('App\Cit_top');
+    }
+
     
     
     

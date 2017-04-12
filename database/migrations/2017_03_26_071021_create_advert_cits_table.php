@@ -15,10 +15,10 @@ class CreateAdvertCitsTable extends Migration
         Schema::create('advert_cits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('cit_id')->unsigned();
-            $table->foreign('cit_id')->references('id')->on('cits')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreign('cit_id')->references('id')->on('cits')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('price');
             $table->integer('advert_id')->unsigned();
-            $table->foreign('advert_id')->references('id')->on('adverts')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreign('advert_id')->references('id')->on('adverts')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

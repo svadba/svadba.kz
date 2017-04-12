@@ -101,6 +101,7 @@
                     @endforeach
                     </table>
                 </div>
+                {{$contractors->links()}}
             </div>
         </div>
     </div>

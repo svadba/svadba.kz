@@ -65,9 +65,9 @@
                             </div>
                             <label>Город-Цена</label>
                             @if(Request::old('advert_cits'))
-                                <?php $count = 0; $prices = Request::old('prices');?>
+                                <?php $count = 0; $prices = Request::old('prices'); $prices_two = Request::old('prices_two');?>
                                 @foreach(Request::old('advert_cits') as $advc)
-                                    @if($prices[$count])
+                                    @if($prices[$count] && $prices_two[$count])
                                     <div class="form-group">
                                         <div class="input-group cities_prices">
                                             <select class="form-control" name="advert_cits[]">
@@ -79,7 +79,8 @@
                                                     @endif
                                                 @endforeach
                                             </select>                                
-                                            <input type="text" class="form-control" name="prices[]" value="{{$prices[$count]}}" placeholder="Цена">
+                                            <input type="text" class="form-control" name="prices[]" value="{{$prices[$count]}}" placeholder="Цена от">
+                                            <input type="text" class="form-control" name="prices_two[]" value="{{$prices_two[$count]}}" placeholder="Цена до">
                                             <span class="input-group-btn"><button type="button" class="btn btn-danger btn-remove">&#10060;</button></span>
                                         </div>
                                     </div>
@@ -95,7 +96,8 @@
                                             <option value="{{$adv_cit->id}}">{{$adv_cit->name}}</option>
                                         @endforeach
                                     </select>                                
-                                    <input type="text" class="form-control" name="prices[]" placeholder="Цена">
+                                    <input type="text" class="form-control" name="prices[]" placeholder="Цена от">
+                                    <input type="text" class="form-control" name="prices_two[]" placeholder="Цена до">
                                     <span class="input-group-btn"><button type="button" class="btn btn-success btn-add">&#10010;</button></span>
                                 </div>
                             </div>
@@ -124,7 +126,7 @@
                             <div class="col-xs-12">
                                 @foreach($advert->advert_cits as $adv_cito)
                                     <div class="tel">
-                                        <span>{{$adv_cito->cit->name}} -</span><span>{{$adv_cito->price}}</span>
+                                        <span>{{$adv_cito->cit->name}}: </span><span>{{$adv_cito->price}}</span> - <span>{{$adv_cito->price_two}}</span>
                                         <a type="button" class="btn btn-danger btn-xs" href="{{url('advert_cits/delete/'.$adv_cito->id)}}">&#10060;</a>
                                     </div>
                                 @endforeach

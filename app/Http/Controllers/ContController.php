@@ -16,13 +16,13 @@ class ContController extends Controller
     
     public function my(Request $request)
     {   
-        $contractors = $request->user()->contractors()->with('phones')->with('adverts')->get();
+        $contractors = $request->user()->contractors()->with('phones')->with('adverts')->paginate(10);
         return View('contractor.contractors', ['contractors' => $contractors]);
     }
     
     public function all()
     {   
-        $contractors = Contractor::with('phones')->with('adverts')->get();
+        $contractors = Contractor::with('phones')->with('adverts')->paginate(10);
         return View('contractor.contractors', ['contractors' => $contractors]);
     }
     

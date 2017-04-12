@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {   
         $user_contractors = $request->user()->contractors()->get();
-        return view('home', ['user_contractors' => $user_contractors]);
+        return view('home', ['user_contractors' => $user_contractors, 'sn' => 'home']);
     }
     
     

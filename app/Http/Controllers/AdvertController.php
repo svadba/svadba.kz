@@ -18,7 +18,12 @@ use App\Http\Requests;
 class AdvertController extends Controller
 {
     
-    
+    public function advertPage(Advert $advert)
+    {
+        //return $advert = $advert->with('photos', 'musics', 'videos', 'cits', 'advert_categor')->get();
+        return view('pages.advert_page', ['ad' => $advert]);
+    }
+
     public function my(Request $request)
     {   
         $cities = Cit::all();
@@ -55,7 +60,7 @@ class AdvertController extends Controller
         
         //DB::table('adverts')->whereExists
         
-        return View('advert.adverts', ['adverts' => $adverts, 'cities' => $cities, 'categories' => $categories, 'city' => $city, 'category'=> $category, 'sort' => $sort]);
+        return View('advert.adverts_my', ['adverts' => $adverts, 'cities' => $cities, 'categories' => $categories, 'city' => $city, 'category'=> $category, 'sort' => $sort]);
     }
     
     
@@ -112,6 +117,7 @@ class AdvertController extends Controller
             'adv_cat' => 'required|numeric|max:30,unique:adverts,advert_categor_id,NULL,id,contractor_id,'.$request->id,
             'advert_cits.*' => 'numeric|exists:cits,id',
             'prices.*' => 'numeric|max:100000000',
+            'prices_two.*' => 'numeric|max:100000000',
             'photos.*' => 'image',
             'videos.*' => 'active_url',
             
@@ -137,21 +143,24 @@ class AdvertController extends Controller
             'publicshed_at' => time(),
         ]);
         
-        IF( ($request->has('advert_cits')) && ($request->has('prices')) )
-        {   
-            $combine_array = array_combine($request->advert_cits, $request->prices);
-            IF($combine_array)
+        IF( $request->has('advert_cits') && $request->has('prices') && $request->has('prices_two') )
+        {
+
+            $count_cits = count($request->advert_cits);
+            $count_prices = count($request->prices);
+            $count_prices_two = count($request->prices_two);
+
+            IF( ($count_cits == $count_prices) && ($count_cits ==$count_prices_two))
             {
-                foreach($combine_array as $key_adv=>$val_pr):
-                    if($key_adv && $val_pr)
-                    {
-                        Advert_cit::create([
-                        'cit_id' => $key_adv,
-                        'price' => $val_pr,
-                        'advert_id' => $add_advert->id,
-                        ]);
-                    }
-                endforeach;
+                FOR($i = 0; $i < $count_cits; $i++)
+                {
+                    IF( $request->advert_cits[$i] && $request->prices[$i] && $request->prices_two[$i])
+                    $add_advert->advert_cits()->create([
+                        'cit_id' => $request->advert_cits[$i],
+                        'price' => $request->prices[$i],
+                        'price_two' => $request->prices_two[$i],
+                    ]);
+                }
             }
         }
         
@@ -159,8 +168,7 @@ class AdvertController extends Controller
         
         IF($request->hasFile('photos'))
         {   
-            $count = 1;
-            $loaded_photos = '';
+
             foreach($request->file('photos') as $photo):
                 $extension = $photo-> guessExtension();
                 IF($photo->isValid())
@@ -178,7 +186,6 @@ class AdvertController extends Controller
                         ]);
                     }
                 }
-            $count++;    
             endforeach;
         }
         
@@ -245,6 +252,7 @@ class AdvertController extends Controller
             'adv_cat' => 'required|numeric|max:30|exists:advert_categors,id',
             'advert_cits.*' => 'numeric|exists:cits,id|unique:advert_cits,cit_id,NULL,id,advert_id,'.$request->advert_id,
             'prices.*' => 'numeric|max:100000000',
+            'prices_two.*' => 'numeric|max:100000000',
             'photos.*' => 'image',
             'videos.*' => 'active_url',
         ]);
@@ -293,22 +301,25 @@ class AdvertController extends Controller
             $count++;    
             endforeach;
         }
-        
-        IF( ($request->has('advert_cits')) && ($request->has('prices')) )
-        {   
-            $combine_array = array_combine($request->advert_cits, $request->prices);
-            IF($combine_array)
-            {   
-                foreach($combine_array as $key_adv=>$val_pr):
-                    IF($key_adv && $val_pr)
-                    {
-                        Advert_cit::create([
-                            'cit_id' => $key_adv,
-                            'price' => $val_pr,
-                            'advert_id' => $advert->id,
+
+        IF( $request->has('advert_cits') && $request->has('prices') && $request->has('prices_two') )
+        {
+
+            $count_cits = count($request->advert_cits);
+            $count_prices = count($request->prices);
+            $count_prices_two = count($request->prices_two);
+
+            IF( ($count_cits == $count_prices) && ($count_cits ==$count_prices_two))
+            {
+                FOR($i = 0; $i < $count_cits; $i++)
+                {
+                    IF( $request->advert_cits[$i] && $request->prices[$i] && $request->prices_two[$i])
+                        $advert->advert_cits()->create([
+                            'cit_id' => $request->advert_cits[$i],
+                            'price' => $request->prices[$i],
+                            'price_two' => $request->prices_two[$i],
                         ]);
-                    }
-                endforeach;
+                }
             }
         }
         

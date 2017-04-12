@@ -20,7 +20,7 @@
                         <input type="search" name="" placeholder="Поиск" class="input" />
                         <input type="submit" name="" value="" class="submit" />
                     </form>
-                    <form action="{{url('/adverts/my')}}" method="GET" class="col-xs-12 col-sm-12 col-md-6">
+                    <form action="{{url('/adverts/all')}}" method="GET" class="col-xs-12 col-sm-12 col-md-6">
                         {{ csrf_field() }}
                         <div class="col-xs-12 col-sm-12 col-md-5">
                             <h4>Фильтры:</h4>

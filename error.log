@@ -1,0 +1,1 @@
+[Wed Apr 12 11:27:33.303046 2017] [:error] [pid 28370] [client 127.0.0.1:49892] PHP Parse error:  syntax error, unexpected '{' in /var/www/hobbyclick.kz/storage/framework/views/ded63a7452a6cdcc2b9f1cf8054b4a2e8d3b6538.php on line 117, referer: http://hobbyclick.kz/
