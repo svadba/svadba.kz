@@ -118,7 +118,7 @@ class AdvertController extends Controller
             'advert_cits.*' => 'numeric|exists:cits,id',
             'prices.*' => 'numeric|max:100000000',
             'prices_two.*' => 'numeric|max:100000000',
-            'photos.*' => 'image',
+            'photos.*' => 'mimes:jpg,bmp,png,jpeg,svg',
             'videos.*' => 'active_url',
             
         ]);
@@ -176,7 +176,7 @@ class AdvertController extends Controller
                     IF($photo->getClientSize() <= 20*1024*1024)
                     {   
                         
-                        $name = str_random(10).$count;
+                        $name = str_random(10);
                         $photo->move($directory.'/photos/', $name.'.'.$extension);
                         Photo::create([
                             'name' => $name,
@@ -253,7 +253,7 @@ class AdvertController extends Controller
             'advert_cits.*' => 'numeric|exists:cits,id|unique:advert_cits,cit_id,NULL,id,advert_id,'.$request->advert_id,
             'prices.*' => 'numeric|max:100000000',
             'prices_two.*' => 'numeric|max:100000000',
-            'photos.*' => 'image',
+            'photos.*' => 'mimes:jpg,bmp,png,jpeg,svg',
             'videos.*' => 'active_url',
         ]);
         

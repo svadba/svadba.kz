@@ -57,7 +57,7 @@
 			<div class="col-xs-12 col-sm-6 col-md-3 article-block-outer">
 				<div class="article-block w100">
 					<div class="article-block-inner">
-						<a href="{{url('/services/filter?category='.$advert->advert_categor->id.'city='.$city_filter)}}">
+						<a href="{{url('/advert/'.$advert->id)}}">
 							<!-- <span class="views_count block"><span class="iblock">948</span></span> -->
 							<img src="{{asset($advert->photos->first()['path'])}}" class="img-responsive" nopin="nopin"  alt="{{$advert->name}}" title="{{$advert->name}}"></a>
 						<div class="heading iblock">

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cit_top extends Model
 {
-    protected $fillable=['album_id','cit_id', 'top_type'];
+    protected $fillable=['advert_id','cit_id', 'top_type'];
 
     public function advert()
     {

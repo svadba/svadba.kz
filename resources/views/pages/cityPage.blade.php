@@ -44,7 +44,7 @@
 						<div class="article-block w100">
 							<div class="article-block-inner"><a href="{{url('/advert/'.$toper->advert->id)}}"><!-- <span class="views_count block"><span class="iblock">2738</span></span> --><img src="{{asset($toper->advert->photos->first()['path'])}}" class="img-responsive" nopin="nopin"  alt="{{$toper->advert->name}}" title="{{$toper->advert->name}}"></a>
 								<div class="heading iblock">
-									<div><a href="{{url('/services/filter?category='.$toper->advert_categor->id)}}" class="pink f13 bold">{{$toper->advert->advert_categor->name}}</a>
+									<div><a href="{{url('/services/filter?category='.$toper->advert->advert_categor->id)}}" class="pink f13 bold">{{$toper->advert->advert_categor->name}}</a>
 									</div>
 									<div class="title"><a href="{{url('/advert/'.$toper->advert->id)}}" class="link">{{$toper->advert->name}}</a>
 									</div>
@@ -71,14 +71,15 @@
 			</div>
 		</div>
 		<div class="row">
-			<h2 class="text-center">Топы 2</h2>
+
 			<div class="col-xs-12">
+				<h2 class="text-center" style="margin-top: 13px;">Топы 2</h2>
 				@foreach($topsTwo as $toper2)
 					<div class="col-xs-12 col-sm-6 col-md-3 article-block-outer">
 						<div class="article-block w100">
 							<div class="article-block-inner"><a href="{{url('/advert/'.$toper2->advert->id)}}"><!-- <span class="views_count block"><span class="iblock">2738</span></span> --><img src="{{asset($toper2->advert->photos->first()['path'])}}" class="img-responsive" nopin="nopin"  alt="{{$toper2->advert->name}}" title="{{$toper2->advert->name}}"></a>
 								<div class="heading iblock">
-									<div><a href="{{url('/services/filter?category='.$toper2->advert_categor->id)}}" class="pink f13 bold">{{$toper2->advert->advert_categor->name}}</a>
+									<div><a href="{{url('/services/filter?category='.$toper2->advert->advert_categor->id)}}" class="pink f13 bold">{{$toper2->advert->advert_categor->name}}</a>
 									</div>
 									<div class="title"><a href="{{url('/advert/'.$toper2->advert->id)}}" class="link">{{$toper2->advert->name}}</a>
 									</div>
@@ -98,7 +99,7 @@
 						<div class="article-block w100">
 							<div class="article-block-inner"><a href="{{url('/advert/'.$toper3->advert->id)}}"><!-- <span class="views_count block"><span class="iblock">2738</span></span> --><img src="{{asset($toper3->advert->photos->first()['path'])}}" class="img-responsive" nopin="nopin"  alt="{{$toper3->advert->name}}" title="{{$toper3->advert->name}}"></a>
 								<div class="heading iblock">
-									<div><a href="{{url('/services/filter?category='.$toper3->advert_categor->id)}}" class="pink f13 bold">{{$toper3->advert->advert_categor->name}}</a>
+									<div><a href="{{url('/services/filter?category='.$toper3->advert->advert_categor->id)}}" class="pink f13 bold">{{$toper3->advert->advert_categor->name}}</a>
 									</div>
 									<div class="title"><a href="{{url('/advert/'.$toper3->advert->id)}}" class="link">{{$toper3->advert->name}}</a>
 									</div>
