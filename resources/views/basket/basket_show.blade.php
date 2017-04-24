@@ -21,7 +21,7 @@
 					</div>
 				</div>
 				<div class="extra content">
-					<div class="ui basic red button">Убрать</div>
+					<div id='{{$bask->id}}' class="ui basic red button">Убрать</div>
 				</div>
 			</div>
 		</div>

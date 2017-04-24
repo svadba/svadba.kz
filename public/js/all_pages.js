@@ -78,6 +78,37 @@ $(document).ready(function(){
         }
     }
 
+    function deleteFromBasket()
+    {
+        $('.del_from_bask').on('click', function()
+        {
+            basket = getCookie('basket');
+            var item_id = 0;
+            if(basket)
+            {
+                var id = $(this).attr('id');
+                var splitBasket = basket.split(',');
+                if(splitBasket.length)
+                {
+                    splitBasket.forEach(function(item, i){
+                        if(item == id)
+                        {
+                            item_id = i;
+                        }
+                    });
+                    var new_bask = splitBasket.splice(item_id, 1);
+                    new_bask = new_bask.join(',');
+                    var date = new Date;
+                    date.setDate(date.getDate() + 3);
+                    date = date.toUTCString();
+                    setCookie('basket', new_bask, date);
+                    setCountBasket();
+                    $('#' + id).remove();
+
+                }
+            }
+        });
+    }
 
     function buyer()
     {
@@ -124,6 +155,7 @@ $(document).ready(function(){
 
     like_svadba();
     setCountBasket();
+    deleteFromBasket();
     buyer();
     //ranjer();
 
