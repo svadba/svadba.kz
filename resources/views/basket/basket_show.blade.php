@@ -9,7 +9,7 @@
 	<div class="col-xs-12 col-sm-9 padding-0-always ui link cards">
 		@if($basket_adv)
 		@foreach($basket_adv as $bask)
-		<div class="col-xs-12 col-sm-4 padding-0-always">
+		<div id="bask_{{$bask->id}}" class="col-xs-12 col-sm-4 padding-0-always">
 			<div class="card">
 				<div class="image">
 					<img src="{{asset($bask->photos->first()['path'])}}"/>
@@ -21,7 +21,7 @@
 					</div>
 				</div>
 				<div class="extra content">
-					<div id='{{$bask->id}}' class="ui basic red button">Убрать</div>
+					<div id='{{$bask->id}}' class="ui basic red button del_from_bask">Убрать</div>
 				</div>
 			</div>
 		</div>

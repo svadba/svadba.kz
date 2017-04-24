@@ -103,7 +103,7 @@ $(document).ready(function(){
                     date = date.toUTCString();
                     setCookie('basket', new_bask, date);
                     setCountBasket();
-                    $('#' + id).remove();
+                    $('#bask_' + id).remove();
 
                 }
             }
