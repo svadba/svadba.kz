@@ -24,6 +24,9 @@ class Cit extends Model
         return $this->hasMany('App\Cit_top');
     }
 
-
+    public function basket_request()
+    {
+        return $this->hasMany('App\Basket_request');
+    }
 
 }

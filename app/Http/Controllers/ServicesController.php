@@ -23,6 +23,7 @@ class ServicesController extends Controller
         $categories = Advert_categor::all();
         $cities = Cit::all();
 
+        $search_name = ($request->has('search_name')) ? $request->search_name : '';
         $city = ($request->has('city')) ? $request->city : '';
         $category = ($request->has('category')) ? $request->category : '';
         IF($request->has('sort'))
@@ -40,6 +41,9 @@ class ServicesController extends Controller
 
 
         $adverts = Advert::with('advert_cits')->with('advert_categor')->with('advert_stat')
+            ->when($search_name, function($query) use ($search_name){
+                return $query->where('name', 'like', '%'.$search_name.'%');
+            })
             ->when($category, function($query) use ($category){
                 return $query->where('advert_categor_id', '=', $category);
             })
@@ -56,9 +60,26 @@ class ServicesController extends Controller
             'city_filter' => $city,
             'category_filter' => $category,
             'sort_filter' => $sort,
+            'search_name' => $search_name,
             'categories' => $categories,
             'cities' => $cities,
             'sn' => 'services_by_filter'
         ]);
+
+    }
+
+    public function ajax_get_adverts(Request $request)
+    {
+
+        $this->validate($request,[
+            'name_search' => 'required|string|max:50'
+        ]);
+
+        $adverts = Advert::where('name', 'LIKE', '%'.$request->name_search.'%')->with('photos')->with('advert_stat')->with('advert_categor')->with('advert_cits.cit')->get();
+
+
+
+
+        return $adverts;
     }
 }

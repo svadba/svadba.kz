@@ -14,5 +14,9 @@ class AdvertCitController extends Controller
         $advert_cit->delete();
         return redirect()->back();
     }
-    
+
+    public function view()
+    {
+
+    }
 }

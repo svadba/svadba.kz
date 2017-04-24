@@ -31,4 +31,14 @@ class CitController extends Controller
             'sn' => 'cityPage'
         ]);
     }
+
+    public function by_id(Request $request)
+    {
+        if(!$request->has('city')) return redirect('/');
+
+        $cit =  Cit::where('id', $request->city)->first();
+
+        return redirect('/cities/'.$cit->name_eng);
+
+    }
 }

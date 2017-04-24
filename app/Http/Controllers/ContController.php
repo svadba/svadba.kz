@@ -76,7 +76,7 @@ class ContController extends Controller
             endforeach;
         }        
         
-        return redirect('/contractors/my');
+        return redirect('admin/contractors/my');
     }
     
     public function view(Request $request, Contractor $contractor)
@@ -137,7 +137,7 @@ class ContController extends Controller
             endforeach;
         }
         
-        return redirect('contractors/my');
+        return redirect('admin/contractors/my');
     }
     
     
@@ -146,6 +146,6 @@ class ContController extends Controller
         
         $this->authorize('delete', $contractor);
         $contractor->delete();
-        return redirect('/contractors/my');
+        return redirect('admin/contractors/my');
     }
 }

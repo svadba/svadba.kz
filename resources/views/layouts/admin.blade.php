@@ -22,6 +22,22 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src='https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fu9l7zaptpht8nnj0a458vczysovxgd2s4r012el9us4paot'></script>
+    <script>
+        tinymce.init({
+            selector: '#descri_text',
+            theme: 'modern',
+            height: 300,
+            language_url: '/js/rutini.js',
+            plugins: [
+                'advlist autolink lists charmap print preview hr anchor pagebreak spellchecker',
+                'searchreplace wordcount visualblocks visualchars fullscreen insertdatetime nonbreaking',
+                'save table contextmenu directionality emoticons template paste textcolor'
+            ],
+            content_css: 'css/content.css',
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor '
+        });
+    </script>
     <style>
         body {
             font-family: 'Lato';
@@ -55,25 +71,24 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     @if(ServiceMan::canView(3))
-                        <li><a href="{{ url('/contractors/my') }}">Подрядчики</a></li>
+                        <li><a href="{{ url('admin/contractors/my') }}">Подрядчики - {{$count_cont}}</a></li>
                     @endif
                     @if(ServiceMan::canView(3))
-                        <li><a href="{{ url('/adverts/my') }}">Объявления</a></li>
+                        <li><a href="{{ url('admin/adverts/my') }}">Объявления - {{$count_adv}}</a></li>
                     @endif
                     @if(ServiceMan::canView(2))
-                        <li><a href="{{ url('/posts/my') }}">Статьи</a></li>
+                        <li><a href="{{ url('admin/posts/my') }}">Статьи</a></li>
                     @endif
                     @if(ServiceMan::canView(4))
-                        <li><a href="{{ url('/client_requests') }}">Заявки</a></li>
+                        <li><a href="{{ url('admin/client_requests') }}">Заявки</a></li>
                     @endif
                     @if(ServiceMan::canView())
-                        <li><a href="{{ url('/data_lists') }}">Списки данных</a></li>
+                        <li><a href="{{ url('admin/list_data/cities') }}">Списки данных</a></li>
                     @endif
                     @if(ServiceMan::canView())
-                        <li><a href="{{ url('/site_users') }}">Пользователи</a></li>
+                        <li><a href="{{ url('admin/site_users') }}">Пользователи</a></li>
                     @endif
                 </ul>
-
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->

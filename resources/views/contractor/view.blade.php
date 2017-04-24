@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="">
             <div class="panel panel-default">
@@ -10,13 +10,13 @@
                         <ul style="margin:5px 0px 10px -35px;">
                         </ul>
                     </div>
-                    <a href="{{url('contractors/my')}}" class="btn btn-default">
+                    <a href="{{url('admin/contractors/my')}}" class="btn btn-default">
                         <i class="fa fa-star"></i> Мои подрядчики
                     </a>
-                    <a href="{{url('contractors/all')}}" class="btn btn-default">
+                    <a href="{{url('admin/contractors/all')}}" class="btn btn-default">
                         <i class="fa fa-list-ul"></i> Все подрядчики
                     </a>
-                    <a href="{{url('contractors/add')}}" class="btn btn-default">
+                    <a href="{{url('admin/contractors/add')}}" class="btn btn-default">
                         <i class="fa fa-plus"></i> Добавить подрядчика
                     </a>
                 </div>
@@ -38,7 +38,7 @@
                                     <tr><th>email</th><td>{{$contractor->email}}</td></tr>
                                     <tr><th>Адрес</th><td>{{$contractor->address}}</td></tr>
                                 </table>
-                                <a href="{{url('adverts/add/'.$contractor->id)}}" type="button" class="btn btn-primary btn-lg btn-block">+ Добавить объявление</a>
+                                <a href="{{url('admin/adverts/add/'.$contractor->id)}}" type="button" class="btn btn-primary btn-lg btn-block">+ Добавить объявление</a>
                             </div>
                         </div>
                     </div>
@@ -83,13 +83,13 @@
                                                             <td style=" width:172px; text-align: right;">
                                                             @if(ServiceMan::canView())
                                                                 @if($adv->allow_type->id == 1)
-                                                                    <a style="" class="btn btn-primary" title="Снять с публикации" href="{{url('/adverts/unallow/'.$adv->id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                                                    <a style="" class="btn btn-primary" title="Снять с публикации" href="{{url('admin/adverts/unallow/'.$adv->id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                                                 @else
-                                                                    <a style="" class="btn btn-success" title="Опубликовать" href="{{url('/adverts/allow/'.$adv->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                                                                    <a style="" class="btn btn-success" title="Опубликовать" href="{{url('admin/adverts/allow/'.$adv->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
                                                                 @endif 
                                                             @endif
-                                                                <a style="" class="btn btn-warning" title="Редактировать объявление" href="{{url('adverts/edit/'.$adv->id)}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                                <a style="" class="btn btn-danger" title="Удалить объявление" href="{{url('adverts/delete/'.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
+                                                                <a style="" class="btn btn-warning" title="Редактировать объявление" href="{{url('admin/adverts/edit/'.$adv->id)}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                                <a style="" class="btn btn-danger" title="Удалить объявление" href="{{url('admin/adverts/delete/'.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
