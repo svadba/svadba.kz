@@ -25,7 +25,7 @@ class AdvertController extends Controller
     public function advertPage(Advert $advert)
     {
         //return $advert = $advert->with('photos', 'musics', 'videos', 'cits', 'advert_categor')->get();
-        return view('pages.advert_page', ['ad' => $advert]);
+        return view('pages.advert_page', ['ad' => $advert, 'sn' => 'advert_page']);
     }
 
 
@@ -353,7 +353,6 @@ class AdvertController extends Controller
         
         $advert = Advert::findOrFail($request->advert_id);
 
-        $contractor_adverts = Advert::where('contractor_id', $advert->contractor_id);
 
         /*
         IF(!$request->adv_cat == $advert->advert_categor_id)

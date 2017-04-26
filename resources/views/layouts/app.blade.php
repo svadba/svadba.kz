@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('css/stylesheet.css')}}">
     <link rel="stylesheet" href="{{asset('css/media.css')}}">
+    <link href="{{asset('css/lightbox.css')}}" rel="stylesheet">
     @if(Route::currentRouteName() == 'cities')
     <link rel="stylesheet" type="text/css" href="{{asset('css/cities/'.$nowCity->name_eng.'.css')}}" />
     @endif
@@ -27,17 +28,21 @@
             </div>
             <div class="collapse navbar-collapse text-center" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Фотограф ({{$count_photo}})</a></li>
-                    <li><a href="#">Видеограф ({{$count_video}})</a></li>
-                    <li><a href="#">Ведущий ({{$count_ved}})</a></li>
+                    <?php $counter = 0; ?>
+                    @foreach($sort_adverts as $sort)
+                    <?php $counter++; ?>
+                    @if($counter > 3) @break @endif
+                    <li><a href="{{url('/services/filter?category='.$sort->id)}}">{{$sort->name}} ({{$sort->adverts_count}})</a></li>
+                    @endforeach
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Все услуги <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" class="text-center">Live Band</a></li>
-                            <li><a href="#" class="text-center">Аренда транспорта</a></li>
-                            <li><a href="#" class="text-center">Артисты и вокалисты</a></li>
-                            <li><a href="#" class="text-center">Инструменталисты</a></li>
-                            <li><a href="#" class="text-center">Оригинальный жанр</a></li>
+                            <?php $counter2 = 0; ?>
+                            @foreach($sort_adverts as $sort)
+                            <?php $counter2++; ?>
+                            @if($counter2 < 4) @continue @endif
+                            <li><a href="{{url('/services/filter?category='.$sort->id)}}">{{$sort->name}} ({{$sort->adverts_count}})</a></li>
+                            @endforeach
                         </ul>
                     </li>
                 </ul>
@@ -58,11 +63,11 @@
             <img src="{{asset('images/logo.png')}}" alt="" class="img-responsive center-block" style="max-width: 150px;">
         </div>
         <div class="col-xs-12 col-sm-4 text-center">
-            <div class="col-xs-12 margin-bottom-always" style="margin-left: -33px;">
-                <a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/fb.png')}}" alt=""></a>
-                <a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/inst.png')}}" alt=""></a>
-                <a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/vk.png')}}" alt=""></a>
-                <a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/yout.png')}}" alt=""></a>
+            <div class="col-xs-12 margin-bottom-always">
+                <a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/fb.png')}}" alt="" class="img-responsive"></a>
+                <a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/inst.png')}}" alt="" class="img-responsive"></a>
+                <a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/vk.png')}}" alt="" class="img-responsive"></a>
+                <a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/yout.png')}}" alt="" class="img-responsive"></a>
             </div>
             <address class="col-xs-12">
                 <abbr title="Телефон">Т:</abbr>+7 (777) 000-3383 <br>
@@ -79,11 +84,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script src="{{asset('js/lightbox.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/all_pages.js')}}"></script>
-    <script>
-        $('.special.cards .image').dimmer({
-          on: 'hover'
-      });
-  </script>
 </body>
 </html>

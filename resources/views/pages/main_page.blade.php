@@ -18,7 +18,7 @@
 							@endforeach
 							<option value="16">Артисты Казахстана</option>
 							<option value="17">Артисты России</option>
-							<option value="18">Артисты Мора</option>
+							<option value="18">Артисты Мира</option>
 						</select>
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="submit">Выбрать!</button>
@@ -28,17 +28,20 @@
 			</div>
 			<div class="col-xs-12 col-sm-3 padding-right-0 text-center">
 				<h1 style="font-size: 16px;">Центр свадебной индустрии</h1> - удобный сервис для подготовки к свадьбе! На нашем Республиканском портале Вы найдёте все необходимое для вашей свадьбы.
+				<a href="#">
+					<img src="{{asset('videos/main_page-ad.gif')}}" alt="" class="img-responsive center-block main_page-ad ad">
+				</a>
 			</div>
 			<div class="col-xs-12 col-sm-9 padding-left-0">
 				<video autoplay="" loop="" muted=""><source type="video/mp4" src="{{asset('videos/main_video.mov')}}"></video>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 padding">
-			<div class="col-xs-12" style="margin-left: -33px;">
-				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/fb.png')}}" alt=""></a>
-				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/inst.png')}}" alt=""></a>
-				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/vk.png')}}" alt=""></a>
-				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/yout.png')}}" alt=""></a>
+			<div class="col-xs-12">
+				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/fb.png')}}" alt="" class="img-responsive"></a>
+				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/inst.png')}}" alt="" class="img-responsive"></a>
+				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/vk.png')}}" alt="" class="img-responsive"></a>
+				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/yout.png')}}" alt="" class="img-responsive"></a>
 			</div>
 			<div class="col-xs-12 anketa">
 				<h3 class="text-center padding-bottom" style="color: #fff; margin-top: 15px;">Добавьте свою анкету</h3>
@@ -63,6 +66,11 @@
 		</div>
 	</div>
 	<div class="col-xs-12">
+		<a href="#">		
+			<img src="{{asset('images/main_page-ad.png')}}" alt="" class="img-responsive ad">
+		</a>
+	</div>
+	<div class="col-xs-12 margin-top-always">
 		<div class="ui steps center-block text-center">
 			<a href="#cities-block" class="link step col-xs-12 col-sm-3 xs-padding-right-left-hidden">
 				<div class="content">

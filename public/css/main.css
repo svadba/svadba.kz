@@ -1,118 +1,176 @@
-.simple-little-table2 {
-    margin-bottom:15px;
-    margin-right:15px;
-    vertical-align:top;
-	font-family:Arial, Helvetica, sans-serif;
-	color:#666;
-	font-size:12px;
-	background:#eaebec;
-	border:#ccc 1px solid;
-	border-collapse:separate;
-    
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;
- 
-	-moz-box-shadow: 0 1px 2px #d1d1d1;
-	-webkit-box-shadow: 0 1px 2px #d1d1d1;
-	box-shadow: 0 1px 2px #d1d1d1;
-    width:auto;
-    display: -moz-inline-stack;
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
+/* Стили модального окна */
+.modal-header1 h2 {
+	color: #555;
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 1;
+	margin: 0;
 }
- 
-.simple-little-table2 th {
-	font-weight:bold;
-	padding:15px 15px 15px 15px;
-	border-top:1px solid #fafafa;
-	border-bottom:1px solid #e0e0e0;
- 
-	background: #ededed;
-	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
-	background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
-    color:black;
+/* кнопка закрытия окна */
+.modal1 .btn-close1 {
+	color: #aaa;
+	cursor: pointer;
+	font-size: 30px;
+	text-decoration: none;
+	position: absolute;
+	right: 5px;
+	top: 0;
 }
-.simple-little-table2 th:first-child{
-	text-align: left;
-	padding-left:20px;
-    color:#e54a1a;
-    width:auto;
+.modal1 .btn-close1:hover {
+	color: red;
 }
-.simple-little-table2 tr:first-child th:first-child{
-	-moz-border-radius-topleft:3px;
-	-webkit-border-top-left-radius:3px;
-	border-top-left-radius:3px;
+/* слой затемнения */
+.modal-wrap1:before {
+	content: "";
+	display: none;
+	background: rgba(0, 0, 0, .3);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 101;
 }
-.simple-little-table2 tr:first-child th:last-child{
-	-moz-border-radius-topright:3px;
-	-webkit-border-top-right-radius:3px;
-	border-top-right-radius:3px;
+.modal-overlay1 {
+	bottom: 0;
+	display: none;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 102;
 }
-.simple-little-table2 tr{
-	text-align: center;
-	padding-left:20px;
+/* активация слоя затемнения и модального блока */
+.modal-open1:checked ~ .modal-wrap1:before,
+.modal-open1:checked ~ .modal-wrap1 .modal-overlay1 {
+	display: block;
 }
-.simple-little-table tr td:first-child{
-	text-align: left;
-	padding-left:20px;
-	border-left: 0;
+.modal-open1:checked ~ .modal-wrap1 .modal-dialog1 {
+	-webkit-transform: translate(-50%, 0);
+	-ms-transform: translate(-50%, 0);
+	-o-transform: translate(-50%, 0);
+	transform: translate(-50%, 0);
+	top: 20%;
 }
-.simple-little-table2 tr td {
-	padding:10px 5px;
-	border-top: 1px solid #ffffff;
-	border-bottom:1px solid #e0e0e0;
-	border-left: 1px solid #e0e0e0;
-	background: #fafafa;
-	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
-	background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+/* элементы модального окна */
+.modal-dialog1 {
+	background: #fefefe;
+	border: none;
+	border-radius: 5px;
+	position: fixed;
+	width: 80%;
+	max-width: 900px;
+	left: 50%;
+	top: -100%;
+	-webkit-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	-moz-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	-webkit-transform: translate(-50%, -500%);
+	-ms-transform: translate(-50%, -500%);
+	-o-transform: translate(-50%, -500%);
+	transform: translate(-50%, -500%);
+	-webkit-transition: -webkit-transform 0.4s ease-out;
+	-moz-transition: -moz-transform 0.4s ease-out;
+	-o-transition: -o-transform 0.4s ease-out;
+	transition: transform 0.4s ease-out;
+	z-index: 103;
 }
-.simple-little-table2 tr:nth-child(even) td{
-	background: #f6f6f6;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
-	background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
+.modal-body1 {
+	padding: 20px;
+	overflow-x: scroll;
 }
-.simple-little-table2 tr:last-child td{
-	border-bottom:0;
+.modal-body1 p {
+	margin: 0;
 }
-.simple-little-table2 tr td:first-child{
-	color:black;
+.modal-header1,
+.modal-footer1 {
+	padding: 20px 20px;
 }
-.simple-little-table2 tr:last-child td:first-child{
-	-moz-border-radius-bottomleft:3px;
-	-webkit-border-bottom-left-radius:3px;
-	border-bottom-left-radius:3px;
+.modal-header1 {
+	border-bottom: #eaeaea solid 1px;
 }
-.simple-little-table2 tr:last-child td:last-child{
-	-moz-border-radius-bottomright:3px;
-	-webkit-border-bottom-right-radius:3px;
-	border-bottom-right-radius:3px;
+.modal-header1 h2 {
+	font-size: 20px;
+	margin: 0;
 }
-.simple-little-table2 tr:hover td{
-	background: #f2f2f2;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
-	background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);
+.modal-footer1 {
+	border-top: #eaeaea solid 1px;
+	text-align: right;
 }
 
-.anavAdmin{
-    padding:10px 20px;
-    display: block;
-    color:#26b;
-    font-size: 16px;
+
+
+#name_search{
+	margin:8px 0px;
+	padding:5px;
 }
-.liNavAdmin{
-    list-style: none;
-    display:inline-block;
-    border:1px solid gray;
-    background:rgba(255,255,255,1);
-    cursor:pointer;
-    margin-right:2px;
+
+.div_img{
+	width:100px;
+	display:inline-block;
+
 }
-.liNavAdmin:hover{
-    background:#26b;
-    color:white;
+.adv_img{
+	width:100%;
+	height:auto;
+	max-height:100px;
+	max-width:121px;
 }
-.liNavAdmin:hover .anavAdmin{
-    color:white;
+.adv_inf{
+	max-width:200px;
+	display:inline-block;
+}
+.mytabler{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.mytabler th {
+	background: #e6e6e6;
+}
+.photoTD{
+	max-width:85px;
+}
+.adv_name{
+	font-weight:800;
+	margin-right:5px;
+	font-size:16px;
+}
+.adv_categor{
+	font-weight:800;
+	margin-right:5px;
+	float:right
+}
+.adv_status{
+	font-weight:800;
+	color:green;
+	float:right;
+}
+.adv_descri{
+	max-width:200px;
+	overflow:hidden;
+	max-height:70px;
+}
+.descrip_style
+{
+	max-height:70px;
+	overflow-x:scroll;
+	margin-top: 5px;
+
+}
+.added_advert_ajax{
+	margin:5px 3px;
+}
+.delete_added{
+	color:red;
+	font-weight:900;
+	margin-left:2px;
+	top:-5px;
+	font-size:10px;
+	cursor:pointer;
+	position:relative;
+
+}
+.added_adverts{
+	width:100%;
+	text-align:left;
 }

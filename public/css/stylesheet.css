@@ -18,10 +18,24 @@ footer .icons img {
 	background: none;
 	box-shadow: none;
 }
+.pagination{
+	border-radius: 6px;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+	background-color: #0abab5;
+	border-color: #0abab5;
+}
+.pagination>li>a, .pagination>li>span{
+	border: none;
+	color: #0abab5;
+}
 .icons img{
 	background-color: #0ABAB5;
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), 0 1px 5px rgba(102, 179, 179, .6);
 	border-radius: 50%;
+}
+.icons{
+	padding: 0 6px;
 }
 .icons:hover{
 	z-index: 1;
@@ -35,31 +49,33 @@ footer .icons img {
 .body {
 	margin-top: 65px;
 	max-width: 1440px;
-	margin-left: auto;
-	margin-right: auto;
 }
 .btn{
 	border-radius: 6px;
 }
+.advert_page .carousel-inner>.item>a>img, .carousel-inner>.item>img{
+	width: 290px;
+	height: 290px;
+}
 .form-control{
 	border-radius: 6px;
 }
-.input-group-btn>.btn{
+.input-group-btn>.btn, .cityPage .btn.btn-default, .combo .btn.btn-default{
 	background: #0ABAB5;
 	color: #fff;
 	text-shadow: 0 1px 0 #008080;
 	border-color: #0ABAB5;
 }
-.basket_show .btn.btn-default{
+.services_by_filter .btn.btn-default,.basket_show .btn.btn-default, .bakyt .btn.btn-default{
 	background: #fff;
 	color: #0ABAB5;
 	text-shadow: 0 1px 0 #fff;
 	border-color: #fff;
 }
-.basket_show label{
+.basket_show label, .bakyt label{
 	color: #fff;
 }
-.basket_show form{
+.basket_show form, .bakyt form{
 	padding: 15px;
 	background: #0abab5;
 	border-radius: 6px;
@@ -70,8 +86,53 @@ footer .icons img {
 	text-shadow: 0 1px 0 #0ABAB5;
 	border-color: #0ABAB5;
 }
+.combo .nav-tabs{
+	border: 1px solid #0ABAB5;
+}
+.combo .nav-tabs>li>a{
+	color: #0ABAB5;
+}
+.combo .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+	border: 1px solid #0ABAB5;
+	border-bottom-color: #0ABAB5;
+}
+.combo .nav-tabs>li>a:hover{
+	border-color: #0ABAB5;
+}
+.combo .nav>li>a:focus, .nav>li>a:hover{
+	background-color: #0ABAB5;
+	color: #fff;
+}
 .cityPage .ui.small.image:hover{
 	background: #0abab5;
+}
+.cityPage .ui.icon.button>.icon{
+	width: 108.75px;
+	height: 108.75px;
+	font-size: 54.375px;
+	line-height: 108.75px;
+	color: #464b50;
+	-webkit-transition: all .6s ease;
+	transition: all .6s ease;
+}
+.cityPage .ui.massive.button{
+	background: rgba(210, 213, 216, .6);
+	-webkit-transition: all .6s ease;
+	transition: all .6s ease;
+}
+.cityPage .ui.massive.button:hover{
+	background: transparent;
+}
+.cityPage .ui.massive.button:hover .ui.circular.button{
+	background: #0abab5;
+}
+.cityPage .ui.massive.button:hover .ui.icon.button>.icon{
+	color: #fff;
+}
+.cityPage .ui.circular.button{
+	background: rgba(187, 191, 194, .6);
+	-webkit-transition: all .6s ease;
+	transition: all .6s ease;
 }
 .btn-lg{
 	background: #66a586;
@@ -134,7 +195,6 @@ div .ui.steps .step{
 }
 div .ui.steps .step:after{
 	border-color: #6eabb0;
-	background-color: transparent;
 }
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
 	color: #fff;
@@ -161,8 +221,8 @@ h1:first-letter{
 .navbar-toggle{
 	background-color: rgba(255, 255, 255, .6);
 	float: left;
-	margin-right: 0;
-	margin-left: 15px;
+	margin-right: 9px;
+	margin-left: 9px;
 }
 .navbar-default .navbar-toggle .icon-bar{
 	background-color: #fff;
@@ -176,6 +236,10 @@ h1:first-letter{
 .ui.small.image{
 	width: 290px;
 	background: transparent;
+}
+.cityPage .ui.buttons .or:before{
+	content: '';
+	background-color: transparent;
 }
 .cities-block .col-sm-2{
 	padding: 15px;
@@ -285,10 +349,19 @@ h1:first-letter{
 	border-radius: 50%!important;
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), 0 1px 5px rgba(102, 179, 179, .6);
 }
+.ui.primary.button, .ui.primary.buttons .button{
+	background-color: #0abab5;
+}
+.ui.primary.button:hover, .ui.primary.buttons .button:hover{
+	background-color: rgba(10, 186, 181, .6);
+}
 footer{
 	background: #0ABAB5;
 	color: #fff;
 	margin-top: 15px;
+}
+.main_page-ad{
+	display: none;
 }
 .margin-top-always{
 	margin-top: 15px!important;
@@ -320,4 +393,7 @@ a{
 }
 .ui.cards{
 	margin: 0;
+}
+.ad:hover{
+	opacity: .6;
 }

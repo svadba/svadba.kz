@@ -1,7 +1,7 @@
 /**
  * Created by admin on 18.04.17.
  */
-$(document).ready(function(){
+ $(document).ready(function(){
 
 
     function ranjer()
@@ -13,9 +13,9 @@ $(document).ready(function(){
             max: 10000000,
             values: [ 75, 5000000 ],
             slide: function( event, ui )
-                {
-                    $( "#amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] + "т" );
-                }
+            {
+                $( "#amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] + "т" );
+            }
         });
 
         $( "#amount" ).val( "" + $( "#slider-range" ).slider( "values", 0 ) +
@@ -47,7 +47,7 @@ $(document).ready(function(){
     {
         var matches = document.cookie.match(new RegExp(
             "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-        ));
+            ));
         return matches ? decodeURIComponent(matches[1]) : undefined;
     }
 
@@ -83,28 +83,31 @@ $(document).ready(function(){
         $('.del_from_bask').on('click', function()
         {
             basket = getCookie('basket');
-            var item_id = 0;
             if(basket)
             {
                 var id = $(this).attr('id');
                 var splitBasket = basket.split(',');
                 if(splitBasket.length)
                 {
+                    console.log('split_baskt_do_foeach = ' + splitBasket);
                     splitBasket.forEach(function(item, i){
                         if(item == id)
                         {
-                            item_id = i;
+                            splitBasket.splice(i,1);
                         }
                     });
-                    var new_bask = splitBasket.splice(item_id, 1);
-                    new_bask = new_bask.join(',');
+                    console.log('split_bask_posle = ' + splitBasket);
+                    var new_bask = splitBasket.join(',');
+                    console.log('new_bask2_join=' + new_bask);
                     var date = new Date;
                     date.setDate(date.getDate() + 3);
                     date = date.toUTCString();
+                    console.log('basket_kuka_do=' + basket);
                     setCookie('basket', new_bask, date);
+                    console.log('basket_kuka_posle=' + getCookie('basket'));
                     setCountBasket();
                     $('#bask_' + id).remove();
-
+                    console.log('endd');
                 }
             }
         });
@@ -153,12 +156,25 @@ $(document).ready(function(){
         });
     }
 
-    like_svadba();
-    setCountBasket();
-    deleteFromBasket();
-    buyer();
+    function special_cards_hover() {
+       $('.special.cards .image').dimmer({
+          on: 'hover'
+      });
+   }
+
+   function lightbox_options() {
+    lightbox.option({
+        'albumLabel': "%1 из %2",
+        'alwaysShowNavOnTouchDevices': true
+    })
+}
+
+like_svadba();
+setCountBasket();
+deleteFromBasket();
+buyer();
     //ranjer();
-
-
+    special_cards_hover();
+    lightbox_options();
 
 });

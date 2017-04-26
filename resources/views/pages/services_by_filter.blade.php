@@ -76,7 +76,9 @@
 			@endforeach
 		</div>
 	</div>
-	{{$adverts->appends(['sort' => $sort_filter, 'city' => $city_filter, 'category' => $category_filter])->links()}}
+	<div class="col-xs-12 text-center">
+		{{$adverts->appends(['sort' => $sort_filter, 'city' => $city_filter, 'category' => $category_filter])->links()}}
+	</div>
 </div>
 @endsection
 

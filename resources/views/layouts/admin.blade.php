@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" id="csrf-token" content="{{{ csrf_token() }}}">
     <title>Панель администратора</title>
 
     <!-- Fonts -->
@@ -18,11 +18,13 @@
     <link rel="stylesheet" href={{asset('css/main.css')}}/>
     <link rel="stylesheet" href={{asset('css/fe.css')}}/>
     <link rel="stylesheet" href={{asset('css/media.css')}}/>
+    <link href="{{asset('css/datepicker.min.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src='https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fu9l7zaptpht8nnj0a458vczysovxgd2s4r012el9us4paot'></script>
+    <script src="{{asset('js/datepicker.min.js')}}"></script>
     <script>
         tinymce.init({
             selector: '#descri_text',
@@ -80,7 +82,7 @@
                         <li><a href="{{ url('admin/posts/my') }}">Статьи</a></li>
                     @endif
                     @if(ServiceMan::canView(4))
-                        <li><a href="{{ url('admin/client_requests') }}">Заявки</a></li>
+                        <li><a href="{{ url('admin/requests/baskets') }}">Заявки</a></li>
                     @endif
                     @if(ServiceMan::canView())
                         <li><a href="{{ url('admin/list_data/cities') }}">Списки данных</a></li>

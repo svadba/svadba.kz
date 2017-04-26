@@ -1,4 +1,29 @@
+@media (min-width: 1439px) {
+	.body{
+		min-height: 1283px;		
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+@media (min-width: 1023px) and (max-width: 1438px) {
+	.body{
+		min-height: 583px;
+	}
+}
+@media (min-width: 767px) and (max-width: 1022px) {
+	.body{
+		min-height: 470px;
+	}
+}
+@media (min-width: 1200px) {
+	.main_page-ad{
+		display: block!important;
+	}
+}
 @media (min-width: 768px){
+	.cityPage .package .col-xs-12.col-sm-4{
+		margin-top: 15px;
+	}
 	.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
 		margin-left: 0;
 	}	

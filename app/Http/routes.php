@@ -30,6 +30,9 @@
 
     Route::get('/advert/{advert}', 'AdvertController@advertPage');
 
+    Route::get('/combo', 'ComboController@on');
+    Route::get('/bakyt', 'ComboController@bakyt');
+
     Route::group(['prefix' => 'services'], function(){
         Route::get('', 'ServicesController@all');
         Route::get('filter', 'ServicesController@by_filter');
@@ -129,6 +132,15 @@
                     });
 
                 });
+
+                Route::group(['prefix' => 'combos'], function(){
+                    Route::get('all', "ComboController@all")->middleware('role');
+                    Route::get('add', "ComboController@add")->middleware('role');
+
+                });
+
+
+
             });
     });
 
