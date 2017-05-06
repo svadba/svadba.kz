@@ -202,6 +202,11 @@
                                     <div class="col-xs-2">
                                         <img id="img-{{$photo->id}}" src="{{asset($photo->path)}}" class="img-responsive img-thumbnail" alt="Responsive image">
                                         <a type="button" class="btn btn-danger btn-xs img_delete" href="{{url('admin/photos/delete/'.$photo->id)}}">X</a>
+                                        @if($photo->main)
+                                            <a type="button" title="Главное фото" style="position:absolute; top:19px; right:45px;" class="btn btn-success btn-xs" href="#"><i class="fa fa-star"></i></a>
+                                        @else
+                                            <a type="button" title="Сделать главным" style="position:absolute; top:19px; right:45px;" class="btn btn-info btn-xs" href="{{url('admin/photos/set_main/'.$photo->id)}}"><i class="fa fa-star"></i></a>
+                                        @endif
                                     </div>
                                     @endforeach
                                 </div>

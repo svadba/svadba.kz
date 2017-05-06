@@ -30,7 +30,10 @@
 
     Route::get('/advert/{advert}', 'AdvertController@advertPage');
 
-    Route::get('/combo', 'ComboController@on');
+    Route::group(['prefix' => 'combo'], function(){
+        Route::get('{combo}/{combo_cit}', 'ComboController@viewUser');
+    });
+
     Route::get('/bakyt', 'ComboController@bakyt');
 
     Route::group(['prefix' => 'services'], function(){
@@ -110,6 +113,7 @@
 
                 Route::group(['prefix' => 'photos'], function(){
                     Route::get('delete/{photo}', 'PhotoController@delete')->middleware('role:3');
+                    Route::get('set_main/{photo}', 'PhotoController@set_main')->middleware('role:3');
                 });
 
                 Route::group(['prefix' => 'advert_cits'], function(){
@@ -136,7 +140,21 @@
                 Route::group(['prefix' => 'combos'], function(){
                     Route::get('all', "ComboController@all")->middleware('role');
                     Route::get('add', "ComboController@add")->middleware('role');
+                    Route::post('save', "ComboController@save")->middleware('role');
+                    Route::group(['prefix' => 'ajax'], function(){
 
+                        Route::get('get_cities', 'ComboController@get_cities')->middleware('role');
+                        Route::post('set_cities/{combo}', 'ComboController@set_cities')->middleware('role');
+                        Route::get('delete_city/{combo_cit}', 'ComboController@delete_city')->middleware('role');
+
+                        Route::get('get_categories', 'ComboController@get_categories')->middleware('role');
+                        Route::post('set_categories/{combo_cit}', 'ComboController@set_categories')->middleware('role');
+                        Route::get('delete_category/{combo_cit_categor}', 'ComboController@delete_category')->middleware('role');
+
+                        Route::post('get_adverts', 'ComboController@get_adverts')->middleware('role');
+                        Route::post('set_adverts/{combo_cit_categor}', 'ComboController@set_adverts')->middleware('role');
+                        Route::get('delete_advert/{combo_cit_categor_advert}', 'ComboController@delete_advert')->middleware('role');
+                    });
                 });
 
 

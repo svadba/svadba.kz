@@ -59,11 +59,16 @@
 							<div class="content">
 								<div class="center">
 									<div id="{{$advert->id}}" class="ui inverted button buy-btn">Добавить в корзину</div>
-									<a href="{{url('/advert/'.$advert->id)}}" class="ui primary button margin-top-always">Подробнее</a>
+									<a href="{{url('/advert/'.$advert->id.'?city='.$city_filter)}}" class="ui primary button margin-top-always">Подробнее</a>
 								</div>
 							</div>
 						</div>
-						<img src="{{asset($advert->photos->first()['path'])}}" alt="{{$advert->name}}" title="{{$advert->name}}">
+						@if($advert->photos->first())
+							<img src="{{asset('upload/adverts/thumbs/'.$advert->photos->first()['name'].'.'.$advert->photos->first()['ext'])}}" alt="{{$advert->name}}" title="{{$advert->name}}">
+						@else
+							<img src="{{asset('images/no-avatar.png')}}" alt="{{$advert->name}}" title="{{$advert->name}}">
+						@endif
+
 					</div>
 					<div class="content">
 						<a href="{{url('/advert/'.$advert->id)}}" class="header">{{$advert->name}}</a>
@@ -76,9 +81,7 @@
 			@endforeach
 		</div>
 	</div>
-	<div class="col-xs-12 text-center">
-		{{$adverts->appends(['sort' => $sort_filter, 'city' => $city_filter, 'category' => $category_filter])->links()}}
-	</div>
+	{{$adverts->appends(['sort' => $sort_filter, 'city' => $city_filter, 'category' => $category_filter])->links()}}
 </div>
 @endsection
 

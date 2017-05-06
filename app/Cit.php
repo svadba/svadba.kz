@@ -29,4 +29,9 @@ class Cit extends Model
         return $this->hasMany('App\Basket_request');
     }
 
+    public function combos()
+    {
+        return $this->belongsToMany('App\Combo');
+    }
+
 }

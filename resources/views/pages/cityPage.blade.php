@@ -12,121 +12,31 @@
 		<p class="margin-top-always">Соберите индивидуальный свадебный пакет</p>
 		<p>или</p>
 		<p>Выберите из наших предложений для Вас</p>
-		<div class="col-xs-12 col-sm-4">
-			<div class="col-xs-12 padding-0-always" style="background: rgba(111, 151, 213, .6); border-radius: 54px 6px 0 54px;">
-				<div class="col-xs-3 padding-0-always">
-					<img src="{{asset('images/icons/sapphire.png')}}" alt="" class="img-responsive">
+		@foreach($combos as $combo)
+			<div class="col-xs-12 col-sm-4">
+				<div class="col-xs-12 padding-0-always" style="background: rgba(111, 151, 213, .6); border-radius: 54px 6px 0 54px;">
+					<div class="col-xs-3 padding-0-always">
+						<img src="{{asset($combo->photo_path)}}" alt="" class="img-responsive">
+					</div>
+					<div class="col-xs-9 padding-0-always">
+						<h2 style="color: #191e23; margin-top: 6px; margin-bottom: 6px;">{{$combo->name}}</h2>
+						<p style="color: #191e23; font-size: 18px;">{{$combo->price}}ТГ</p>
+					</div>
 				</div>
-				<div class="col-xs-9 padding-0-always">
-					<h2 style="color: #191e23; margin-top: 6px; margin-bottom: 6px;">САПФИР</h2>
-					<p style="color: #191e23; font-size: 18px;">200 000ТГ</p>
-				</div>
-			</div>
-			<div class="col-xs-10 padding-0-always" style="float: right; background: #f8f8f8;">
-				<ul style="list-style: none; padding: 0; color: #23282d; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-				</ul>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui primary button" style="float: none;">Подробнее</button>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui blue button" style="float: none;">Выбрать</button>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-4">
-			<div class="col-xs-12 padding-0-always" style="background: rgba(150, 222, 174, .6); border-radius: 54px 6px 0 54px;">
-				<div class="col-xs-3 padding-0-always">
-					<img src="{{asset('images/icons/emerald.png')}}" alt="" class="img-responsive">
-				</div>
-				<div class="col-xs-9 padding-0-always">
-					<h2 style="color: #191e23; margin-top: 6px; margin-bottom: 6px;">ИЗУМРУД</h2>
-					<p style="color: #191e23; font-size: 18px">400 000ТГ</p>
+				<div class="col-xs-10 padding-0-always" style="float: right; background: #f8f8f8;">
+					<ul style="list-style: none; padding: 0; color: #23282d; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
+						@foreach($combo->combo_cits as $cit)
+							@foreach($cit->categories as $categ)
+								<li>{{$categ->name}}</li>
+							@endforeach
+						@endforeach
+					</ul>
+					@foreach($combo->combo_cits as $cit2)
+						<a href="{{url('combo/'.$combo->id.'/'.$cit2->id)}}" class="col-xs-10 col-lg-5 margin-bottom-always ui primary button" style="float: none;">Подробнее</a>
+					@endforeach
 				</div>
 			</div>
-			<div class="col-xs-10 padding-0-always" style="float: right; background: #f8f8f8;">
-				<ul style="list-style: none; padding: 0; color: #23282d; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-				</ul>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui primary button" style="float: none;">Подробнее</button>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui blue button" style="float: none;">Выбрать</button>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-4">
-			<div class="col-xs-12 padding-0-always" style="background: rgba(197, 103, 139, .6); border-radius: 54px 6px 0 54px;">
-				<div class="col-xs-3 padding-0-always">
-					<img src="{{asset('images/icons/ruby.png')}}" alt="" class="img-responsive">
-				</div>
-				<div class="col-xs-9 padding-0-always">
-					<h2 style="color: #191e23; margin-top: 6px; margin-bottom: 6px;">РУБИН</h2>
-					<p style="color: #191e23; font-size: 18px;">600 000ТГ</p>
-				</div>
-			</div>
-			<div class="col-xs-10 padding-0-always" style="float: right; background: #f8f8f8;">
-				<ul style="list-style: none; padding: 0; color: #23282d; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-				</ul>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui primary button" style="float: none;">Подробнее</button>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui blue button" style="float: none;">Выбрать</button>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-4">
-			<div class="col-xs-12 padding-0-always" style="background: rgba(242, 236, 222, .6); border-radius: 54px 6px 0 54px;">
-				<div class="col-xs-3 padding-0-always">
-					<img src="{{asset('images/icons/pearl.png')}}" alt="" class="img-responsive">
-				</div>
-				<div class="col-xs-9 padding-0-always">
-					<h2 style="color: #191e23; margin-top: 6px; margin-bottom: 6px;">ЖЕМЧУГ</h2>
-					<p style="color: #191e23; font-size: 18px;">800 000ТГ</p>
-				</div>
-			</div>
-			<div class="col-xs-10 padding-0-always" style="float: right; background: #f8f8f8;">
-				<ul style="list-style: none; padding: 0; color: #23282d; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-				</ul>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui primary button" style="float: none;">Подробнее</button>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui blue button" style="float: none;">Выбрать</button>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-4">
-			<div class="col-xs-12 padding-0-always" style="background: rgba(213, 247, 255, .6); border-radius: 54px 6px 0 54px;">
-				<div class="col-xs-3 padding-0-always">
-					<img src="{{asset('images/icons/diamond.png')}}" alt="" class="img-responsive">
-				</div>
-				<div class="col-xs-9 padding-0-always">
-					<h2 style="color: #191e23; margin-top: 6px; margin-bottom: 6px;">БРИЛЛИАНТ</h2>
-					<p style="color: #191e23; font-size: 18px;">1 000 000ТГ</p>
-				</div>
-			</div>
-			<div class="col-xs-10 padding-0-always" style="float: right; background: #f8f8f8;">
-				<ul style="list-style: none; padding: 0; color: #23282d; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-					<li>lorem</li>
-				</ul>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui primary button" style="float: none;">Подробнее</button>
-				<button class="col-xs-10 col-lg-5 margin-bottom-always ui blue button" style="float: none;">Выбрать</button>
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 margin-top-always">
-		<a href="#">
-			<img src="{{asset('images/Astana-ad.png')}}" alt="" class="img-responsive ad">
-		</a>		
+		@endforeach
 	</div>
 	<div class="col-xs-12">
 		<h2 class="text-center margin-top-always">Каталог компаний и специалистов по основным категориям</h2>
@@ -148,11 +58,15 @@
 							<div class="content">
 								<div class="center">
 									<div id="{{$toper2->advert->id}}" class="ui inverted button buy-btn">Добавить в корзину</div>
-									<a href="{{url('/advert/'.$toper2->advert->id)}}" class="ui primary button margin-top-always">Подробнее</a>
+									<a href="{{url('/advert/'.$toper2->advert->id.'?city='.$nowCity->id)}}" class="ui primary button margin-top-always">Подробнее</a>
 								</div>
 							</div>
 						</div>
-						<img src="{{asset($toper2->advert->photos->first()['path'])}}" alt="{{$toper2->advert->name}}" title="{{$toper2->advert->name}}">
+						@if($toper2->advert->photos->first())
+							<img src="{{asset('upload/adverts/thumbs/'.$toper2->advert->photos->first()['name'].'.'.$toper2->advert->photos->first()['ext'])}}" alt="{{$toper2->advert->name}}" title="{{$toper2->advert->name}}">
+						@else
+							<img src="{{asset('images/no-avatar.png')}}" alt="{{$toper2->advert->name}}" title="{{$toper2->advert->name}}">
+						@endif
 					</div>
 					<div class="content">
 						<a href="{{url('/advert/'.$toper2->advert->id)}}" class="header">{{$toper2->advert->name}}</a>
@@ -175,11 +89,15 @@
 							<div class="content">
 								<div class="center">
 									<div id="{{$toper3->advert->id}}" class="ui inverted button buy-btn">Добавить в корзину</div>
-									<a href="{{url('/advert/'.$toper3->advert->id)}}" class="ui primary button margin-top-always">Подробнее</a>
+									<a href="{{url('/advert/'.$toper3->advert->id.'?city='.$nowCity->id)}}" class="ui primary button margin-top-always">Подробнее</a>
 								</div>
 							</div>
 						</div>
-						<img src="{{asset($toper3->advert->photos->first()['path'])}}" alt="{{$toper3->advert->name}}" title="{{$toper3->advert->name}}">
+						@if($toper3->advert->photos->first())
+							<img src="{{asset('upload/adverts/thumbs/'.$toper3->advert->photos->first()['name'].'.'.$toper3->advert->photos->first()['ext'])}}" alt="{{$toper3->advert->name}}" title="{{$toper3->advert->name}}">
+						@else
+							<img src="{{asset('images/no-avatar.png')}}" alt="{{$toper3->advert->name}}" title="{{$toper3->advert->name}}">
+						@endif
 					</div>
 					<div class="content">
 						<a href="{{url('/advert/'.$toper3->advert->id)}}" class="header">{{$toper3->advert->name}}</a>

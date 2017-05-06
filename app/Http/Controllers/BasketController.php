@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Advert;
 use App\Cit;
 use App\Basket_request;
+use App\Combo;
+use App\Combo_cit;
 use App\Http\Requests;
 
 class BasketController extends Controller
@@ -21,17 +23,66 @@ class BasketController extends Controller
 
         $cities = Cit::whereNotIn('id', [16,17,18])->get();
 
-        if(!isset($_COOKIE['basket'])) return redirect('/');
+        if(isset($_COOKIE['basket'])) {
+            $cooks = $_COOKIE['basket'];
+        }
+        else
+        {
+            $cooks = '';
+        }
 
-        $cooks = $_COOKIE['basket'];
+        if(isset($_COOKIE['combo']))
+        {
+            $combo_cook = json_decode($_COOKIE['combo'], true);
+            $combo_cook = ( $combo_cook === null) ? '' : $combo_cook;
+        }
+        else
+        {
+            $combo_cook = '';
+        }
 
+        if($combo_cook)
+        {
+            $combo = $combo_cook['combo'];
+            if($combo)
+            {
+                $combo = Combo::find($combo);
+            }
+            else
+            {
+                $combo = '';
+            }
+            $combo_cit = $combo_cook['combo_cit'];
+            if($combo_cit)
+            {
+                $combo_cit = Combo_cit::find($combo_cit)->load('combo_categors.advert_categor', 'combo_categors.adverts.photos');
+            }
+            else
+            {
+                $combo_cit = '';
+            }
+
+        }
+        else
+        {
+            $combo = '';
+            $combo_cit = '';
+        }
         $cooks = explode(',', $cooks);
 
-        IF(!$cooks) return redirect('/');
+        IF($cooks)
+        {
+            $bask_advert = Advert::whereIn('id', $cooks)->with('advert_categor')->with(['photos' => function($query) {
+                $query->where('main', 1);
+            }])->get();
+        }
+        else
+        {
+            $bask_advert = '';
+        }
 
-        $bask_advert = Advert::whereIn('id', $cooks)->with('advert_categor')->with('photos')->get();
 
-        return view('basket.basket_show', ['basket_adv' => $bask_advert, 'cities' => $cities, 'sn' => 'basket_show']);
+        return view('basket.basket_show', ['combo' => $combo, 'combo_cit' => $combo_cit, 'combo_cook' => $combo_cook,'basket_adv' => $bask_advert, 'cities' => $cities, 'sn' => 'basket_show']);
     }
 
 

@@ -40,7 +40,9 @@ class ServicesController extends Controller
         }
 
 
-        $adverts = Advert::with('advert_cits')->with('advert_categor')->with('advert_stat')
+        $adverts = Advert::with('advert_cits')->with('advert_categor')->with('advert_stat')->with(['photos' => function($query) {
+                $query->where('main', 1);
+            }])
             ->when($search_name, function($query) use ($search_name){
                 return $query->where('name', 'like', '%'.$search_name.'%');
             })
@@ -75,7 +77,10 @@ class ServicesController extends Controller
             'name_search' => 'required|string|max:50'
         ]);
 
-        $adverts = Advert::where('name', 'LIKE', '%'.$request->name_search.'%')->with('photos')->with('advert_stat')->with('advert_categor')->with('advert_cits.cit')->get();
+        $adverts = Advert::where('name', 'LIKE', '%'.$request->name_search.'%')->with(['photos' => function($query) {
+                $query->where('main', 1);
+            }])
+            ->with('advert_stat')->with('advert_categor')->with('advert_cits.cit')->get();
 
 
 

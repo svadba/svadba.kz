@@ -15,16 +15,16 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-    <link rel="stylesheet" href={{asset('css/main.css')}}/>
-    <link rel="stylesheet" href={{asset('css/fe.css')}}/>
-    <link rel="stylesheet" href={{asset('css/media.css')}}/>
-    <link href="{{asset('css/datepicker.min.css')}}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href={{asset('admin_wp/css/main.css')}}/>
+    <link rel="stylesheet" href={{asset('admin_wp/css/fe.css')}}/>
+    <link rel="stylesheet" href={{asset('admin_wp/css/media.css')}}/>
+    <link href="{{asset('admin_wp/css/datepicker.min.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src='https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=fu9l7zaptpht8nnj0a458vczysovxgd2s4r012el9us4paot'></script>
-    <script src="{{asset('js/datepicker.min.js')}}"></script>
+    <script src="{{asset('admin_wp/js/datepicker.min.js')}}"></script>
     <script>
         tinymce.init({
             selector: '#descri_text',
@@ -82,7 +82,14 @@
                         <li><a href="{{ url('admin/posts/my') }}">Статьи</a></li>
                     @endif
                     @if(ServiceMan::canView(4))
-                        <li><a href="{{ url('admin/requests/baskets') }}">Заявки</a></li>
+                        @if($count_basket)
+                            <li><a style="color:red;" href="{{ url('admin/requests/baskets') }}">Заявки - {{$count_basket}}</a></li>
+                        @else
+                           <li><a href="{{ url('admin/requests/baskets') }}">Заявки</a></li>
+                        @endif
+                    @endif
+                    @if(ServiceMan::canView())
+                        <li><a href="{{ url('admin/combos/all') }}">Пакеты</a></li>
                     @endif
                     @if(ServiceMan::canView())
                         <li><a href="{{ url('admin/list_data/cities') }}">Списки данных</a></li>

@@ -71,7 +71,17 @@ class Advert extends Model
         return $this->hasMany('App\Cit_top');
     }
 
-    
+    public function photo_main()
+    {
+        $all_photos = Photo::where('advert_id', $this->id)->where('main', 1)->first();
+        if($all_photos)
+        {
+            return 'upload/adverts/thumbs/' .$all_photos->name. '.' .$all_photos->ext;
+        }
+        else {
+            return 'images/no-avatar.png';
+        }
+    }
     
     
     

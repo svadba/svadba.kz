@@ -1,0 +1,444 @@
+/* Стили модального окна */
+.modal-header1 h2 {
+	color: #555;
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 1;
+	margin: 0;
+}
+/* кнопка закрытия окна */
+.modal1 .btn-close1 {
+	color: #aaa;
+	cursor: pointer;
+	font-size: 30px;
+	text-decoration: none;
+	position: absolute;
+	right: 5px;
+	top: 0;
+}
+.modal1 .btn-close1:hover {
+	color: red;
+}
+/* слой затемнения */
+.modal-wrap1:before {
+	content: "";
+	display: none;
+	background: rgba(0, 0, 0, .3);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 101;
+}
+.modal-overlay1 {
+	bottom: 0;
+	display: none;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 102;
+}
+/* активация слоя затемнения и модального блока */
+.modal-open1:checked ~ .modal-wrap1:before,
+.modal-open1:checked ~ .modal-wrap1 .modal-overlay1 {
+	display: block;
+}
+.modal-open1:checked ~ .modal-wrap1 .modal-dialog1 {
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+/* элементы модального окна */
+.modal-dialog1 {
+	background: #fefefe;
+	border: none;
+	border-radius: 5px;
+	width: 85%;
+	max-width: 900px;
+	left: 50%;
+	-webkit-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	-moz-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	-webkit-transform: translate(-50%, -500%);
+	-ms-transform: translate(-50%, -500%);
+	-o-transform: translate(-50%, -500%);
+	transform: translate(-50%, -500%);
+	-webkit-transition: -webkit-transform 0.4s ease-out;
+	-moz-transition: -moz-transform 0.4s ease-out;
+	-o-transition: -o-transform 0.4s ease-out;
+	transition: transform 0.4s ease-out;
+	position:relative;
+	z-index: 103;
+	overflow-y: scroll;
+}
+.modal-body1 {
+	padding: 20px;
+	overflow-y: scroll;
+}
+.modal-body1 p {
+	margin: 0;
+}
+.modal-header1,
+.modal-footer1 {
+	padding: 20px 20px;
+}
+.modal-header1 {
+	border-bottom: #eaeaea solid 1px;
+}
+.modal-header1 h2 {
+	font-size: 20px;
+	margin: 0;
+}
+.modal-footer1 {
+	border-top: #eaeaea solid 1px;
+	text-align: right;
+}
+
+
+
+#name_search{
+	margin:8px 0px;
+	padding:5px;
+}
+
+.div_img{
+	width:100px;
+	display:inline-block;
+
+}
+.adv_img{
+	width:100%;
+	height:auto;
+	max-height:100px;
+	max-width:121px;
+}
+.adv_inf{
+	max-width:200px;
+	display:inline-block;
+}
+.mytabler{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.mytabler th {
+	background: #e6e6e6;
+}
+.photoTD{
+	max-width:85px;
+}
+.adv_name{
+	font-weight:800;
+	margin-right:5px;
+	font-size:16px;
+}
+.adv_categor{
+	font-weight:800;
+	margin-right:5px;
+	float:right
+}
+.adv_status{
+	font-weight:800;
+	color:green;
+	float:right;
+}
+.adv_descri{
+	max-width:200px;
+	overflow:hidden;
+	max-height:70px;
+}
+.descrip_style
+{
+	max-height:70px;
+	overflow-x:scroll;
+	margin-top: 5px;
+
+}
+.added_advert_ajax{
+	margin:5px 3px;
+}
+.delete_added{
+	color:red;
+	font-weight:900;
+	margin-left:2px;
+	top:-5px;
+	font-size:10px;
+	cursor:pointer;
+	position:relative;
+
+}
+.added_adverts{
+	width:100%;
+	text-align:left;
+}
+/* ajax add_city_to_combo */
+.added_city_ajax{
+	margin:5px 3px;
+}
+.delete_city{
+	color:red;
+	font-weight:900;
+	margin-left:2px;
+	top:-5px;
+	font-size:10px;
+	cursor:pointer;
+	position:relative;
+
+}
+#cities_to_add{
+	width:100%;
+	text-align:left;
+}
+
+/* ajax add_city_to_combo */
+
+
+
+
+
+
+/* forma 2 to add_category*/
+
+/* Стили модального окна */
+.modal-header2 h2 {
+	color: #555;
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 1;
+	margin: 0;
+}
+/* кнопка закрытия окна */
+.modal2 .btn-close2 {
+	color: #aaa;
+	cursor: pointer;
+	font-size: 30px;
+	text-decoration: none;
+	position: absolute;
+	right: 5px;
+	top: 0;
+}
+.modal2 .btn-close2:hover {
+	color: red;
+}
+/* слой затемнения */
+.modal-wrap2:before {
+	content: "";
+	display: none;
+	background: rgba(0, 0, 0, .3);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 101;
+}
+.modal-overlay2 {
+	bottom: 0;
+	display: none;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 102;
+}
+/* активация слоя затемнения и модального блока */
+.modal-open2:checked ~ .modal-wrap2:before,
+.modal-open2:checked ~ .modal-wrap2 .modal-overlay2 {
+	display: block;
+}
+.modal-open2:checked ~ .modal-wrap2 .modal-dialog2 {
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+/* элементы модального окна */
+.modal-dialog2 {
+	background: #fefefe;
+	border: none;
+	border-radius: 5px;
+	width: 85%;
+	max-width: 900px;
+	left: 50%;
+	-webkit-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	-moz-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	-webkit-transform: translate(-50%, -500%);
+	-ms-transform: translate(-50%, -500%);
+	-o-transform: translate(-50%, -500%);
+	transform: translate(-50%, -500%);
+	-webkit-transition: -webkit-transform 0.4s ease-out;
+	-moz-transition: -moz-transform 0.4s ease-out;
+	-o-transition: -o-transform 0.4s ease-out;
+	transition: transform 0.4s ease-out;
+	position:relative;
+	z-index: 103;
+	overflow-y: scroll;
+}
+.modal-body2 {
+	padding: 20px;
+	overflow-y: scroll;
+}
+.modal-body2 p {
+	margin: 0;
+}
+.modal-header2,
+.modal-footer2 {
+	padding: 20px 20px;
+}
+.modal-header2 {
+	border-bottom: #eaeaea solid 1px;
+}
+.modal-header2 h2 {
+	font-size: 20px;
+	margin: 0;
+}
+.modal-footer2 {
+	border-top: #eaeaea solid 1px;
+	text-align: right;
+}
+
+.added_categories_ajax{
+	margin:5px 3px;
+}
+.delete_category{
+	color:red;
+	font-weight:900;
+	margin-left:2px;
+	top:-5px;
+	font-size:10px;
+	cursor:pointer;
+	position:relative;
+
+}
+#categories_to_add{
+	width:100%;
+	text-align:left;
+}
+/* end moedl2 for add_category*/
+
+
+
+
+
+/* forma 2 to add_category*/
+
+/* Стили модального окна */
+.modal-header3 h2 {
+	color: #555;
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 1;
+	margin: 0;
+}
+/* кнопка закрытия окна */
+.modal3 .btn-close3 {
+	color: #aaa;
+	cursor: pointer;
+	font-size: 30px;
+	text-decoration: none;
+	position: absolute;
+	right: 5px;
+	top: 0;
+}
+.modal3 .btn-close3:hover {
+	color: red;
+}
+/* слой затемнения */
+.modal-wrap3:before {
+	content: "";
+	display: none;
+	background: rgba(0, 0, 0, .3);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 101;
+}
+.modal-overlay3 {
+	bottom: 0;
+	display: none;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 102;
+}
+/* активация слоя затемнения и модального блока */
+.modal-open3:checked ~ .modal-wrap3:before,
+.modal-open3:checked ~ .modal-wrap3 .modal-overlay3 {
+	display: block;
+}
+.modal-open3:checked ~ .modal-wrap3 .modal-dialog3 {
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+/* элементы модального окна */
+.modal-dialog3 {
+	background: #fefefe;
+	border: none;
+	border-radius: 5px;
+	width: 85%;
+	max-width: 900px;
+	left: 50%;
+	-webkit-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	-moz-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+	-webkit-transform: translate(-50%, -500%);
+	-ms-transform: translate(-50%, -500%);
+	-o-transform: translate(-50%, -500%);
+	transform: translate(-50%, -500%);
+	-webkit-transition: -webkit-transform 0.4s ease-out;
+	-moz-transition: -moz-transform 0.4s ease-out;
+	-o-transition: -o-transform 0.4s ease-out;
+	transition: transform 0.4s ease-out;
+	position:relative;
+	z-index: 103;
+	overflow-y: scroll;
+}
+.modal-body3 {
+	padding: 20px;
+	overflow-y: scroll;
+}
+.modal-body3 p {
+	margin: 0;
+}
+.modal-header3,
+.modal-footer3 {
+	padding: 20px 20px;
+}
+.modal-header3 {
+	border-bottom: #eaeaea solid 1px;
+}
+.modal-header3 h2 {
+	font-size: 20px;
+	margin: 0;
+}
+.modal-footer3 {
+	border-top: #eaeaea solid 1px;
+	text-align: right;
+}
+
+.added_adverts_ajax{
+	margin:5px 3px;
+}
+.delete_advert{
+	color:red;
+	font-weight:900;
+	margin-left:2px;
+	top:-5px;
+	font-size:10px;
+	cursor:pointer;
+	position:relative;
+
+}
+#adverts_to_add{
+	width:100%;
+	text-align:left;
+}
+/* end moedl2 for add_category*/

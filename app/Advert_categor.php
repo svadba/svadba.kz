@@ -12,5 +12,9 @@ class Advert_categor extends Model
     {
         return $this->hasMany('App\Advert');
     }
-    
+
+    public function combos()
+    {
+        return $this->belongsToMany('App\Combo');
+    }
 }

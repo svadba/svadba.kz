@@ -7,6 +7,7 @@ use App\Contractor;
 use App\Advert;
 use App\Sv_count;
 use App\Advert_categor;
+use App\Basket_request;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         //Share to all view count contractors and adverts
         $count_contr = Contractor::all()->count();
         $count_advert = Advert::all()->count();
+        $count_basket = Basket_request::where('ended', 0)->count();
         $advert_categor = Advert_categor::withCount('adverts')->get();
         $sort_advert = $advert_categor->sortByDesc('adverts_count');
         $sort_advert->values()->all();
@@ -29,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         view()->share('count_adv', $count_advert);
         view()->share('sort_adverts', $sort_advert);
         view()->share('svadba_like', $sv_count);
+        view()->share('count_basket', $count_basket);
     }
 
     /**

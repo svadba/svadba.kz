@@ -39,9 +39,9 @@
 		<div class="col-xs-12 col-sm-3 padding">
 			<div class="col-xs-12">
 				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/fb.png')}}" alt="" class="img-responsive"></a>
-				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/inst.png')}}" alt="" class="img-responsive"></a>
+				<a href="//www.instagram.com/www_svadba_kz/" class="col-xs-3 icons"><img src="{{asset('images/icons/inst.png')}}" alt="" class="img-responsive"></a>
 				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/vk.png')}}" alt="" class="img-responsive"></a>
-				<a href="#" class="col-xs-3 icons"><img src="{{asset('images/icons/yout.png')}}" alt="" class="img-responsive"></a>
+				<a href="//www.youtube.com/channel/UCuqcno-2cTI49tl_RqVswTw" class="col-xs-3 icons"><img src="{{asset('images/icons/yout.png')}}" alt="" class="img-responsive"></a>
 			</div>
 			<div class="col-xs-12 anketa">
 				<h3 class="text-center padding-bottom" style="color: #fff; margin-top: 15px;">Добавьте свою анкету</h3>
@@ -66,7 +66,7 @@
 		</div>
 	</div>
 	<div class="col-xs-12">
-		<a href="#">		
+		<a href="bakyt">		
 			<img src="{{asset('images/main_page-ad.png')}}" alt="" class="img-responsive ad">
 		</a>
 	</div>

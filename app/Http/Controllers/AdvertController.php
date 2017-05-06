@@ -13,7 +13,7 @@ use App\Cit;
 use App\Photo;
 use App\Video;
 use App\Advert_categor;
-use App\Http\Requests;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class AdvertController extends Controller
 {
@@ -22,10 +22,40 @@ class AdvertController extends Controller
      * @param Advert $advert
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function advertPage(Advert $advert)
+    public function advertPage(Request $request, Advert $advert)
     {
-        //return $advert = $advert->with('photos', 'musics', 'videos', 'cits', 'advert_categor')->get();
-        return view('pages.advert_page', ['ad' => $advert, 'sn' => 'advert_page']);
+        $advert = Advert::where('id', $advert->id)->with('photos', 'musics', 'videos', 'advert_cits.cit', 'advert_categor')->first();
+        $categor  = $advert->advert_categor->id;
+        $city = '';
+        if($request->city)
+        {
+            $city = (int) $request->city;
+            $other_advert = Advert::where('advert_categor_id', $categor)->whereExists(function($q) use ($city){
+                $q->select('cit_id', 'advert_id')->from('advert_cits')->whereRaw('advert_cits.advert_id = adverts.id')->where('cit_id', $city);
+            })
+            ->with(['photos' => function($query) {
+                $query->where('main', 1);
+            }])
+            ->get();
+        }
+        else
+        {
+            $array_cits = [];
+            foreach($advert->advert_cits as $adv_cit):
+                $array_cits[] = $adv_cit->cit_id;
+            endforeach;
+            $other_advert = Advert::where('advert_categor_id', $categor)
+                ->whereExists(function($q) use ($array_cits){
+                    $q->select('cit_id', 'advert_id')->from('advert_cits')->whereRaw('advert_cits.advert_id = adverts.id')->whereIn('cit_id', $array_cits);
+                })
+                ->with(['photos' => function($query) {
+                    $query->where('main', 1);
+                }])
+                ->get();
+        }
+        $other_advert = (($other_advert->count())<=3) ? $other_advert : $other_advert->random(3);
+
+        return view('pages.advert_page', ['ad' => $advert, 'other_adverts' => $other_advert, 'city_filter' => $city,'sn' => 'advert_page']);
     }
 
 
@@ -234,26 +264,42 @@ class AdvertController extends Controller
             }
         }
         
-        $directory = 'upload/adverts/'.$add_advert->id;
-        
-        IF($request->hasFile('photos'))
-        {   
 
+        IF($request->hasFile('photos'))
+        {
+            $directory = 'upload/adverts/'.$add_advert->id;
+            $check = false;
             foreach($request->file('photos') as $photo):
                 $extension = $photo-> guessExtension();
                 IF($photo->isValid())
                 {   
                     IF($photo->getClientSize() <= 20*1024*1024)
-                    {   
-                        
-                        $name = str_random(10);
+                    {
+                        $name = str_random(10).$add_advert->id;
                         $photo->move($directory.'/photos/', $name.'.'.$extension);
-                        Photo::create([
-                            'name' => $name,
-                            'path' => $directory.'/photos/'.$name.'.'.$extension,
-                            'ext' => $extension,
-                            'advert_id' => $add_advert->id,
-                        ]);
+                        if($check)
+                        {
+                            $saved_file = Photo::create([
+                                'name' => $name,
+                                'path' => $directory.'/photos/'.$name.'.'.$extension,
+                                'ext' => $extension,
+                                'advert_id' => $add_advert->id,
+                                'main' => 0,
+                            ]);
+                        }
+                        else
+                        {
+                            $saved_file = Photo::create([
+                                'name' => $name,
+                                'path' => $directory.'/photos/'.$name.'.'.$extension,
+                                'ext' => $extension,
+                                'advert_id' => $add_advert->id,
+                                'main' => 1,
+                            ]);
+                            $image = Image::make($saved_file->path);
+                            $image->fit(290)->save('upload/adverts/thumbs/' .$name. '.' .$extension);
+                            $check = true;
+                        }
                     }
                 }
             endforeach;
@@ -367,29 +413,45 @@ class AdvertController extends Controller
         $advert->description = $request->description;
         $advert->advert_categor_id = $request->adv_cat;
         $advert->save();
-        
+
+
         IF($request->hasFile('photos'))
-        {   
+        {
+            $check = (Photo::where('advert_id', $advert->id)->where('main', 1)->count()) ? true : false;
             $directory = 'upload/adverts/'.$advert->id;
-            $count = 1;
-            $loaded_photos = '';
             foreach($request->file('photos') as $photo):
                 $extension = $photo-> guessExtension();
                 IF($photo->isValid())
                 {   
                     IF($photo->getClientSize() <= 20*1024*1024)
                     {   
-                        $name = str_random(10).$count;
+                        $name = str_random(10) . $advert->id;
                         $photo->move($directory.'/photos/', $name.'.'.$extension);
-                        Photo::create([
-                            'name' => $name,
-                            'path' => $directory.'/photos/'.$name.'.'.$extension,
-                            'ext' => $extension,
-                            'advert_id' => $advert->id,
-                        ]);
+                        if($check)
+                        {
+                            $saved_file = Photo::create([
+                                'name' => $name,
+                                'path' => $directory. '/photos/' .$name. '.' .$extension,
+                                'ext' => $extension,
+                                'advert_id' => $advert->id,
+                                'main' => 0,
+                            ]);
+                        }
+                        else
+                        {
+                            $saved_file = Photo::create([
+                                'name' => $name,
+                                'path' => $directory. '/photos/' .$name. '.' .$extension,
+                                'ext' => $extension,
+                                'advert_id' => $advert->id,
+                                'main' => 1,
+                            ]);
+                            $image = Image::make($saved_file->path);
+                            $image->fit(290)->save('upload/adverts/thumbs/' .$name. '.' .$extension);
+                            $check = true;
+                        }
                     }
                 }
-            $count++;    
             endforeach;
         }
 
@@ -474,8 +536,13 @@ class AdvertController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(Request $request, Advert $advert)
-    {   
+    {
         $directory = 'upload/adverts/'.$advert->id;
+        $thumb_photo = Photo::where('advert_id', $advert->id)->where('main', 1)->first();
+        if($thumb_photo)
+        {
+            Storage::disk('public_my')->delete('upload/adverts/thumbs/' .$thumb_photo->name. '.' .$thumb_photo->ext);
+        }
         $true_delete = Storage::disk('public_my')->deleteDirectory($directory);
         $advert->delete();
         return redirect()->back();
