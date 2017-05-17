@@ -1,30 +1,27 @@
 /**
  * Created by admin on 18.04.17.
  */
-$(document).ready(function(){
+$(document).ready(function () {
 
 
-    function ranjer()
-    {
-        $( "#slider-range" ).slider(
-        {
-            range: true,
-            min: 1,
-            max: 10000000,
-            values: [ 75, 5000000 ],
-            slide: function( event, ui )
-                {
-                    $( "#amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] + "т" );
+    function ranjer() {
+        $("#slider-range").slider(
+            {
+                range: true,
+                min: 1,
+                max: 10000000,
+                values: [75, 5000000],
+                slide: function (event, ui) {
+                    $("#amount").val("" + ui.values[0] + " - " + ui.values[1] + "т");
                 }
-        });
+            });
 
-        $( "#amount" ).val( "" + $( "#slider-range" ).slider( "values", 0 ) +
-            " - " + $( "#slider-range" ).slider( "values", 1 ) + "т" );
+        $("#amount").val("" + $("#slider-range").slider("values", 0) +
+            " - " + $("#slider-range").slider("values", 1) + "т");
     }
 
-    function like_svadba()
-    {
-        $('#sv_like').on('click', function(){
+    function like_svadba() {
+        $('#sv_like').on('click', function () {
             $.ajax({
                 url: "/like_svadba",
                 type: "get",
@@ -32,10 +29,10 @@ $(document).ready(function(){
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
 
-                success:function(data){
+                success: function (data) {
                     $('#sv_l').html(data);
                 },
-                error:function(a,b){
+                error: function (a, b) {
                     alert('Сервер не отвечает попробуйте позже!')
                 }
             });
@@ -43,8 +40,7 @@ $(document).ready(function(){
     }
 
     // возвращает cookie с именем name, если есть, если нет, то undefined
-    function getCookie(name)
-    {
+    function getCookie(name) {
         var matches = document.cookie.match(new RegExp(
             "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
         ));
@@ -52,48 +48,38 @@ $(document).ready(function(){
     }
 
     //устанавливает куку
-    function setCookie(name, value, date)
-    {
+    function setCookie(name, value, date) {
         document.cookie = name + "=" + value + "; path=/; expires=" + date;
     }
 
     //добавляет значение к куке
-    function addCookie(name, lastValue, value, date)
-    {
-        document.cookie = name + "=" + lastValue + "," + value +"; path=/; expires=" + date;
+    function addCookie(name, lastValue, value, date) {
+        document.cookie = name + "=" + lastValue + "," + value + "; path=/; expires=" + date;
     }
 
     //устанавливает в шапке количество объявленимй в корзине
-    function setCountBasket ()
-    {
+    function setCountBasket() {
         var basket = getCookie('basket');
-        if(basket)
-        {
+        if (basket) {
             var splitbasket = basket.split(',');
             $('#count_basket').html(splitbasket.length);
         }
-        else
-        {
+        else {
             $('#count_basket').html('0');
         }
     }
 
-    function deleteFromBasket()
-    {
-        $('.del_from_bask').on('click', function()
-        {
+    function deleteFromBasket() {
+        $('.del_from_bask').on('click', function () {
             basket = getCookie('basket');
-            if(basket)
-            {
+            if (basket) {
                 var id = $(this).attr('id');
                 var splitBasket = basket.split(',');
-                if(splitBasket.length)
-                {
+                if (splitBasket.length) {
                     console.log('split_baskt_do_foeach = ' + splitBasket);
-                    splitBasket.forEach(function(item, i){
-                        if(item == id)
-                        {
-                            splitBasket.splice(i,1);
+                    splitBasket.forEach(function (item, i) {
+                        if (item == id) {
+                            splitBasket.splice(i, 1);
                         }
                     });
                     var new_bask = splitBasket.join(',');
@@ -109,8 +95,7 @@ $(document).ready(function(){
     }
 
 
-    function buyer()
-    {
+    function buyer() {
         $('.buy-btn').on('click', function () {
 
             var date = new Date;
@@ -121,29 +106,25 @@ $(document).ready(function(){
 
             basket = getCookie('basket');
 
-            if(basket)
-            {
+            if (basket) {
                 var splitBasket = basket.split(',');
 
-                if(splitBasket.length == 0)
-                {
+                if (splitBasket.length == 0) {
                     setCookie('basket', id, date);
                 }
-                else
-                {
+                else {
                     var flag = false;
-                    for(var i=0; i<splitBasket.length; i++)
-                    {
-                        if(splitBasket[i] == id) {flag = true;}
+                    for (var i = 0; i < splitBasket.length; i++) {
+                        if (splitBasket[i] == id) {
+                            flag = true;
+                        }
                     }
-                    if(!flag)
-                    {
+                    if (!flag) {
                         addCookie('basket', basket, id, date);
                     }
                 }
             }
-            else
-            {
+            else {
                 setCookie('basket', id, date);
             }
 
@@ -152,10 +133,13 @@ $(document).ready(function(){
         });
     }
 
-    function special_cards_hover() {
+    function semantic_ui() {
         $('.special.cards .image').dimmer({
             on: 'hover'
         });
+        $('.ui.rating')
+            .rating('disable')
+        ;
     }
 
     function lightbox_options() {
@@ -168,7 +152,7 @@ $(document).ready(function(){
     }
 
 
-    $('.dekBut').on('click', function(){
+    $('.dekBut').on('click', function () {
 
         var id = $(this).attr('id');
         var split_id = id.split('-');
@@ -183,7 +167,7 @@ $(document).ready(function(){
         console.log($('.radioAdv[checked]'));
     });
 
-    $('.setCombo').on('click', function(){
+    $('.setCombo').on('click', function () {
 
         var date = new Date;
         date.setDate(date.getDate() + 3);
@@ -193,33 +177,30 @@ $(document).ready(function(){
         comboObj.combo = $('input[name=combo]').val();
         comboObj.combo_cit = $('input[name=combo_cit]').val();
 
-        $('.radioAdv[checked]').each(function(){
+        $('.radioAdv[checked]').each(function () {
             comboObj[$(this).attr('name')] = $(this).val();
         });
 
         var combo_json = JSON.stringify(comboObj);
         console.log(combo_json);
         setCookie('combo', combo_json, date);
-
+        AddToBasket();
     });
 
-    function set_checked()
-    {
+    function set_checked() {
         var combo_cook = getCookie('combo');
         var combo = '';
-        if(combo_cook)
-        {
+        if (combo_cook) {
             combo = JSON.parse(combo_cook);
             $all_radio = $('.radioAdv');
 
-            $all_radio.each(function(){
+            $all_radio.each(function () {
 
                 var radio_name = $(this).attr('name');
                 var radio_val = $(this).val();
 
                 for (key in combo) {
-                    if( (radio_name == key) && (radio_val == combo[key]))
-                    {
+                    if ((radio_name == key) && (radio_val == combo[key])) {
                         $('.baseAdvDiv-' + key).removeClass('activeAdvert');
                         $('#baseAd-' + combo[key]).addClass('activeAdvert');
                         $(this).attr('checked', true);
@@ -228,13 +209,20 @@ $(document).ready(function(){
 
             });
 
-
         }
     }
 
-    function combo_change()
-    {
-        $('.take_adv').on('click', function(){
+    function combo_change() {
+        var chenged_adv = '';
+
+        $('.change_adv').on('click', function () {
+            var id = $(this).attr('id');
+            var split_id = id.split('-');
+            chenged_adv = split_id[1];
+            console.log(chenged_adv);
+        });
+
+        $('.take_adv').on('click', function () {
             var id = $(this).attr('id');
             var split_id = id.split('-');
             var advert_id = split_id[1];
@@ -245,41 +233,120 @@ $(document).ready(function(){
             console.log($('.minadvdiv-' + categor_id));
             $('#minadv-' + advert_id).addClass('activeMinAdv');
             console.log($('#minadv-' + advert_id));
+            advert_desibl = $(this);
+            console.log(advert_desibl);
         });
 
-        $('.save_adv').on('click', function(){
+        $('.save_adv').on('click', function () {
             var id = $(this).attr('id');
             var split_id = id.split('-');
             var categor_id = split_id[1];
             var take_adv = $('.minadvdiv-' + categor_id + '.activeMinAdv').attr('id');
             var take_adv_id = take_adv.split('-');
             take_adv_id = take_adv_id[1];
-
+            console.log(take_adv_id);
             var combo_cook = getCookie('combo');
 
             combo_cook = JSON.parse(combo_cook);
 
-            if(categor_id in combo_cook)
-            {
+            if (categor_id in combo_cook) {
                 combo_cook[categor_id] = take_adv_id;
                 combo_cook = JSON.stringify(combo_cook);
                 var date = new Date;
                 date.setDate(date.getDate() + 3);
                 date = date.toUTCString();
-                setCookie('combo',combo_cook,date);
+                setCookie('combo', combo_cook, date);
 
-                $('#baseAd-' + take_adv_id).remove();
-                $('#modal' + categor_id).modal('hide');
+                $.ajax({
+                    url: "/ajax/get_advert/" + take_adv_id,
+                    type: "get",
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    },
+
+                    success: function (data) {
+                        var main_photo = '';
+                        var photos = '';
+                        data.photos.forEach(function (item) {
+                            if (item.main == 1) {
+                                main_photo = '<img src="/upload/adverts/thumbs/' + item.name + '.' + item.ext + '" alt="">';
+                            }
+                            else {
+                                photos = photos + '<div class="col-xs-3 photo-advert" style="background-image: url(' + item.path + ');"></div>';
+                            }
+                        });
+                        var render =
+                            '<div class="col-xs-12 baseAdvDiv-' + categor_id + '" id="baseAd-' + data.id + '" style="width: 20%;">' +
+                            '<div class="card">' +
+                            '<div class="blurring dimmable image">' +
+                            '<div class="ui dimmer">' +
+                            '<div class="content">' +
+                            '<div class="center">' +
+                            '<div style="max-height: 72.5px; overflow: hidden; text-overflow: ellipsis;">' +
+                            data.description + '</div>' +
+                            photos +
+                            '</div></div></div>' +
+                            main_photo +
+                            '</div>' +
+                            '<div class="content">' +
+                            '<div class="header text-center" style="font-size: 12px;">' + data.name + ' ' + data.advert_categor.name + '</div>' +
+                            '</div>' +
+                            '<div class="extra content">' +
+                            '<div class="ui two buttons">' +
+                            '<a id="change-' + data.id + '" href="#modal' + categor_id + '" data-toggle="modal" class="ui basic teal button">Изменить</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            "</div>";
+                        var baseAdvert = $('#baseAd-' + chenged_adv);
+                        console.log(baseAdvert);
+                        console.log(render);
+                        var prepAdvert = baseAdvert.prev();
+
+                        if (prepAdvert.length) {
+                            prepAdvert.after(render);
+                            console.log('prep');
+                            console.log(prepAdvert);
+                        }
+                        else {
+                            var parentAdvert = baseAdvert.parent();
+                            parentAdvert.append(render);
+                            console.log('parent');
+                            console.log(parentAdvert);
+                        }
+                        baseAdvert.remove();
+                    },
+                    error: function (a, b) {
+                        alert('Сервер не отвечает попробуйте позже!')
+                    }
+                });
+
                 console.log(combo_cook);
             }
+
+            //$('#modal' + categor_id).modal('hide');
 
         });
     }
 
-
+    function AddToBasket() {
+        var modal = document.getElementById('myModal');
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        $(modal).fadeOut(3000);
+        //Close function
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
 
     like_svadba();
-    special_cards_hover();
     lightbox_options();
     setCountBasket();
     deleteFromBasket();
@@ -287,7 +354,5 @@ $(document).ready(function(){
     //set_checked();
     combo_change();
     //ranjer();
-
-
-
+    semantic_ui();
 });

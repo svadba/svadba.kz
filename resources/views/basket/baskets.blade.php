@@ -44,7 +44,18 @@
                             <td>{{$bask->cit->name}}</td>
                             <td>{{$bask->phone}}</td>
                             <td>{{$bask->email}}</td>
-                            <td>{{$bask->adverts}}</td>
+                            <td>
+                                @if($bask->combo_requests->count())
+                                    @foreach($bask->combo_requests as $com_req)
+                                        <p>Пакет: {{$com_req->combo->name}}</p>
+                                    @endforeach
+                                @else
+                                    <p>Пакетов не выбрано!</p>
+                                @endif
+                                <p><span style="color:green;">Дополнительно:</span>{{$bask->count_advert()}} объяв.</p>
+
+
+                            </td>
                             <td>{{$bask->created_at}}</td>
                             <td>@if($bask->ended_at) <span style="color:green">Завершена - {{$bask->ended_at}}</span> @else <span style="color:red;">Не обработана</span> @endif</td>
                             <?php  $count++; ?>

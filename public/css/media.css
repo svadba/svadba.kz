@@ -82,6 +82,14 @@
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
+    #sv_like {
+        display: none;
+    }
+
+    .xs-margin-top {
+        margin-top: 15px!important;
+    }
+
     .photo-advert {
         height: 102px;
     }

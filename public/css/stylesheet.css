@@ -11,6 +11,36 @@ h1, h2, h3, h4, h5, .ui.steps .step .title {
     font-family: 'Comfortaa', cursive;
 }
 
+.modal {
+    display: none;
+    top: 66px;
+}
+
+.modal-content {
+    background-color: #0abab5;
+    margin-left: auto;
+    right: 66px;
+    padding: 20px;
+    width: 240px;
+}
+
+.home .form-control::-webkit-input-placeholder {
+    color: #fff;
+}
+
+.home .form-control {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-bottom: 3px solid #fff;
+    border-radius: 0;
+    text-align: center;
+}
+
+.home .img-circle {
+    border: 6px solid #fff;
+}
+
 .basket_show .tab-content .card .blurring.dimmable.image img {
     width: 172px;
     height: 172px;
@@ -193,7 +223,7 @@ footer a:hover {
 
 .btn-lg {
     background: #66a586;
-    border: 6px #fff;
+    border: 6px solid #fff;
     color: #fff;
 }
 
@@ -315,6 +345,12 @@ div .ui.steps .step:after {
 }
 
 .activeAdvert .ui.basic.green.button, .ui.basic.green.buttons .button {
+    background-color: #16ab39 !important;
+    color: #FFF !important;
+    text-shadow: none !important;
+}
+
+.activeMinAdv .ui.basic.teal.button {
     background-color: #16ab39 !important;
     color: #FFF !important;
     text-shadow: none !important;

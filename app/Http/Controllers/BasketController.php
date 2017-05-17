@@ -9,6 +9,8 @@ use App\Cit;
 use App\Basket_request;
 use App\Combo;
 use App\Combo_cit;
+use App\Combo_cit_categor;
+use App\Combo_request;
 use App\Http\Requests;
 
 class BasketController extends Controller
@@ -22,6 +24,17 @@ class BasketController extends Controller
     {
 
         $cities = Cit::whereNotIn('id', [16,17,18])->get();
+
+        if(!(isset($_COOKIE['basket']) && isset($_COOKIE['combo'])))
+        {
+            return redirect('/');
+        }else
+        {
+            if(!($_COOKIE['basket'] && $_COOKIE['combo']))
+            {
+                return redirect('/');
+            }
+        }
 
         if(isset($_COOKIE['basket'])) {
             $cooks = $_COOKIE['basket'];
@@ -68,6 +81,7 @@ class BasketController extends Controller
             $combo = '';
             $combo_cit = '';
         }
+
         $cooks = explode(',', $cooks);
 
         IF($cooks)
@@ -100,7 +114,17 @@ class BasketController extends Controller
             'email' => 'email|string|max:50'
         ]);
 
-        if(!isset($_COOKIE['basket']))  return redirect('/');
+        if(!(isset($_COOKIE['basket']) && isset($_COOKIE['combo'])))
+        {
+            return redirect('/');
+        }else
+        {
+            if(!($_COOKIE['basket'] && $_COOKIE['combo']))
+            {
+                return redirect('/');
+            }
+        }
+
 
 
         $cooks = $_COOKIE['basket'];
@@ -108,18 +132,88 @@ class BasketController extends Controller
         if(!$cooks_array) return redirect('/');
 
         $gr = Basket_request::create([
-                'name' => $request->name,
-                'cit_id' => $request->city,
-                'phone' => $request->phone,
-                'email' => $request->email,
-                'adverts' => $cooks,
-                'ended' => 0,
-                'ended_at' => null
+            'name' => $request->name,
+            'cit_id' => $request->city,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'adverts' => $cooks,
+            'ended' => 0,
+            'ended_at' => null
         ]);
+
+        if(isset($_COOKIE['combo']))
+        {
+            $combo_cook = json_decode($_COOKIE['combo'], true);
+            $combo_cook = ( $combo_cook === null ) ? '' : $combo_cook;
+        }
+        else
+        {
+            $combo_cook = '';
+        }
+
+        $combo = '';
+        $combo_cit = '';
+        $request_combo_advert = '';
+        if($combo_cook)
+        {
+            $comboInCook = (array_has($combo_cook, 'combo')) ? $combo_cook['combo'] : '';
+            $combo = ($comboInCook) ? Combo::find($comboInCook) : '';
+            if($combo)
+            {
+                $comboCitInCook = (array_has($combo_cook, 'combo_cit')) ? $combo_cook['combo_cit'] : '';
+                $combo_cit = ($comboCitInCook) ? Combo_cit::where('id',$comboCitInCook)
+                    ->with('combo_categors.advert_categor', 'combo_categors.adverts.photos')->first() : '';
+                if($combo_cit)
+                {
+                    $combo_cit_categors = Combo_cit_categor::where('combo_cit_id', $combo_cit->id)->with('adverts')->get();
+                    $combo_cit_categors_count = $combo_cit_categors->count();
+                    $sovpad_count = 0;
+                    $combo_adverts = '';
+                    foreach($combo_cit_categors as $combo_categor):
+                        if(array_has($combo_cook, $combo_categor->id))
+                        {
+                            foreach($combo_categor->adverts as $adv):
+                                if($adv->id == $combo_cook[$combo_categor->id])
+                                {
+                                    $combo_adverts .= $adv->id.',';
+                                    $sovpad_count++;
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    if($combo_cit_categors_count == $sovpad_count)
+                    {
+                        $combo_adverts = substr($combo_adverts, 0, -1);
+                        Combo_request::create([
+                            'combo_cit_id' => $combo_cit->id,
+                            'combo_id' => $combo->id,
+                            'basket_request_id' => $gr->id,
+                            'adverts' => $combo_adverts
+                        ]);
+                        $request_combo_advert = Advert::whereIn('id', explode(',',$combo_adverts))->with('advert_categor')->get();
+                    }
+                    /*
+                    else
+                    {
+                        return view('test', ['c1' => $combo_cit_categors_count.'|' .$sovpad_count, 'c2' =>
+                            $combo_cit_categors, 'c3' => $combo_cit, 'c4' => $combo]);
+                    }*/
+                }
+            }
+
+        }
+
 
         $request_adverts = Advert::whereIn('id', $cooks_array)->with('advert_categor')->get();
 
-        return view('basket.sented', ['br' => $gr, 'request_adverts' => $request_adverts]);
+        return view('basket.sented', [
+            'br' => $gr,
+            'request_adverts' => $request_adverts,
+            'combo' => $combo,
+            'combo_cit' => $combo_cit,
+            '$request_combo_advert' => $request_combo_advert,
+            'sn' => 'sented'
+        ]);
 
     }
 
@@ -130,8 +224,35 @@ class BasketController extends Controller
      */
     public function basket_requests()
     {
-        $baskets = Basket_request::paginate(20);
+        $baskets = Basket_request::with('combo_requests.combo','combo_requests.combo_cit')->paginate(20);
         return view('basket.baskets', ['baskets' => $baskets]);
+    }
+
+
+    public function edit_combo_adverts(Request $request, Combo_request $combo_request)
+    {
+        $this->validate($request, [
+            'advert_last' => 'required|numeric',
+            'advert_new' => 'required|numeric',
+            'categor_id' => 'required|numeric'
+        ]);
+
+        $adverts = $combo_request->geted_adverts();
+
+        for($i=0; $i < count($adverts); $i++)
+        {
+            if($adverts[$i] == $request->advert_last)
+            {
+                $adverts[$i] = $request->advert_new;
+            }
+        }
+
+        $adverts = implode(',',$adverts);
+
+        $combo_request->adverts = $adverts;
+        $combo_request->save();
+        $advert = Advert::where('id', $request->advert_new)->with('advert_categor')->first();
+        return $advert;
     }
 
 
@@ -144,8 +265,14 @@ class BasketController extends Controller
     {
         $adverts = $basket_request->adverts;
         $adverts = explode(',',$adverts);
-        $bask_advert = Advert::whereIn('id', $adverts)->with('advert_categor')->with('advert_stat')->with('advert_cits.cit')->with('contractor.phones')->get();
-        return view('basket.admin_open', ['basket' => $basket_request, 'adverts' => $bask_advert]);
+        $bask_advert = Advert::whereIn('id', $adverts)->with('advert_categor')
+            ->with('advert_stat')
+            ->with('advert_cits.cit')
+            ->with('contractor.phones')->get();
+        $combo_requests = Combo_request::where('basket_request_id', $basket_request->id)
+            ->with('combo','combo_cit.cit','combo_cit.combo_categors.adverts.advert_categor', 'combo_cit.combo_categors.adverts.photos')->get();
+
+        return view('basket.admin_open', ['basket' => $basket_request, 'adverts' => $bask_advert, 'combo_requests' => $combo_requests]);
     }
 
     //сохраняет дату мероприятия
@@ -159,7 +286,8 @@ class BasketController extends Controller
         return redirect()->back();
     }
 
-    public function save_adverts_in_basket(Request $request, Basket_request $basket_request){
+    public function save_adverts_in_basket(Request $request, Basket_request $basket_request)
+    {
         $this->validate($request,[
             'adverts' => "array",
         ]);

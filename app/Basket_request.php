@@ -14,4 +14,16 @@ class Basket_request extends Model
         return $this->belongsTo('App\Cit');
     }
 
+    public function combo_requests()
+    {
+        return $this->hasMany('App\Combo_request');
+    }
+
+    public function count_advert()
+    {
+        $adverts = $this->adverts;
+        $adverts = explode(',',$adverts);
+        return count ($adverts);
+    }
+
 }

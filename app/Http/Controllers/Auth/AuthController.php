@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Role_user;
+use App\Contractor;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -28,7 +30,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new authentication controller instance.
@@ -50,8 +52,8 @@ class AuthController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|min:6|max:35',
         ]);
     }
 
@@ -63,10 +65,25 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        Role_user::create([
+            'user_id' => $user->id,
+            'role_id' => 5
+        ]);
+
+        Contractor::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'constat_id' => 2,
+            'contype_id' =>  1,
+            'user_id' => $user->id
+        ]);
+
+        return $user;
     }
 }

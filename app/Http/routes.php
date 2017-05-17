@@ -30,6 +30,9 @@
 
     Route::get('/advert/{advert}', 'AdvertController@advertPage');
 
+    Route::group(['prefix' => 'ajax'], function(){
+        Route::get('get_advert/{advert}', 'AdvertController@get_advert');
+    });
     Route::group(['prefix' => 'combo'], function(){
         Route::get('{combo}/{combo_cit}', 'ComboController@viewUser');
     });
@@ -133,6 +136,8 @@
                         Route::post('delete_adverts/{basket_request}',"BasketController@delete_adverts")->middleware('role:4');
                         Route::get('delete/{basket_request}', "BasketController@delete")->middleware('role');
                         Route::get('delete_go/{basket_request}', "BasketController@delete_go")->middleware('role');
+                        //ajax combo_request
+                        Route::post('edit_combo_adverts/{combo_request}', 'BasketController@edit_combo_adverts')->middleware('role:4');
                     });
 
                 });

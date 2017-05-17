@@ -45,11 +45,11 @@
 						<img src="{{asset($advert->photo_main())}}" alt="">
 					</div>
 					<div class="content">
-						<div class="header text-center" style="font-size: 12px;">{{$advert->name}}</div>
+						<div class="header text-center" style="font-size: 12px;">{{$advert->name}} {{$combo_categor2->advert_categor->name}}</div>
 					</div>
 					<div class="extra content">
 						<div class="ui two buttons">
-							<a href="#modal{{$combo_categor2->id}}" data-toggle="modal" class="ui basic teal button">Изменить{{$combo_categor2->advert_categor->name}}</a>
+							<a id="change-{{$advert->id}}" href="#modal{{$combo_categor2->id}}" data-toggle="modal" class="ui basic teal button change_adv">Изменить</a>
 						</div>
 					</div>
 				</div>
@@ -64,29 +64,17 @@
 					<div class="modal-content">
 						<!-- Заголовок модального окна -->
 						<div class="modal-header">
-							<button type="button" class="close close_cities" data-dismiss="modal" aria-hidden="true">×</button>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h4 class="modal-title">Изменение категории: {{$combo_categor2->advert_categor->name}}</h4>
 						</div>
 						<!-- Основное содержимое модального окна -->
 						<div class="modal-body">
-							<div id="geted_cities">
+							<div class="geted_cities">
 								@foreach($combo_categor3->adverts as $advert)
 								<div id="minadv-{{$advert->id}}" class="col-xs-12 col-sm-4 minadvdiv-{{$combo_categor3->id}}" style="padding-right: 0;">
 									<div class="card">
 										<div class="blurring dimmable image">
-											<div class="ui dimmer">
-												<div class="content">
-													<div class="center">
-														<div style="max-height: 72.5px; overflow: hidden; text-overflow: ellipsis;">
-															<?php echo $advert->description; ?>
-														</div>
-														@foreach($advert->photos as $photo)
-														<div class="col-xs-3 photo-advert" style="background-image: url({{asset($photo->path)}});"></div>
-														@endforeach
-													</div>
-												</div>
-											</div>
-											<img src="{{asset($advert->photo_main())}}" alt="">
+											<img class="minadvimg-{{$advert->id}}" src="{{asset($advert->photo_main())}}" alt="">
 										</div>
 										<div class="content">
 											<div class="header text-center">{{$advert->name}}</div>
@@ -97,7 +85,7 @@
 										</div>
 										<div class="extra content">
 											<div class="ui two buttons">
-												<a href="#" id="take-{{$advert->id}}-{{$combo_categor3->id}}" class="ui basic teal button take_adv">Выбрать</a>
+												<a href="#" id="take-{{$advert->id}}-{{$combo_categor3->id}}" class=" ui basic teal button take_adv">Выбрать</a>
 											</div>
 										</div>
 									</div>
@@ -107,8 +95,8 @@
 						</div>
 						<!-- Футер модального окна -->
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default close_cities" data-dismiss="modal">Закрыть</button>
-							<button type="button" id="save-{{$combo_categor3->id}}" class="btn ui primary button save_adv">Сохранить изменения</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+							<button type="button" id="save-{{$combo_categor3->id}}" data-dismiss="modal" class="btn ui primary button save_adv">Сохранить изменения</button>
 						</div>
 					</div>
 				</div>

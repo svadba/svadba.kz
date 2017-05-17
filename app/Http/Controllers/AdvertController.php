@@ -17,7 +17,10 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class AdvertController extends Controller
 {
-
+    //AJAX
+    public function get_advert(Advert $advert){
+        return $advert = $advert->load('advert_categor', 'photos');
+    }
     /**
      * @param Advert $advert
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

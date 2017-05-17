@@ -442,3 +442,8 @@
 	text-align:left;
 }
 /* end moedl2 for add_category*/
+
+.activeTakeAdv
+{
+	background:blue;
+}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Contractor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,9 +26,10 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {   
-        $user_contractors = $request->user()->contractors()->get();
-        return view('home', ['user_contractors' => $user_contractors, 'sn' => 'home']);
+    {
+        $contractor = Contractor::where('user_id', $request->user()->id)
+        ->with('phones','adverts.advert_categor', 'adverts.musics', 'adverts.photos', 'adverts.videos')->first();
+        return view('home.home', ['contractor' => $contractor,'sn' => 'home']);
     }
     
     

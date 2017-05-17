@@ -21,7 +21,7 @@
 
                 <div class="panel-body col-xs-12">
                     @include('common.errors')
-                    <table style="font-size:16px; max-width:500px;" class="table table-striped table-bordered table-hover table-condensed">
+                    <table style="font-size:16px; max-width:500px;" class="table table-striped table-bordered table-hover table-condensed table-responsive">
                         <tr>
                             <td>Заявка №</td>
                             <td id="basket_id" style="color:darkblue;">{{$basket->id}}</td>
@@ -75,9 +75,45 @@
                         </tr>
                         @endif
                     </table>
-
                     <br>
-                    <h4>Таблица объявлений заказанных клиентом:</h4>
+                    @if($combo_requests->count())
+                        <h4 style="font-weight:bold;">Пакеты заказанные клиентом:</h4>
+                        @foreach($combo_requests as $com_req)
+                            <div style="border:solid 1px green; padding:15px 10px;">
+                                <h5>Наименование пакета: <span style="color:green; font-weight:bold;">{{$com_req->combo->name}}</span></h5>
+                                <h5>Наименование города для пакета: <span style="color:green; font-weight:bold;">{{$com_req->combo_cit->cit->name}}</span></h5>
+                                <h5>Цена пакета: <span style="color:green; font-weight:bold;">{{$com_req->combo->price}}</span></h5>
+                                <div>
+                                    <table class="table table-striped table-bordered table-hover table-condensed main_table">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Наименование</th>
+                                            <th>Категория</th>
+                                            <th>Функции</th>
+                                        </tr>
+                                        <?php $count = 1; ?>
+                                        @foreach($com_req->combo_cit->combo_categors as $combo_categor)
+                                            @foreach($combo_categor->adverts as $advert)
+                                                @foreach($com_req->geted_adverts() as $advert_basket)
+                                                        @if($advert->id == $advert_basket)
+                                                            <tr>
+                                                                <td id="td-{{$advert->id}}-1">{{$count}}</td>
+                                                                <td id="td-{{$advert->id}}-2"><a href="{{url('/advert/'.$advert->id)}}">{{$advert->name}}</a></td>
+                                                                <td id="td-{{$advert->id}}-3">{{$advert->advert_categor->name}}</td>
+                                                                <td id="td-{{$advert->id}}-4"><a href="#modal-{{$combo_categor->id}}" data-toggle="modal" id="change-{{$advert->id}}-{{$combo_categor->id}}-{{$com_req->id}}" class="btn btn-info change_adv">Заменить</a></td>
+                                                            </tr>
+                                                        @endif
+                                                @endforeach
+                                            @endforeach
+                                        <?php $count++; ?>
+                                        @endforeach
+                                    </table>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                    <br>
+                    <h4 style="font-weight:bold;">Таблица объявлений заказанных клиентом:</h4>
                     <form method="post" action="{{url('admin/requests/basket/delete_adverts/'.$basket->id)}}">
                         {{csrf_field()}}
                     <table class="table table-striped table-bordered table-hover table-condensed main_table" cellspacing='0'>
@@ -120,32 +156,87 @@
                     </table>
                         <!-- Кнопка активации -->
                         <button class="btn btn-danger" style="float:right; " type="submit"><i class="fa fa-trash-o"></i> Удалить выделенные</button>
-                        <label style="float:right; margin-right:10px;" class="btn1 btn btn-success" for="modal-1"><i class="fa fa-plus"></i>Добавить объявление</label>
+                        <a style="float:right; margin-right:10px;" href="#modal1" data-toggle="modal" class="btn1 btn btn-success"><i class="fa fa-plus"></i>Добавить объявление</a>
                     </form>
                     <!-- Модальное окно -->
-                    <div class="modal1">
-                        <input class="modal-open1" id="modal-1" type="checkbox" hidden>
-                        <div class="modal-wrap1" aria-hidden="true" role="dialog">
-                            <label class="modal-overlay1" for="modal-1"></label>
-                            <div class="modal-dialog1">
-                                <div class="modal-header1">
-                                    <h2>Добавление объявления </h2>
-                                    <label class="btn-close1" for="modal-1" aria-hidden="true">×</label>
+                    <div id="modal1" class="modal fade">
+                        <div style="width: 700px;" class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Заголовок модального окна -->
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">Добавление объявления:</h4>
                                 </div>
-                                <div class="modal-body1">
+                                <!-- Основное содержимое модального окна -->
+                                <div class="modal-body">
                                     <p>Введите в поиск наименование объявления</p>
                                     <input type="text" id="name_search"><br>
                                     <button id="go_search" class="btn btn-info"><i class="fa fa-binoculars"></i> Найти</button>
                                     <div id="adverts_div"></div>
                                 </div>
-                                <div class="modal-footer1">
+                                <!-- Футер модального окна -->
+                                <div class="modal-footer">
                                     <div class="added_adverts"></div>
-                                    <label id="sent_to_server" class="btn btn-success" for="modal-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Добавить</label>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                    <button type="button" id="sent_to_server" data-dismiss="modal" class="btn ui primary button">Сохранить изменения</button>
                                 </div>
                             </div>
                         </div>
-                        <div style="display:none;" class="go_adder"></div><div style="display:none;" class="delete_added"></div>
                     </div>
+
+                    @if($combo_requests->count())
+                        @foreach($combo_requests as $com_req)
+                            @foreach($com_req->combo_cit->combo_categors as $combo_categor)
+                                <div id="modal-{{$combo_categor->id}}" class="modal fade">
+                                    <div class="modal-dialog" style="width:800px;">
+                                        <div class="modal-content">
+                                            <!-- Заголовок модального окна -->
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title">Изменение категории: {{$combo_categor->advert_categor->name}}</h4>
+                                            </div>
+                                            <!-- Основное содержимое модального окна -->
+                                            <div class="col-xs-12 modal-body">
+                                                <div class="geted_cities">
+                                                    @foreach($combo_categor->adverts as $advert)
+                                                        <div id="minadv-{{$advert->id}}" class="col-xs-12 col-sm-4 minadvdiv-{{$combo_categor->id}}" style="padding-right: 0;">
+                                                            <div class="ui card">
+                                                                <div class="blurring dimmable image">
+                                                                    <img class="minadvimg-{{$advert->id}}" src="{{asset($advert->photo_main())}}" alt="">
+                                                                </div>
+                                                                <div class="content">
+                                                                    <div class="header text-center">{{$advert->name}}</div>
+                                                                </div>
+                                                                <div class="extra content">
+                                                                    <span style="float: left;"><i class="unhide icon"></i> {{$advert->views}} </span>
+                                                                    <span style="float: right;"><i class="star icon"></i> {{$advert->rating}} </span>
+                                                                </div>
+                                                                <div class="extra content">
+                                                                    <div class="ui two buttons">
+                                                                        <span id="take-{{$advert->id}}-{{$combo_categor->id}}-{{$com_req->id}}" class=" ui basic teal button take_adv">Выбрать</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            <!-- Футер модального окна -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                                <button type="button" id="save-{{$combo_categor->id}}" data-dismiss="modal" class="btn ui primary button save_adv">Сохранить изменения</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @foreach($combo_categor->adverts as $advert)
+
+                                @endforeach
+                                <?php $count++; ?>
+                            @endforeach
+                        @endforeach
+                    @endif
+
                     <script type="text/javascript">
 
                         function isNumeric(n) {
@@ -160,6 +251,84 @@
                             });
                         }
                         checkpoints();
+
+                        function edit_combo()
+                        {
+                            var take_advert_id_last;
+                            var take_advert_id_new;
+                            var take_categor_id;
+                            var take_combo_request;
+
+                            $('.change_adv').on('click', function(){
+                                var id = $(this).attr('id');
+                                id = id.split('-');
+                                take_advert_id_last = id[1];
+                                take_categor_id = id[2];
+                                take_combo_request = id[3];
+                                console.log('Ид объяв было' + take_advert_id_last);
+                                console.log('Ид категории было ' + take_categor_id);
+                                console.log('Ид combo-req ' + take_combo_request);
+                            });
+
+                            $('.take_adv').on('click', function(){
+                                var id = $(this).attr('id');
+                                id = id.split('-');
+                                take_advert_id_new = id[1];
+                                take_categor_id = id[2];
+                                take_combo_request = id[3];
+                                console.log('Ид объяв будет ' + take_advert_id_new);
+                                console.log('Ид категории будет ' + take_categor_id);
+                                console.log('Ид combo-req ' + take_combo_request);
+                                $('.take_adv').removeClass('activeTakeAdv');
+                                $(this).addClass('activeTakeAdv');
+                            });
+
+                            $('.save_adv').on('click', function(){
+                                if(take_advert_id_last && take_advert_id_new && take_categor_id && take_combo_request)
+                                {
+                                    $.ajax({
+                                        url: '/admin/requests/basket/edit_combo_adverts/' + take_combo_request,
+                                        type: "POST",
+                                        headers: {
+                                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        data:
+                                        {
+                                            "advert_last" : take_advert_id_last,
+                                            "advert_new" : take_advert_id_new,
+                                            "categor_id" :take_categor_id
+                                        },
+                                        success:function(data)
+                                        {
+                                            if(data)
+                                            {
+                                                var now_td = $('#td-' + take_advert_id_last + '-1');
+                                                var now_td2 = $('#td-' + take_advert_id_last + '-2');
+                                                var now_td3 = $('#td-' + take_advert_id_last + '-3');
+                                                var now_td4 = $('#td-' + take_advert_id_last + '-4');
+                                                now_td2.html('<a href="/advert/' + data.id +'">' + data.name +'</a>');
+                                                now_td3.html(data.advert_categor.name);
+                                                now_td4.html('<a href="#modal-' + take_categor_id + '" class="btn btn-info" data-toggle="modal" id="change-' + data.id + '-' + take_categor_id + '-' + take_combo_request + '">Заменить</a>');
+
+                                                now_td.attr('id','td-' + take_advert_id_new + '-1');
+                                                now_td2.attr('id','td-' + take_advert_id_new + '-2');
+                                                now_td3.attr('id','td-' + take_advert_id_new + '-3');
+                                                now_td4.attr('id','td-' + take_advert_id_new + '-4');
+                                            }
+                                        },
+                                        error:function()
+                                        {   alert('Сервер не отвечает, попробуйте позже');   }
+
+
+                                    });
+                                }
+                            });
+
+
+
+                        }
+
+                        edit_combo();
 
                         function ajax_add_adverts(){
 
@@ -219,7 +388,7 @@
                                     success:function(data){
 
                                         render = "<table class='table table-striped table-bordered table-hover table-condensed mytabler'>";
-                                        render = render + "<th>Фото</th><th>Описание</th><th style='width:50px;'>Города</th><th style='width:30px;'>Функции</th>";
+                                        render = render + "<th>Описание</th><th style='width:50px;'>Города</th><th style='width:30px;'>Функции</th>";
 
 
                                         data.forEach(function(item, i, data) {
@@ -249,7 +418,6 @@
 
                                             render = render + "<tr>";
                                             render = render + "" +
-                                                "<td class='photoTD'><img class='adv_img' src='{{'/'}}" + photo + "'></td> " +
                                                 "<td><div><span class='adv_name'>" + item.name + "</span><span style='color:" + need_color + ";' class='adv_status'>" + item.advert_stat.name + "</span><span class='adv_categor'>" + item.advert_categor.name + "</span></div><div class='descrip_style'><span class='adv_descri'>" + item.description + "</span></div></td>" +
                                                 "<td>" + cities + "</td>" +
                                                 "<td><button id='adder-" + item.id + "' class='btn btn-success go_adder' data-name='" + item.name + "'><i class=' fa fa-plus'></i></button></td> ";
