@@ -91,7 +91,6 @@
                             <label for="checkbox0">Договорная</label>
                         </div>
                     </div>
-                    <div class="ui negative submit button">Удалить</div>
                     <div class="ui error message"></div>
                 </div>
                 <button class="fluid ui button createPrice" type="button">

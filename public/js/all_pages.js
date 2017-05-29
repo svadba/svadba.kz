@@ -371,9 +371,8 @@ $(document).ready(function () {
         $(price).find('select').attr('name', 'advert_cits[' + id + ']');
         $(price).find('.prices').attr('name', 'prices[' + id + ']');
         $(price).find('.prices_two').attr('name', 'prices_two[' + id + ']');
-        var closeButton = document.createElement('div');
-        closeButton.className = 'col-xs-12';
-        closeButton.innerHTML = '<button type="button" class="close" aria-label="Close" onclick="$(this).closest(\'.price\').remove()"><span aria-hidden="true">&times;</span></button>';
+        var closeButton;
+        closeButton.innerHTML = '<div class="ui negative submit button" onclick="$(this).closest(\'.price\').remove()">Удалить</div>';
         $(price).prepend(closeButton);
         price.insertBefore('.createPrice');
     });
