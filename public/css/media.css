@@ -64,12 +64,16 @@
         padding: 15px;
     }
 
-    .padding-right-0 {
+    .md-padding-right-0 {
         padding-right: 0;
     }
 
-    .padding-left-0 {
+    .md-padding-left-0 {
         padding-left: 0;
+    }
+
+    .md-margin-right {
+        margin-right: 15px !important;
     }
 
     .img-advert {
@@ -87,7 +91,7 @@
     }
 
     .xs-margin-top {
-        margin-top: 15px!important;
+        margin-top: 15px !important;
     }
 
     .photo-advert {

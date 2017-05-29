@@ -28,10 +28,16 @@ class ComboController extends Controller
     {
         If($combo_cit->combo_id != $combo->id) return redirect()->back();
 
-        $combo_cit = $combo_cit->load('combo_categors.advert_categor', 'combo_categors.adverts.photos');
+        $combo_cit = $combo_cit->load('combo_categors.advert_categor', 'combo_categors.adverts.photos', 'cit');
         //return $combo;
         //return $combo_cit;
-        return view('combo.viewCombo', ['combo' => $combo, 'combo_cit'=> $combo_cit,'sn' => 'combo']);
+        return view('combo.viewCombo', [
+            'combo' => $combo,
+            'combo_cit'=> $combo_cit,
+            'sn' => 'combo',
+            'title' => 'Станица пакета '.$combo_cit->cit->name,
+            'description' => 'Страница для заказа паета '.$combo_cit->cit->name
+        ]);
     }
 
     public function add(Request $request)
@@ -213,7 +219,13 @@ class ComboController extends Controller
     public function bakyt()
     {
         $cities = Cit::whereNotIn('id', [16,17,18])->orderBy('order', 'ASC')->get();
-        return view('combo.bakyt', ['cities' => $cities, 'sn' => 'bakyt']);
+        return view('combo.bakyt',
+            [
+                'cities' => $cities,
+                'sn' => 'bakyt',
+                'title' => 'Мастер класс "Бакыт"',
+                'description' => 'Страница для оформления заяявки на мастер класс "Бакыт"'
+            ]);
     }
 
 

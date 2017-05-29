@@ -10,17 +10,17 @@
                         <ul style="margin:5px 0px 10px -35px;">
                         </ul>
                     </div>
-                    <a href="{{url('admin/adverts/my')}}" class="btn btn-default col-xs-6 col-sm-4 col-md-2">
+                    <a href="{{secure_url('admin/adverts/my')}}" class="btn btn-default col-xs-6 col-sm-4 col-md-2">
                         <i class="fa fa-star"></i> Мои объявления
                     </a>
-                    <a href="{{url('admin/adverts/all')}}" class="btn btn-default col-xs-6 col-sm-4 col-md-2">
+                    <a href="{{secure_url('admin/adverts/all')}}" class="btn btn-default col-xs-6 col-sm-4 col-md-2">
                         <i class="fa fa-list-ul"></i> Все объявления
                     </a>
-                    <form action="{{url('admin/adverts/all')}}" method="GET" class="search col-xs-2 col-sm-4 col-md-2">
+                    <form action="{{secure_url('admin/adverts/all')}}" method="GET" class="search col-xs-2 col-sm-4 col-md-2">
                         <input type="search" name="search_name" placeholder="Поиск" class="input" />
                         <input type="submit" name="" value="" class="submit" />
                     </form>
-                    <form action="{{url('admin/adverts/all')}}" method="GET" class="col-xs-12 col-sm-12 col-md-6">
+                    <form action="{{secure_url('admin/adverts/all')}}" method="GET" class="col-xs-12 col-sm-12 col-md-6">
                         {{ csrf_field() }}
                         <div class="col-xs-12 col-sm-12 col-md-5">
                             <h4>Фильтры:</h4>
@@ -87,14 +87,14 @@
                             <td style=" width:172px; text-align: right;">
                                 @if(ServiceMan::canView())
                                     @if($adv->allow_type->id == 1)
-                                    <a style="" class="btn btn-primary" title="Снять с публикации" href="{{url('admin/adverts/unallow/'.$adv->id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></a>
+                                    <a style="" class="btn btn-primary" title="Снять с публикации" href="{{secure_url('admin/adverts/unallow/'.$adv->id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></a>
                                     @else
-                                    <a style="" class="btn btn-success" title="Опубликовать" href="{{url('admin/adverts/allow/'.$adv->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></a>
+                                    <a style="" class="btn btn-success" title="Опубликовать" href="{{secure_url('admin/adverts/allow/'.$adv->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></a>
                                     @endif 
                                 @endif
-                                <a style="" class="btn btn-warning" title="Редактировать объявление" href="{{url('admin/adverts/edit/'.$adv->id)}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a style="" class="btn btn-warning" title="Редактировать объявление" href="{{secure_url('admin/adverts/edit/'.$adv->id)}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 @if(ServiceMan::canView())
-                                <a style="" class="btn btn-danger" title="Удалить объявление" href="{{url('admin/adverts/delete/'.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
+                                <a style="" class="btn btn-danger" title="Удалить объявление" href="{{secure_url('admin/adverts/delete/'.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
                                 @endif
                             </td>
                         </tr>

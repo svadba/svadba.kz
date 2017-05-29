@@ -11,46 +11,70 @@
 |
 */
 
-    Route::get('/', 'MainPageController@mainPage');
+    Route::get('/', 'MainPageController@mainPage'); //good
 
-    Route::get('/contacts', 'MainPageController@contacts');
+    Route::get('/sitemap','SiteMapController@index'); //none
 
-    Route::get('/about', 'MainPageController@about');
+    Route::get('/cities/{city}', ['as' => 'cities', 'uses' => 'CitController@mainPage']); //good
 
-    Route::get('/rules_and_help', 'MainPageController@rulesAndHelp');
+    Route::get('/city/by_id', 'CitController@by_id'); //good
 
-    Route::get('/advertising', 'MainPageController@advertising');
+    Route::get('/like_svadba', 'MainPageController@like_svadba'); //none
 
-    Route::get('/weddingPlan', 'MainPageController@weddingPlan');
-
-    Route::get('/cities/{city}', ['as' => 'cities', 'uses' => 'CitController@mainPage']);
-    Route::get('/city/by_id', 'CitController@by_id');
-
-    Route::get('/like_svadba', 'MainPageController@like_svadba');
-
-    Route::get('/advert/{advert}', 'AdvertController@advertPage');
+    Route::get('/advert/{advert}', 'AdvertController@advertPage'); //good
 
     Route::group(['prefix' => 'ajax'], function(){
         Route::get('get_advert/{advert}', 'AdvertController@get_advert');
     });
+
     Route::group(['prefix' => 'combo'], function(){
-        Route::get('{combo}/{combo_cit}', 'ComboController@viewUser');
+        Route::get('{combo}/{combo_cit}', 'ComboController@viewUser'); //good
     });
 
-    Route::get('/bakyt', 'ComboController@bakyt');
+    //Route::get('/bakyt', 'ComboController@bakyt'); //good
 
     Route::group(['prefix' => 'services'], function(){
-        Route::get('', 'ServicesController@all');
-        Route::get('filter', 'ServicesController@by_filter');
+        Route::get('', 'ServicesController@all'); //good
+        Route::get('filter', 'ServicesController@by_filter'); //good
         Route::post('get_adverts', 'ServicesController@ajax_get_adverts');
     });
 
-    Route::get('basket/show', 'BasketController@showBasket');
-    Route::post('basket/sent', 'BasketController@sentBasket');
+    Route::get('basket/show', 'BasketController@showBasket'); //none
+    Route::post('basket/sent', 'BasketController@sentBasket'); //none
 
     Route::auth();
 
-    Route::get('/home', 'HomeController@index');
+    Route::group([ 'prefix' => 'home'], function(){
+        Route::get('/','HomeController@index');
+
+        Route::group(['prefix' => 'adverts'], function(){
+            Route::get('add/{contractor}/step1', 'HomeController@add_advert_st1_get');
+            Route::post('add/step1', 'HomeController@add_advert_st1_post');
+
+            Route::get('edit/{advert}/step1', 'HomeController@edit_advert_st1_get');
+            Route::post('edit/step1', 'HomeController@edit_advert_st1_post');
+
+            Route::get('edit/{advert}/step2', 'HomeController@edit_advert_st2_get');
+            Route::post('edit/step2', 'HomeController@edit_advert_st2_post');
+
+            Route::get('edit/{advert}/step3', 'HomeController@edit_advert_st3_get');
+            Route::post('edit/step3', 'HomeController@edit_advert_st3_post');
+
+            Route::group(['prefix' => 'musics'], function(){
+                Route::post('add', 'MusicController@save_ajax');
+                Route::post('delete', 'MusicController@delete_ajax');
+            });
+
+            Route::group(['prefix' => 'photos'], function(){
+                Route::post('add', 'HomeController@save_advert_photo');
+                Route::post('set_main', 'HomeController@setmain_advert_photo');
+                Route::post('delete', 'HomeController@delete_advert_photo');
+            });
+
+
+            Route::get('delete/{advert}', 'HomeController@delete_advert');
+        });
+    });
 
     Route::group(['middleware' => 'auth'], function()
     {
@@ -135,9 +159,9 @@
                         Route::get('delete_advert/{basket_request}',"BasketController@delete_advert")->middleware('role:4');
                         Route::post('delete_adverts/{basket_request}',"BasketController@delete_adverts")->middleware('role:4');
                         Route::get('delete/{basket_request}', "BasketController@delete")->middleware('role');
-                        Route::get('delete_go/{basket_request}', "BasketController@delete_go")->middleware('role');
                         //ajax combo_request
                         Route::post('edit_combo_adverts/{combo_request}', 'BasketController@edit_combo_adverts')->middleware('role:4');
+                        Route::get('delete_combo/{combo_request}', 'BasketController@delete_combo')->middleware('role:4');
                     });
 
                 });
@@ -162,13 +186,8 @@
                     });
                 });
 
-
-
             });
     });
-
-
-
 
 
 
@@ -176,5 +195,6 @@
 
     Route::any('/test_method', 'TestController@test_method');
 
+    Route::get('/test_youtube', 'TestController@test_youtube'); //good
     //Route::get('/addrole', 'AddRoleController@index');
 

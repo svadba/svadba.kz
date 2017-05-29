@@ -59,21 +59,21 @@
 							<div class="content">
 								<div class="center">
 									<div id="{{$advert->id}}" class="ui inverted button buy-btn">Добавить в корзину</div>
-									<a href="{{url('/advert/'.$advert->id.'?city='.$city_filter)}}" class="ui primary button margin-top-always">Подробнее</a>
+									<a href="{{secure_url('/advert/'.$advert->id.'?city='.$city_filter)}}" class="ui primary button margin-top-always">Подробнее</a>
 								</div>
 							</div>
 						</div>
 						@if($advert->photos->first())
-							<img src="{{asset('upload/adverts/thumbs/'.$advert->photos->first()['name'].'.'.$advert->photos->first()['ext'])}}" alt="{{$advert->name}}" title="{{$advert->name}}">
+							<img src="{{secure_asset('upload/begests/thumbs/'.$advert->photos->first()['name'].'.'.$advert->photos->first()['ext'])}}" alt="{{$advert->name}}" title="{{$advert->name}}">
 						@else
-							<img src="{{asset('images/no-avatar.png')}}" alt="{{$advert->name}}" title="{{$advert->name}}">
+							<img src="{{secure_asset('images/no-avatar.png')}}" alt="{{$advert->name}}" title="{{$advert->name}}">
 						@endif
 
 					</div>
 					<div class="content">
-						<a href="{{url('/advert/'.$advert->id)}}" class="header">{{$advert->name}}</a>
+						<a href="{{secure_url('/advert/'.$advert->id)}}" class="header">{{$advert->name}}</a>
 						<div class="meta">
-							<a href="{{url('/services/filter?category='.$advert->advert_categor->id.'&city='.$city_filter)}}">{{$advert->advert_categor->name}}</a>
+							<a href="{{secure_url('/services/filter?category='.$advert->advert_categor->id.'&city='.$city_filter)}}">{{$advert->advert_categor->name}}</a>
 						</div>
 					</div>
 				</div>

@@ -14,7 +14,13 @@ class ServicesController extends Controller
     public function all(){
 
         $services = Advert_categor::all();
-        return view('pages.services', ['services' => $services, 'sn' => 'services']);
+        return view('pages.services',
+            [
+                'services' => $services,
+                'sn' => 'services',
+                'title' => 'Список всех услуг',
+                'description' => 'Свадебные услуги портала SVADBA.KZ'
+            ]);
     }
 
 
@@ -65,7 +71,9 @@ class ServicesController extends Controller
             'search_name' => $search_name,
             'categories' => $categories,
             'cities' => $cities,
-            'sn' => 'services_by_filter'
+            'sn' => 'services_by_filter',
+            'title' => 'Список объявлений по фильтру',
+            'description' => 'Объявления отсортированные по городу и категории'
         ]);
 
     }

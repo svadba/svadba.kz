@@ -58,7 +58,14 @@ class AdvertController extends Controller
         }
         $other_advert = (($other_advert->count())<=3) ? $other_advert : $other_advert->random(3);
 
-        return view('pages.advert_page', ['ad' => $advert, 'other_adverts' => $other_advert, 'city_filter' => $city,'sn' => 'advert_page']);
+        return view('pages.advert_page', [
+            'ad' => $advert,
+            'other_adverts' => $other_advert,
+            'city_filter' => $city,
+            'sn' => 'advert_page',
+            'title' => $advert->name,
+            'description' => str_limit($advert->description, $limit = 74 - strlen($advert->name) , $end = '...')
+        ]);
     }
 
 
@@ -270,7 +277,7 @@ class AdvertController extends Controller
 
         IF($request->hasFile('photos'))
         {
-            $directory = 'upload/adverts/'.$add_advert->id;
+            $directory = 'upload/begests/'.$add_advert->id;
             $check = false;
             foreach($request->file('photos') as $photo):
                 $extension = $photo-> guessExtension();
@@ -300,7 +307,7 @@ class AdvertController extends Controller
                                 'main' => 1,
                             ]);
                             $image = Image::make($saved_file->path);
-                            $image->fit(290)->save('upload/adverts/thumbs/' .$name. '.' .$extension);
+                            $image->fit(290)->save('upload/begests/thumbs/' .$name. '.' .$extension);
                             $check = true;
                         }
                     }
@@ -421,7 +428,7 @@ class AdvertController extends Controller
         IF($request->hasFile('photos'))
         {
             $check = (Photo::where('advert_id', $advert->id)->where('main', 1)->count()) ? true : false;
-            $directory = 'upload/adverts/'.$advert->id;
+            $directory = 'upload/begests/'.$advert->id;
             foreach($request->file('photos') as $photo):
                 $extension = $photo-> guessExtension();
                 IF($photo->isValid())
@@ -450,7 +457,7 @@ class AdvertController extends Controller
                                 'main' => 1,
                             ]);
                             $image = Image::make($saved_file->path);
-                            $image->fit(290)->save('upload/adverts/thumbs/' .$name. '.' .$extension);
+                            $image->fit(290)->save('upload/begests/thumbs/' .$name. '.' .$extension);
                             $check = true;
                         }
                     }
@@ -540,11 +547,11 @@ class AdvertController extends Controller
      */
     public function delete(Request $request, Advert $advert)
     {
-        $directory = 'upload/adverts/'.$advert->id;
+        $directory = 'upload/begests/'.$advert->id;
         $thumb_photo = Photo::where('advert_id', $advert->id)->where('main', 1)->first();
         if($thumb_photo)
         {
-            Storage::disk('public_my')->delete('upload/adverts/thumbs/' .$thumb_photo->name. '.' .$thumb_photo->ext);
+            Storage::disk('public_my')->delete('upload/begests/thumbs/' .$thumb_photo->name. '.' .$thumb_photo->ext);
         }
         $true_delete = Storage::disk('public_my')->deleteDirectory($directory);
         $advert->delete();

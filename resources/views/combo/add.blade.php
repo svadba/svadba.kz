@@ -10,10 +10,10 @@
                         <ul style="margin:5px 0px 10px -35px;">
                         </ul>
                     </div>
-                    <a href="{{url('admin/combos/all')}}" class="btn btn-default ">
+                    <a href="{{secure_url('admin/combos/all')}}" class="btn btn-default ">
                         <i class="fa fa-list-ul"></i> Все пакеты
                     </a>
-                    <a href="{{url('admin/combos/add')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/combos/add')}}" class="btn btn-default">
                         <i class="fa fa-plus"></i> Добавить пакет
                     </a>
 
@@ -23,7 +23,7 @@
                     <!-- Отображение ошибок проверки ввода -->
                     @include('common.errors')
                     <div class="row">
-                        <form action="{{url('admin/combos/save')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{secure_url('admin/combos/save')}}" method="post" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Наименование</label>

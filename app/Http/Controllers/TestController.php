@@ -10,6 +10,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 use App\Combo;
 use App\Combo_cit;
+use App\Services\YoutubeService as Youtube;
 
 class TestController extends Controller
 {
@@ -86,8 +87,12 @@ class TestController extends Controller
         }])
         ->get();*/
 
-    $combo_cit = Combo_cit::with('combo_categors.advert_categor', 'combo_categors.adverts')->get();
-    return $combo_cit;
+    return Advert::with('musics', 'photos', 'videos', 'advert_categor', 'advert_cits.cit')->get();
 
+    }
+
+    public function test_youtube()
+    {
+        return Youtube::getAuthToken();
     }
 }

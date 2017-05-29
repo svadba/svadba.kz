@@ -22,8 +22,16 @@ class Basket_request extends Model
     public function count_advert()
     {
         $adverts = $this->adverts;
-        $adverts = explode(',',$adverts);
-        return count ($adverts);
+        if($adverts)
+        {
+            $adverts = explode(',',$adverts);
+            return count ($adverts);
+        }
+        else
+        {
+            return 0;
+        }
+
     }
 
 }

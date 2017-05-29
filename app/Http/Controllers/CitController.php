@@ -42,7 +42,9 @@ class CitController extends Controller
             'topsThree' => $topsThree,
             'categories' => $categories,
             'combos' => $combos,
-            'sn' => 'cityPage'
+            'sn' => 'cityPage',
+            'title' => 'Объявления в городе '.$nowCity->name,
+            'description' => 'ОФормление свадеб в городе '.$nowCity->name
         ]);
     }
 

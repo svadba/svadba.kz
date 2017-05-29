@@ -10,10 +10,10 @@
                         <ul style="margin:5px 0px 10px -35px;">
                         </ul>
                     </div>
-                    <a href="{{url('admin/requests/baskets')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/requests/baskets')}}" class="btn btn-default">
                         <i class="fa fa-star"></i> Заявки из корзин
                     </a>
-                    <a href="{{url('admin/requests/baskets')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/requests/baskets')}}" class="btn btn-default">
                         <i class="fa fa-list-ul"></i> Заявки из пакетов
                     </a>
                 </div>
@@ -50,7 +50,7 @@
                         <tr>
                             <td>Дата мероприятия</td>
                             <td>
-                                <form style="display:inline-block; " method="POST" id="form_tusa" action="{{url('/admin/requests/basket/save_tusa/'.$basket->id)}}">
+                                <form style="display:inline-block; " method="POST" id="form_tusa" action="{{secure_url('/admin/requests/basket/save_tusa/'.$basket->id)}}">
                                     {{ csrf_field() }}
                                     <input style="color:@if($basket->tusa_at) green @else red @endif;" type='text' value="{{$basket->tusa_at or 'Не указанна'}}" name="tusa_at" class="datepicker-here" data-date-format="yyyy-mm-dd" data-timepicker="true" data-time-format="hh:ii:00" data-position="right top bottom" />
 
@@ -65,7 +65,7 @@
                             <td>
                                 @if($basket->ended == 1) <span style="color:green;"> Завершена </span> @else <span style="color:red;"> Не завершена </span> @endif
                             </td>
-                            <td>@if($basket->ended != 1) <a style="" class="btn btn-success" title="Завершить заявку" href="{{url('admin/requests/basket/set_end/'.$basket->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> @endif</td>
+                            <td>@if($basket->ended != 1) <a style="" class="btn btn-success" title="Завершить заявку" href="{{secure_url('admin/requests/basket/set_end/'.$basket->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> @endif</td>
                         </tr>
                         @if($basket->ended == 1)
                         <tr>
@@ -79,11 +79,11 @@
                     @if($combo_requests->count())
                         <h4 style="font-weight:bold;">Пакеты заказанные клиентом:</h4>
                         @foreach($combo_requests as $com_req)
-                            <div style="border:solid 1px green; padding:15px 10px;">
-                                <h5>Наименование пакета: <span style="color:green; font-weight:bold;">{{$com_req->combo->name}}</span></h5>
-                                <h5>Наименование города для пакета: <span style="color:green; font-weight:bold;">{{$com_req->combo_cit->cit->name}}</span></h5>
+                            <div class="col-xs-12" style="border:solid 1px green; padding:15px 10px;" id="combo_req-{{$com_req->id}}">
+                                <h5>Наименование пакета: <span id="namecomboreq-{{$com_req->id}}" style="color:green; font-weight:bold;">{{$com_req->combo->name}}</span></h5>
+                                <h5>Наименование города для пакета: <span id="citcomboreq-{{$com_req->id}}" style="color:green; font-weight:bold;">{{$com_req->combo_cit->cit->name}}</span></h5>
                                 <h5>Цена пакета: <span style="color:green; font-weight:bold;">{{$com_req->combo->price}}</span></h5>
-                                <div>
+                                <div class="col-xs-12">
                                     <table class="table table-striped table-bordered table-hover table-condensed main_table">
                                         <tr>
                                             <th>ID</th>
@@ -98,7 +98,7 @@
                                                         @if($advert->id == $advert_basket)
                                                             <tr>
                                                                 <td id="td-{{$advert->id}}-1">{{$count}}</td>
-                                                                <td id="td-{{$advert->id}}-2"><a href="{{url('/advert/'.$advert->id)}}">{{$advert->name}}</a></td>
+                                                                <td id="td-{{$advert->id}}-2"><a href="{{secure_url('/advert/'.$advert->id)}}">{{$advert->name}}</a></td>
                                                                 <td id="td-{{$advert->id}}-3">{{$advert->advert_categor->name}}</td>
                                                                 <td id="td-{{$advert->id}}-4"><a href="#modal-{{$combo_categor->id}}" data-toggle="modal" id="change-{{$advert->id}}-{{$combo_categor->id}}-{{$com_req->id}}" class="btn btn-info change_adv">Заменить</a></td>
                                                             </tr>
@@ -109,12 +109,15 @@
                                         @endforeach
                                     </table>
                                 </div>
+                                <div class="col-xs-12">
+                                    <button id="delcomb-{{$com_req->id}}" style="float:right;" class="btn btn-danger delete_combo">Удалить пакет из заказа</button>
+                                </div>
                             </div>
                         @endforeach
                     @endif
                     <br>
                     <h4 style="font-weight:bold;">Таблица объявлений заказанных клиентом:</h4>
-                    <form method="post" action="{{url('admin/requests/basket/delete_adverts/'.$basket->id)}}">
+                    <form method="post" action="{{secure_url('admin/requests/basket/delete_adverts/'.$basket->id)}}">
                         {{csrf_field()}}
                     <table class="table table-striped table-bordered table-hover table-condensed main_table" cellspacing='0'>
                         <tr>
@@ -132,7 +135,7 @@
                         @foreach ($adverts as $adv)
                         <tr>
                             <td><?php echo $count; ?></td>
-                            <td><a href="{{url('advert/'.$adv->id)}}">{{$adv->name}}</a></td>
+                            <td><a href="{{secure_url('advert/'.$adv->id)}}">{{$adv->name}}</a></td>
                             <td>{{$adv->advert_categor->name}}</td>
                             <td>{{$adv->rating}}</td>
                             <td>
@@ -147,7 +150,7 @@
                             </td>
                             <td>@if($adv->advert_stat_id == 1) <span style="color:green;">{{$adv->advert_stat->name}}</span> @else <span style="color:red;">{{$adv->advert_stat->name}}</span> @endif</td>
                             <td style=" width:40px; text-align: center;">
-                                <a style="" class="btn btn-danger" title="Удалить заявку" href="{{url('admin/requests/basket/delete_advert/'.$basket->id.'?delete_adverts='.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
+                                <a style="" class="btn btn-danger" title="Удалить заявку" href="{{secure_url('admin/requests/basket/delete_advert/'.$basket->id.'?delete_adverts='.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
                             </td>
                             <td><input type="checkbox" class="delete_advert" name='delete_adverts[]' value="{{$adv->id}}"></td>
                         </tr>
@@ -178,7 +181,7 @@
                                 <div class="modal-footer">
                                     <div class="added_adverts"></div>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                                    <button type="button" id="sent_to_server" data-dismiss="modal" class="btn ui primary button">Сохранить изменения</button>
+                                    <button type="button" id="sent_to_server" class="btn ui primary button">Сохранить изменения</button>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +205,7 @@
                                                         <div id="minadv-{{$advert->id}}" class="col-xs-12 col-sm-4 minadvdiv-{{$combo_categor->id}}" style="padding-right: 0;">
                                                             <div class="ui card">
                                                                 <div class="blurring dimmable image">
-                                                                    <img class="minadvimg-{{$advert->id}}" src="{{asset($advert->photo_main())}}" alt="">
+                                                                    <img class="minadvimg-{{$advert->id}}" src="{{secure_asset($advert->photo_main())}}" alt="">
                                                                 </div>
                                                                 <div class="content">
                                                                     <div class="header text-center">{{$advert->name}}</div>
@@ -245,11 +248,10 @@
 
                         function checkpoints(){
                             $('#delete_adverts_main').on('change', function(){
-
                                 $('.delete_advert').prop("checked", this.checked);
-
                             });
                         }
+
                         checkpoints();
 
                         function edit_combo()
@@ -302,33 +304,62 @@
                                         {
                                             if(data)
                                             {
-                                                var now_td = $('#td-' + take_advert_id_last + '-1');
-                                                var now_td2 = $('#td-' + take_advert_id_last + '-2');
-                                                var now_td3 = $('#td-' + take_advert_id_last + '-3');
-                                                var now_td4 = $('#td-' + take_advert_id_last + '-4');
-                                                now_td2.html('<a href="/advert/' + data.id +'">' + data.name +'</a>');
-                                                now_td3.html(data.advert_categor.name);
-                                                now_td4.html('<a href="#modal-' + take_categor_id + '" class="btn btn-info" data-toggle="modal" id="change-' + data.id + '-' + take_categor_id + '-' + take_combo_request + '">Заменить</a>');
-
-                                                now_td.attr('id','td-' + take_advert_id_new + '-1');
-                                                now_td2.attr('id','td-' + take_advert_id_new + '-2');
-                                                now_td3.attr('id','td-' + take_advert_id_new + '-3');
-                                                now_td4.attr('id','td-' + take_advert_id_new + '-4');
+                                                $('#td-' + take_advert_id_last + '-2').html('<a href="/advert/' + data.id +'">' + data.name +'</a>');
+                                                $('#change-' + take_advert_id_last + '-' + take_categor_id + '-' + take_combo_request).attr('id', 'change-' + data.id + '-' + take_categor_id + '-' + take_combo_request);
+                                                $('#modal' + take_categor_id).modal('hide');
                                             }
                                         },
                                         error:function()
-                                        {   alert('Сервер не отвечает, попробуйте позже');   }
-
-
+                                        {
+                                            $('#modal' + take_categor_id).modal('hide');
+                                            alert('Сервер не отвечает, попробуйте позже');
+                                        }
                                     });
                                 }
                             });
 
+                            $('.modal').on('hidden.bs.modal', function() {
+                                take_advert_id_last = undefined;
+                                take_advert_id_new = undefined;
+                                take_categor_id = undefined;
+                                take_combo_request = undefined;
+                            });
 
 
                         }
 
                         edit_combo();
+
+                        function delete_combo()
+                        {
+                            $('.delete_combo').on('click', function(){
+                                var id = $(this).attr('id');
+                                var combo_req = id.split('-');
+                                combo_req = combo_req[1];
+                                if(combo_req)
+                                {
+                                    var check = confirm('Вы действительно хотите удалить пакет ' + $('#namecomboreq-' + combo_req).html() + 'из заказа?')
+                                    if(check)
+                                    {
+                                        $.ajax({
+                                            url: '/admin/requests/basket/delete_combo/' + combo_req,
+                                            type: "GET",
+                                            headers: {
+                                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success:function(data) {
+                                                if(data == 'good')
+                                                {
+                                                    $('#com_req-' + combo_req).remove();
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+
+                        delete_combo();
 
                         function ajax_add_adverts(){
 

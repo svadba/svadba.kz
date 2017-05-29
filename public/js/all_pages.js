@@ -134,11 +134,17 @@ $(document).ready(function () {
     }
 
     function semantic_ui() {
+        // hover for cards
         $('.special.cards .image').dimmer({
             on: 'hover'
         });
+        // rating views
         $('.ui.rating')
             .rating('disable')
+        ;
+        //dropdown for select
+        $('.ui.dropdown')
+            .dropdown()
         ;
     }
 
@@ -345,6 +351,100 @@ $(document).ready(function () {
             }
         }
     }
+
+    $('.createPrice').on('click', function (event) {
+        event.preventDefault();
+        var checkboxIds = [];
+        $('.checkbox').each(function (index) {
+            checkboxIds[index] = $(this).attr('id');
+        });
+        var lastCheckboxIds = checkboxIds[checkboxIds.length - 1];
+        var lastId = lastCheckboxIds.substr(8);
+        var id = Number(lastId) + 1;
+        var priceWithoutClose = document.getElementsByClassName("priceWithoutClose");
+        var price = $(priceWithoutClose).clone();
+        $(price).find('input').val('');
+        var price = $(price).removeClass('priceWithoutClose');
+        $(price).find('.checkbox').attr('id', 'checkbox' + id);
+        $(price).find('.checkbox').attr('name', 'dogovor[' + id + ']');
+        $(price).find('label').attr('for', 'checkbox' + id);
+        $(price).find('select').attr('name', 'advert_cits[' + id + ']');
+        $(price).find('.prices').attr('name', 'prices[' + id + ']');
+        $(price).find('.prices_two').attr('name', 'prices_two[' + id + ']');
+        var closeButton = document.createElement('div');
+        closeButton.className = 'col-xs-12';
+        closeButton.innerHTML = '<button type="button" class="close" aria-label="Close" onclick="$(this).closest(\'.price\').remove()"><span aria-hidden="true">&times;</span></button>';
+        $(price).prepend(closeButton);
+        price.insertBefore('.createPrice');
+    });
+
+    $('.addVideo').on('click', function () {
+        var video = document.getElementById("youtube_videoId").value;
+        $('#youtube_videoId').css('color', '#555');
+        var videoUrl = /(^https:\/\/youtu.be\/)[a-zA-Z0-9-]/;
+        var videoValidation = videoUrl.test(video);
+        if (videoValidation == true) {
+            var videoId = video.substr(17);
+            var videoBlock = document.createElement('div');
+            videoBlock.className = "col-xs-4 col-sm-3 col-md-2";
+            videoBlock.innerHTML = '<img src="//img.youtube.com/vi/' + videoId + '/1.jpg" class="img-responsive margin-top-always advert_video center-block" id="' + videoId + '">';
+            $(".videoPanel").append(videoBlock);
+        } else {
+            $('#youtube_videoId').css('color', '#FF4469');
+            $('#youtube_videoId').addClass('unvalid');
+            setTimeout(function () {
+                $('#youtube_videoId').removeClass('unvalid');
+            }, 666);
+            $('#youtube_videoId').val('Ссылка неверна');
+        }
+    });
+
+    $('.saveVideoAdvert').on('click', function () {
+        var videoIds = '';
+        var advertId = $('.massive.fluid.ui.teal.basic.button').attr('id');
+
+        $('.video_panel img').each(function (index) {
+            videoIds = videoIds + $(this).attr('id') + ',';
+        });
+        videoIds = videoIds.substr(0, videoIds.length - 1);
+        var ids_array = videoIds.split(',');
+        var render = '';
+        ids_array.forEach(function (item, i, arr) {
+            alert(i + ": " + item + " (массив:" + arr + ")");
+            //render = render + '<a href="https://youtu.be/' + element + '" data-lity><img src="//img.youtube.com/vi/' + element + '/1.jpg" class="img-responsive"></a>';
+        });
+        var videoBlock = document.createElement('div');
+        videoBlock.className = "col-xs-4";
+        videoBlock.innerHTML = render;
+        $(".video_panel").append(videoBlock);
+        /*if (videoIds) {
+         $.ajax({
+         url: '/admin/requests/basket/edit_combo_adverts/' + advertId,
+         type: "POST",
+         headers: {
+         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+         },
+         data: {
+         "videoIds": videoIds
+         },
+         success: function (data) {
+         if (data) {
+         var ids_array = videoIds.split(',');
+         var render = '';
+         ids_array.forEach(element)
+         {
+         render = render + '<div><img src=""/></div>';
+         }
+         innerHTML = render;
+         }
+         },
+         error: function () {
+         $('#modal' + take_categor_id).modal('hide');
+         alert('Сервер не отвечает, попробуйте позже');
+         }
+         });
+         }*/
+    });
 
     like_svadba();
     lightbox_options();

@@ -443,7 +443,13 @@
 }
 /* end moedl2 for add_category*/
 
-.activeTakeAdv
+.ui.basic.teal.button.activeTakeAdv
 {
-	background:blue;
+	background:blue!important;
+	color: #fff!important;
+}
+.ui.basic.teal.button.activeTakeAdv:hover
+{
+	background:blue!important;
+	color: #fff!important;
 }

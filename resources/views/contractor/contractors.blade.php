@@ -10,13 +10,13 @@
                         <ul style="margin:5px 0px 10px -35px;">
                         </ul>
                     </div>
-                    <a href="{{url('admin/contractors/my')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/contractors/my')}}" class="btn btn-default">
                         <i class="fa fa-star"></i> Мои подрядчики
                     </a>
-                    <a href="{{url('admin/contractors/all')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/contractors/all')}}" class="btn btn-default">
                         <i class="fa fa-list-ul"></i> Все подрядчики
                     </a>
-                    <a href="{{url('admin/contractors/add')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/contractors/add')}}" class="btn btn-default">
                         <i class="fa fa-plus"></i> Добавить подрядчика
                     </a>
                 </div>
@@ -52,10 +52,10 @@
 
                             <?php  $count++; ?>
                             <td style="width: 172px; text-align: right;">
-                                <a class="btn btn-primary" title="Добавить объявление" href="{{url('admin/adverts/add/'.$contr->id)}}"><i class="fa fa-plus"></i></a>
-                                <a class="btn btn-info" title="Открыть подрядчика" href="{{url('admin//contractors/view/'.$contr->id)}}"><i class="fa fa-external-link"></i></a>
-                                <a class="btn btn-warning" title="Редактировать подрядчика" href="{{url('admin/contractors/edit/'.$contr->id)}}"><i class="fa fa-pencil"></i></a>
-                                <a class="btn btn-danger" title="Удалить подрядчика" href="{{url('admin/contractors/delete/'.$contr->id)}}"><i class="fa fa-trash-o"></i></a>
+                                <a class="btn btn-primary" title="Добавить объявление" href="{{secure_url('admin/adverts/add/'.$contr->id)}}"><i class="fa fa-plus"></i></a>
+                                <a class="btn btn-info" title="Открыть подрядчика" href="{{secure_url('admin//contractors/view/'.$contr->id)}}"><i class="fa fa-external-link"></i></a>
+                                <a class="btn btn-warning" title="Редактировать подрядчика" href="{{secure_url('admin/contractors/edit/'.$contr->id)}}"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-danger" title="Удалить подрядчика" href="{{secure_url('admin/contractors/delete/'.$contr->id)}}"><i class="fa fa-trash-o"></i></a>
                             </td>
                            
                         </tr>
@@ -84,13 +84,13 @@
                                         <td style=" width:80px; text-align: right;">
                                         @if(ServiceMan::canView())
                                             @if($adv->allow_type->id == 1)
-                                                <a style="padding:0px 3px; font-size:14px" class="btn btn-primary" title="Снять с публикации" href="{{url('admin/adverts/unallow/'.$adv->id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                                <a style="padding:0px 3px; font-size:14px" class="btn btn-primary" title="Снять с публикации" href="{{secure_url('admin/adverts/unallow/'.$adv->id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                             @else
-                                                <a style="padding:0px 3px; font-size:14px" class="btn btn-success" title="Опубликовать" href="{{url('admin/adverts/allow/'.$adv->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                                                <a style="padding:0px 3px; font-size:14px" class="btn btn-success" title="Опубликовать" href="{{secure_url('admin/adverts/allow/'.$adv->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
                                             @endif 
                                         @endif
-                                            <a style="padding:0px 3px; font-size:14px;" class="btn btn-warning" title="Редактировать объявление" href="{{url('admin/adverts/edit/'.$adv->id)}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                            <a style="padding:0px 3px; font-size:14px;" class="btn btn-danger" title="Удалить объявление" href="{{url('admin/adverts/delete/'.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
+                                            <a style="padding:0px 3px; font-size:14px;" class="btn btn-warning" title="Редактировать объявление" href="{{secure_url('admin/adverts/edit/'.$adv->id)}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a style="padding:0px 3px; font-size:14px;" class="btn btn-danger" title="Удалить объявление" href="{{secure_url('admin/adverts/delete/'.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

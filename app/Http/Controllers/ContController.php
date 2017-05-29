@@ -17,7 +17,12 @@ class ContController extends Controller
     public function my(Request $request)
     {   
         $contractors = $request->user()->contractors()->with('phones')->with('adverts')->paginate(10);
-        return View('contractor.contractors', ['contractors' => $contractors]);
+        return View('contractor.contractors',
+            [
+                'contractors' => $contractors,
+                'title' => 'Панель управления администратора',
+                'description' => 'Страница добавления объявления'
+            ]);
     }
     
     public function all()

@@ -2,17 +2,17 @@
 @section('content')
 <div class="row body">
 	<div class="col-xs-12 col-sm-9">
-		<img src="{{asset($ad->photo_main())}}" class="img-responsive img-circle img-advert col-xs-12 col-sm-3" alt="Responsive image">
+		<img src="{{secure_asset($ad->photo_main())}}" class="img-responsive img-circle img-advert col-xs-12 col-sm-3" alt="Responsive image">
 		<h1 >{{$ad->name}}</h1>
 		<h4>Рейтинг: {{$ad->rating}}
 			<div class='starrr' id='star1'></div>
 		</h4>
 		<h4>Категория:
-			<a href="{{url('/services/filter/?category='.$ad->advert_categor->id)}}">{{$ad->advert_categor->name}}</a>
+			<a href="{{secure_url('/services/filter/?category='.$ad->advert_categor->id)}}">{{$ad->advert_categor->name}}</a>
 		</h4>
 		<h4>Города:
 			@foreach($ad->advert_cits as $adv_cit)
-			<a href="{{url('/cities/'.$adv_cit->cit->name_eng)}}">{{$adv_cit->cit->name}}</a>
+			<a href="{{secure_url('/cities/'.$adv_cit->cit->name_eng)}}">{{$adv_cit->cit->name}}</a>
 			@endforeach
 		</h4>
 		<h4>
@@ -28,7 +28,7 @@
 			<div class="col-xs-12 margin-top-always" style="padding: 0;">
 				<h4 class="margin-top-always">Фотографии ({{$ad->photos->count()}})</h4>
 				@foreach($ad->photos as $photo)
-				<a class="col-xs-3 photo-advert" data-lightbox="roadtrip" href="{{asset($photo->path)}}" style="background-image: url({{asset($photo->path)}});"></a>
+				<a class="col-xs-3 photo-advert" data-lightbox="roadtrip" href="{{secure_asset($photo->path)}}" style="background-image: url({{secure_asset($photo->path)}});"></a>
 				@endforeach
 			</div>
 			<div class="col-xs-12 margin-top-always" style="padding: 0;">
@@ -50,21 +50,21 @@
 						<div class="content">
 							<div class="center">
 								<div id="{{$other_adv->id}}" class="ui inverted button buy-btn">Добавить в корзину</div>
-								<a href="{{url('/advert/'.$other_adv->id.'?=city'.$city_filter)}}" class="ui primary button margin-top-always">Подробнее</a>
+								<a href="{{secure_url('/advert/'.$other_adv->id.'?=city'.$city_filter)}}" class="ui primary button margin-top-always">Подробнее</a>
 							</div>
 						</div>
 					</div>
 					@if($other_adv->photos->first())
-						<img src="{{asset('upload/adverts/thumbs/'.$other_adv->photos->first()['name'].'.'.$other_adv->photos->first()['ext'])}}" alt="{{$other_adv->name}}" title="{{$other_adv->name}}">
+						<img src="{{secure_asset('upload/begests/thumbs/'.$other_adv->photos->first()['name'].'.'.$other_adv->photos->first()['ext'])}}" alt="{{$other_adv->name}}" title="{{$other_adv->name}}">
 					@else
-						<img src="{{asset('images/no-avatar.png')}}" alt="{{$other_adv->name}}" title="{{$other_adv->name}}">
+						<img src="{{secure_asset('images/no-avatar.png')}}" alt="{{$other_adv->name}}" title="{{$other_adv->name}}">
 					@endif
 
 				</div>
 				<div class="content">
-					<a href="{{url('/advert/'.$other_adv->id)}}" class="header">{{$other_adv->name}}</a>
+					<a href="{{secure_url('/advert/'.$other_adv->id)}}" class="header">{{$other_adv->name}}</a>
 					<div class="meta">
-						<a href="{{url('/services/filter?category='.$other_adv->advert_categor->id)}}">{{$other_adv->advert_categor->name}}</a>
+						<a href="{{secure_url('/services/filter?category='.$other_adv->advert_categor->id)}}">{{$other_adv->advert_categor->name}}</a>
 					</div>
 				</div>
 			</div>

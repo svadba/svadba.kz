@@ -17,46 +17,46 @@
 			<div class="col-xs-12 col-sm-9 tab-content">
 				<div role="tabpanel" class="tab-pane active" id="1">
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/city.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/city.png')}}" alt="">
 					</div>
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/city.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/city.png')}}" alt="">
 					</div>
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/city.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/city.png')}}" alt="">
 					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="2">
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/marry.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/marry.png')}}" alt="">
 					</div>
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/marry.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/marry.png')}}" alt="">
 					</div>
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/marry.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/marry.png')}}" alt="">
 					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="3">
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/city.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/city.png')}}" alt="">
 					</div>
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/city.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/city.png')}}" alt="">
 					</div>
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/city.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/city.png')}}" alt="">
 					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="4">
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/marry.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/marry.png')}}" alt="">
 					</div>
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/marry.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/marry.png')}}" alt="">
 					</div>
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{asset('images/icons/marry.png')}}" alt="">
+						<img src="{{secure_asset('images/icons/marry.png')}}" alt="">
 					</div>
 				</div>
 			</div>

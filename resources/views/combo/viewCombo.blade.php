@@ -8,7 +8,7 @@
 		<div class="col-xs-12 col-sm-3">
 			<div class="col-xs-12 padding-0-always" style="background: rgba(111, 151, 213, .6); border-radius: 54px 6px 0 54px;">
 				<div class="col-xs-3 padding-0-always">
-					<img src="{{asset($combo->photo_path)}}" alt="" class="img-responsive">
+					<img src="{{secure_asset($combo->photo_path)}}" alt="" class="img-responsive">
 				</div>
 				<div class="col-xs-9 padding-0-always text-center">
 					<h2 style="color: #191e23; margin-top: 6px; margin-bottom: 6px;">{{$combo->name}}</h2>
@@ -42,12 +42,12 @@
 											{{$advert->description}}
 											</div>
 											@foreach($advert->photos as $photo)
-											<div class="col-xs-3 photo-advert" style="background-image: url({{asset($photo->path)}});"></div>
+											<div class="col-xs-3 photo-advert" style="background-image: url({{secure_asset($photo->path)}});"></div>
 											@endforeach
 										</div>
 									</div>
 								</div>
-								<img src="{{asset($advert->photo_main())}}" alt="">
+								<img src="{{secure_asset($advert->photo_main())}}" alt="">
 							</div>
 							<div class="content">
 								<div class="header text-center">{{$advert->name}}</div>

@@ -1,0 +1,108 @@
+/* LoadImage */
+
+.loadGoodImgMusic {
+	display: block;
+	position: absolute;
+	right: 33px;
+	top: -4px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	color: green;
+	font-size: 1.2em;
+	line-height: 29px;
+	height: 33px;}
+
+
+.set_main2 {
+	display: block;
+	position: absolute;
+	right: 13px;
+	top: 0;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	color: green;
+}
+
+.set_main2:hover {
+	transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+	-moz-transform: scale(1.2);
+	-o-transform: scale(1.2);
+	-ms-transform: scale(1.2);
+}
+
+.dropInMusic {
+	display: block;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	color: orangered;
+	font-size: 1.3em;
+	line-height: 29px;
+	height: 33px;
+}
+
+
+.dropInMusic2 {
+	display: block;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	color: rgb(229, 74, 26);
+}
+
+
+.loadingMusics {
+	display: none;
+	margin: 10px 0;
+	max-width: 350px;
+	position: relative;
+	width: 100%;
+}
+.loadingDivMusic
+{
+	width:100%;
+	background:black;
+	height:10px;
+}
+.theLoadingDivMusic{
+	width:0%;
+	background:red;
+	height:10px;
+}
+
+.loadingBarMusics {
+	background: rgba(34, 102, 187, 0.5) none repeat scroll 0 0;
+	border-radius: 2px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+	height: 25px;
+	margin-top: 5px;
+}
+
+.loadingColorMusics {
+	width: 0%;
+	height: 100%;
+	-webkit-transition: all 0.1s ease-in;
+	-moz-transition: all 0.1s ease-in;
+	-ms-transition: all 0.1s ease-in;
+	-o-transition: all 0.1s ease-in;
+	transition: all 0.1s ease-in;
+	border-radius: inherit;
+	background-color: rgb(34, 102, 187);
+}
+
+.loadingContentMusics {
+	font-size: 1em;
+	font-weight: bold;
+	position: relative;
+	text-align: left;
+
+.dis_block {
+	display: block;
+}
+
+.inputFile {
+	background: #26b;
+	color: white;
+	display: block;
+	height: 30px;
+	width: 30px;
+}

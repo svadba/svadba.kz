@@ -21,7 +21,6 @@
                         <input type="submit" name="" value="" class="submit" />
                     </form>
                 </div>
-                
                 <div class="panel-body col-xs-12">
                     <h4>Заявки из корзин</h4>
                     <table class="table table-striped table-bordered table-hover table-condensed" cellspacing='0'>
@@ -38,8 +37,8 @@
                         </tr>
                         <?php $count = 1;?>
                         @foreach ($baskets as $bask)
-                        <tr>
-                            <td><?php echo $count; ?></td>
+                        <tr id="tr-{{$bask->id}}">
+                            <td><?php echo $bask->id; ?></td>
                             <td>{{$bask->name}}</td>
                             <td>{{$bask->cit->name}}</td>
                             <td>{{$bask->phone}}</td>
@@ -67,7 +66,7 @@
                                     <a style="" class="btn btn-success" title=" Установить статус выполнено" href="{{url('admin/requests/basket/set_end/'.$bask->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></a>
                                 @endif
                                 @if(ServiceMan::canView())
-                                <a style="" class="btn btn-danger" title="Удалить заявку" href="{{url('admin/requests/basket/delete/'.$bask->id)}}"><i class="fa fa-trash-o"></i></a>
+                                <span  id="delbask-{{$bask->id}}" class="btn btn-danger delete_bask" title="Удалить заявку" ><i class="fa fa-trash-o"></i></span>
                                 @endif
                             </td>
                         </tr>
@@ -79,4 +78,42 @@
         </div>
     </div>
 </div>
+    <script type="text/javascript">
+        function del_bask()
+        {
+            $('.delete_bask').on('click', function(){
+                var id = $(this).attr('id');
+                var bask_id = id.split('-');
+                bask_id = bask_id[1];
+                if(bask_id)
+                {
+                    var check = confirm('Вы действительно хотите удалить заявку № ' + bask_id + '?');
+                    if(check)
+                    {
+                        $.ajax({
+                            url:'/admin/requests/basket/delete/'+bask_id,
+                            type: "get",
+                            headers: {
+                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                                if(data == 'good')
+                                {
+                                    $('#tr-' + bask_id).remove();
+                                }
+                                else
+                                {
+                                    alert('Не удалено');
+                                }
+                            },
+                            error: function (a, b) {
+                                alert('Сервер не отвечает попробуйте позже!')
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        del_bask();
+    </script>
 @endsection

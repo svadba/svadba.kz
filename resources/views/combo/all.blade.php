@@ -10,10 +10,10 @@
                         <ul style="margin:5px 0px 10px -35px;">
                         </ul>
                     </div>
-                    <a href="{{url('admin/combos/all')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/combos/all')}}" class="btn btn-default">
                         <i class="fa fa-list-ul"></i> Все пакеты
                     </a>
-                    <a href="{{url('admin/combos/add')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/combos/add')}}" class="btn btn-default">
                         <i class="fa fa-plus"></i> Добавить пакет
                     </a>
                 </div>
@@ -37,9 +37,9 @@
                                 <td>{{$combo->price}}</td>
                                 <td style="width: 172px; text-align: right;">
                                     <a href="#modalCity" id="addcity-{{$combo->id}}" class="btn btn-primary btn_city" data-toggle="modal"><i class="fa fa-plus"></i></a>
-                                    <a class="btn btn-info" title="Открыть пакет" href="{{url('admin//combos/view/'.$combo->id)}}"><i class="fa fa-external-link"></i></a>
-                                    <a class="btn btn-warning" title="Редактировать пакет" href="{{url('admin/combos/edit/'.$combo->id)}}"><i class="fa fa-pencil"></i></a>
-                                    <a class="btn btn-danger" title="Удалить пакет" href="{{url('admin/combos/delete/'.$combo->id)}}"><i class="fa fa-trash-o"></i></a>
+                                    <a class="btn btn-info" title="Открыть пакет" href="{{secure_url('admin//combos/view/'.$combo->id)}}"><i class="fa fa-external-link"></i></a>
+                                    <a class="btn btn-warning" title="Редактировать пакет" href="{{secure_url('admin/combos/edit/'.$combo->id)}}"><i class="fa fa-pencil"></i></a>
+                                    <a class="btn btn-danger" title="Удалить пакет" href="{{secure_url('admin/combos/delete/'.$combo->id)}}"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
                             @foreach($combo->combo_cits as $combo_cit)
@@ -90,7 +90,7 @@
                                 <!-- Футер модального окна -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default close_cities" data-dismiss="modal">Закрыть</button>
-                                    <button type="button" id="sent_city_to_server" class="btn btn-primary">Сохранить изменения</button>
+                                    <button type="button" id="sent_city_to_server" data-dismiss="modal" class="btn btn-primary">Сохранить изменения</button>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                                 <!-- Футер модального окна -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default close_categories" data-dismiss="modal">Закрыть</button>
-                                    <button type="button" id="sent_category_to_server" class="btn btn-primary">Сохранить изменения</button>
+                                    <button type="button" id="sent_category_to_server" data-dismiss="modal" class="btn btn-primary">Сохранить изменения</button>
                                 </div>
                             </div>
                         </div>
@@ -136,15 +136,14 @@
                                 <!-- Футер модального окна -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default close_advert" data-dismiss="modal">Закрыть</button>
-                                    <button type="button" id="sent_adverts_to_server" class="btn btn-primary">Сохранить изменения</button>
+                                    <button type="button" id="sent_adverts_to_server" data-dismiss="modal" class="btn btn-primary">Сохранить изменения</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-            <script type="text/javascript" src="{{asset('admin_wp/js/combo_ajax.js')}}"></script>
+            <script type="text/javascript" src="{{secure_asset('admin_wp/js/combo_ajax.js')}}"></script>
         </div>
     </div>
 </div>

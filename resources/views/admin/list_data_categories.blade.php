@@ -10,10 +10,10 @@
                         <ul style="margin:5px 0px 10px -35px;">
                         </ul>
                     </div>
-                    <a href="{{url('admin/list_data/cities')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/list_data/cities')}}" class="btn btn-default">
                         <i class="fa fa-list-ul"></i> Города
                     </a>
-                    <a href="{{url('admin/list_data/categories')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/list_data/categories')}}" class="btn btn-default">
                         <i class="fa fa-list-ul"></i> Категории
                     </a>
                 </div>
@@ -23,7 +23,7 @@
                     <h5 style="color:red;">Будьте внимательны! Удаление определенной категории приведет к удалению всех объявлений зависимых от этой категории!</h5>
                     <!-- Отображение ошибок проверки ввода -->
                     @include('common.errors')
-                    <form style="margin-bottom:20px; border:1px solid gray; padding:10px;" action="{{url('admin/list_data/category/add')}}" method="POST">
+                    <form style="margin-bottom:20px; border:1px solid gray; padding:10px;" action="{{secure_url('admin/list_data/category/add')}}" method="POST">
                         {{ csrf_field() }}
                         <p>Добавление категории</p>
                         <div class="form-group">
@@ -46,8 +46,8 @@
                             <td>{{$categ->name}}</td>
                             <td>{{$categ->name_eng}}</td>
                             <td style="width: 172px; text-align: right;">
-                                <a class="btn btn-warning" title="Редактировать город" href="{{url('admin/list_data/category/edit/'.$categ->id)}}"><i class="fa fa-pencil"></i></a>
-                                <a class="btn btn-danger" title="Удалить город" href="{{url('admin/list_data/category/delete_test/'.$categ->id)}}"><i class="fa fa-trash-o"></i></a>
+                                <a class="btn btn-warning" title="Редактировать город" href="{{secure_url('admin/list_data/category/edit/'.$categ->id)}}"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-danger" title="Удалить город" href="{{secure_url('admin/list_data/category/delete_test/'.$categ->id)}}"><i class="fa fa-trash-o"></i></a>
                             </td>
                         </tr>
                     <?php  $count++; ?>

@@ -10,13 +10,13 @@
                         <ul style="margin:5px 0px 10px -35px;">
                         </ul>
                     </div>
-                    <a href="{{url('admin/requests/baskets')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/requests/baskets')}}" class="btn btn-default">
                         <i class="fa fa-star"></i> Заявки из корзин
                     </a>
-                    <a href="{{url('admin/requests/baskets')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/requests/baskets')}}" class="btn btn-default">
                         <i class="fa fa-list-ul"></i> Заявки из пакетов
                     </a>
-                    <form style="margin-top:10px; left:-15px;" action="{{url('')}}" method="GET" class="search col-sm-8">
+                    <form style="margin-top:10px; left:-15px;" action="{{secure_url('')}}" method="GET" class="search col-sm-8">
                         <input type="search" name="search_name" placeholder="Поиск" class="input" />
                         <input type="submit" name="" value="" class="submit" />
                     </form>
@@ -54,7 +54,7 @@
                         <tr>
                             <td>Дата мероприятия</td>
                             <td>
-                                <form style="display:inline-block; " method="POST" id="form_tusa" action="{{url('/admin/requests/basket/save_tusa/'.$basket->id)}}">
+                                <form style="display:inline-block; " method="POST" id="form_tusa" action="{{secure_url('/admin/requests/basket/save_tusa/'.$basket->id)}}">
                                     {{ csrf_field() }}
                                     <input style="color:@if($basket->tusa_at) green @else red @endif;" type='text' value="{{$basket->tusa_at or 'Не указанна'}}" name="tusa_at" class="datepicker-here" data-date-format="yyyy-mm-dd" data-timepicker="true" data-time-format="hh:ii:00" data-position="right top bottom" />
 
@@ -69,7 +69,7 @@
                             <td>
                                 @if($basket->ended == 1) <span style="color:green;"> Завершена </span> @else <span style="color:red;"> Не завершена </span> @endif
                             </td>
-                            <td>@if($basket->ended != 1) <a style="" class="btn btn-success" title="Завершить заявку" href="{{url('admin/requests/basket/set_end/'.$basket->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> @endif</td>
+                            <td>@if($basket->ended != 1) <a style="" class="btn btn-success" title="Завершить заявку" href="{{secure_url('admin/requests/basket/set_end/'.$basket->id)}}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> @endif</td>
                         </tr>
                         @if($basket->ended == 1)
                         <tr>
@@ -82,7 +82,7 @@
 
                     <br>
                     <h4>Таблица объявлений заказанных клиентом:</h4>
-                    <form method="post" action="{{url('admin/requests/basket/delete_adv_many/'.$basket->id)}}">
+                    <form method="post" action="{{secure_url('admin/requests/basket/delete_adv_many/'.$basket->id)}}">
                     <table class="table table-striped table-bordered table-hover table-condensed" cellspacing='0'>
                         <tr>
                             <th style="background: #e6e6e6;">№</th>
@@ -99,7 +99,7 @@
                         @foreach ($adverts as $adv)
                         <tr>
                             <td><?php echo $count; ?></td>
-                            <td><a href="{{url('advert/'.$adv->id)}}">{{$adv->name}}</a></td>
+                            <td><a href="{{secure_url('advert/'.$adv->id)}}">{{$adv->name}}</a></td>
                             <td>{{$adv->advert_categor->name}}</td>
                             <td>{{$adv->rating}}</td>
                             <td>
@@ -114,7 +114,7 @@
                             </td>
                             <td>@if($adv->advert_stat_id == 1) <span style="color:green;">{{$adv->advert_stat->name}}</span> @else <span style="color:red;">{{$adv->advert_stat->name}}</span> @endif</td>
                             <td style=" width:40px; text-align: center;">
-                                <a style="" class="btn btn-danger" title="Удалить заявку" href="{{url('admin/requests/basket/delete_adv_one/'.$basket->id.'?delete_adverts='.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
+                                <a style="" class="btn btn-danger" title="Удалить заявку" href="{{secure_url('admin/requests/basket/delete_adv_one/'.$basket->id.'?delete_adverts='.$adv->id)}}"><i class="fa fa-trash-o"></i></a>
 
                             </td>
                             <td><input type="checkbox" class="delete_advert" name='delete_adverts[]' value="{{$adv->id}}"></td>

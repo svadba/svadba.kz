@@ -14,7 +14,7 @@
 		<div class="col-xs-12 margin-top-always">
 			<div class="col-xs-12 col-sm-4 padding-0-always" style="margin-left: 33%;">
 				<div class="col-xs-3 padding-0-always">
-					<img src="{{asset($combo->photo_path)}}" alt="" class="img-responsive">
+					<img src="{{secure_asset($combo->photo_path)}}" alt="" class="img-responsive">
 				</div>
 				<div class="col-xs-9 padding-0-always text-center">
 					<h2 style="color: #191e23; margin-top: 6px; margin-bottom: 6px;">{{$combo->name}}</h2>
@@ -37,12 +37,12 @@
 										<?php echo $advert->description; ?>
 									</div>
 									@foreach($advert->photos as $photo)
-									<div class="col-xs-3 photo-advert" style="background-image: url({{asset($photo->path)}});"></div>
+									<div class="col-xs-3 photo-advert" style="background-image: url({{secure_asset($photo->path)}});"></div>
 									@endforeach
 								</div>
 							</div>
 						</div>
-						<img src="{{asset($advert->photo_main())}}" alt="">
+						<img src="{{secure_asset($advert->photo_main())}}" alt="">
 					</div>
 					<div class="content">
 						<div class="header text-center" style="font-size: 12px;">{{$advert->name}} {{$combo_categor2->advert_categor->name}}</div>
@@ -74,7 +74,7 @@
 								<div id="minadv-{{$advert->id}}" class="col-xs-12 col-sm-4 minadvdiv-{{$combo_categor3->id}}" style="padding-right: 0;">
 									<div class="card">
 										<div class="blurring dimmable image">
-											<img class="minadvimg-{{$advert->id}}" src="{{asset($advert->photo_main())}}" alt="">
+											<img class="minadvimg-{{$advert->id}}" src="{{secure_asset($advert->photo_main())}}" alt="">
 										</div>
 										<div class="content">
 											<div class="header text-center">{{$advert->name}}</div>
@@ -107,7 +107,7 @@
 		<h1>nety combo</h1>
 		@endif
 	</div>
-	<form action="{{url('basket/sent')}}" method="POST" class="center-block col-xs-12 col-sm-3" style="max-width: 290px;">
+	<form action="{{secure_url('basket/sent')}}" method="POST" class="center-block col-xs-12 col-sm-3" style="max-width: 290px;">
 		{{ csrf_field() }}
 		<div class="form-group">
 			<label for="exampleInputEmail1">Имя:</label>
@@ -138,15 +138,15 @@
 			<div class="card">
 				<div class="image">
 					@if($bask->photos->first())
-					<img src="{{asset('upload/adverts/thumbs/'.$bask->photos->first()['name'].'.'.$bask->photos->first()['ext'])}}" alt="{{$bask->name}}" title="{{$bask->name}}">
+					<img src="{{secure_asset('upload/begests/thumbs/'.$bask->photos->first()['name'].'.'.$bask->photos->first()['ext'])}}" alt="{{$bask->name}}" title="{{$bask->name}}">
 					@else
-					<img src="{{asset('images/no-avatar.png')}}" alt="{{$bask->name}}" title="{{$bask->name}}">
+					<img src="{{secure_asset('images/no-avatar.png')}}" alt="{{$bask->name}}" title="{{$bask->name}}">
 					@endif
 				</div>
 				<div class="content">
-					<a href="{{url('advert/'.$bask->id)}}" class="header">{{$bask->name}}</a>
+					<a href="{{secure_url('advert/'.$bask->id)}}" class="header">{{$bask->name}}</a>
 					<div class="meta">
-						<a href="{{url('services/filter?category='.$bask->advert_categor_id)}}" class="date">{{$bask->advert_categor->name}}</a>
+						<a href="{{secure_url('services/filter?category='.$bask->advert_categor_id)}}" class="date">{{$bask->advert_categor->name}}</a>
 					</div>
 				</div>
 				<div class="extra content">

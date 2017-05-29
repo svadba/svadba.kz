@@ -76,7 +76,7 @@ class Advert extends Model
         $all_photos = Photo::where('advert_id', $this->id)->where('main', 1)->first();
         if($all_photos)
         {
-            return 'upload/adverts/thumbs/' .$all_photos->name. '.' .$all_photos->ext;
+            return 'upload/begests/thumbs/' .$all_photos->name. '.' .$all_photos->ext;
         }
         else {
             return 'images/no-avatar.png';

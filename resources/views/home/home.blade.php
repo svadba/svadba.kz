@@ -3,38 +3,45 @@
 @section('content')
     <div class="body row">
         <div class="col-xs-12 col-sm-3">
-            <div class="anketa col-xs-12">
+            <div style="background: #e9e9e9; border:1px solid #d3d3d3; padding:0 20px;" class="anketa col-xs-12">
                 <img alt="{{$contractor->name}}" class="center-block img-circle img-responsive margin-top-always"
-                     src="//svadba.kz/upload/adverts/thumbs/ncvTZB1xDP1446.jpeg">
-                <div class="input-group margin-top-always">
-                    <span class="input-group-addon" id="basic-addon1">И</span>
-                    <input type="text" class="form-control" placeholder="{{$contractor->name}}"
-                           aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group margin-top-always">
-                    <span class="input-group-addon" id="basic-addon2">Ф</span>
-                    <input type="text" class="form-control" placeholder="{{$contractor->surname}}"
-                           aria-describedby="basic-addon2">
-                </div>
-                <div class="input-group margin-top-always">
-                    <span class="input-group-addon" id="basic-addon3">@</span>
-                    <input type="text" class="form-control" placeholder="{{$contractor->email}}"
-                           aria-describedby="basic-addon3">
-                </div>
+                     @if($contractor->ava_path) src="{{secure_asset($contractor->ava_path)}}" @else src="{{secure_asset('images/no-avatar.png')}}" @endif >
+                <h5 style="color:black;margin:10px 0px 5px;"><i style="font-size: 2em; color: #00aeef;" class="user icon"></i>Личная информация</h5>
+                <span class="input input--fumi">
+					<input class="input__field input__field--fumi" type="text" value="{{$contractor->name}}" id="inputname{{$contractor->id}}" />
+					<label class="input__label input__label--fumi" for="inputname{{$contractor->id}}">
+						<i class="info icon icon--fumi"></i>
+						<span style="font-size: 1.2em;" class="input__label-content input__label-content--fumi">Имя</span>
+					</label>
+				</span>
+                <span class="input input--fumi">
+					<input class="input__field input__field--fumi" type="text" value="{{$contractor->surname}}" id="inputfam{{$contractor->id}}"/>
+					<label class="input__label input__label--fumi" for="inputfam{{$contractor->id}}">
+						<i class="info icon icon--fumi"></i>
+						<span style="font-size: 1.2em;" class="input__label-content input__label-content--fumi">Фамилия</span>
+					</label>
+				</span>
+                <span class="input input--fumi">
+					<input class="input__field input__field--fumi" type="text" value="{{$contractor->email}}" id="inputemail{{$contractor->id}}"/>
+					<label class="input__label input__label--fumi" for="inputemail{{$contractor->id}}">
+						<i class="at icon icon--fumi"></i>
+						<span style="font-size: 1.2em;" class="input__label-content input__label-content--fumi">Почтовый адрес</span>
+					</label>
+				</span>
                 <a class="btn btn-default btn-lg btn-block margin-top-always margin-bottom-always"
-                   href="{{url('/home/adverts/add')}}">+ Добавить объявление</a>
+                   href="{{url('/home/adverts/add/'.$contractor->id.'/step1')}}">+ Добавить объявление
+                </a>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-9 ui cards stackable three column grid">
+
+        <div class="col-xs-12 col-sm-9 ui cards">
             <h2 class="col-xs-12 text-center xs-margin-top">Объявления</h2>
             @foreach($contractor->adverts as $advert)
-                <div class="card column" id="advert-{{$advert->id}}">
+                <div class="card" id="advert-{{$advert->id}}">
                     <div class="content">
                         <img class="right floated tiny ui image"
-                             src="//svadba.kz/upload/adverts/thumbs/ncvTZB1xDP1446.jpeg">
-                        <div class="header">
-                            {{$advert->name}}
-                        </div>
+                             src="{{$advert->photo_main()}}">
+                        <div class="header">{{$advert->name}}</div>
                         <div class="meta">
                             <i class="unhide icon"></i> {{$advert->views}}
                         </div>
@@ -57,7 +64,7 @@
                         <div class="ui two buttons">
                             <a class="ui basic green button"
                                href="{{url('/home/adverts/'.$advert->id)}}">Просмотреть</a>
-                            <div class="ui basic red button" id="del_adv-{{$advert->id}}">Удалить</div>
+                            <div class="ui basic red button delete_advert" data-name="{{$advert->name}}" id="del_adv-{{$advert->id}}">Удалить</div>
                         </div>
                     </div>
                 </div>

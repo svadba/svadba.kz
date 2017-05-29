@@ -8,7 +8,7 @@
 		@foreach($services as $serv)
 			<div class="category_block col-cb c137">
 				<div class="category_block_wrap">
-					<a href="{{url('/services/filter?category='.$serv->id)}}">
+					<a href="{{secure_url('/services/filter?category='.$serv->id)}}">
 						<div class="image"></div>
 						<div class="name">{{$serv->name}}</div>
 					</a>

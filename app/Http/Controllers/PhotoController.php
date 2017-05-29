@@ -14,7 +14,7 @@ class PhotoController extends Controller
     {
         if($photo->main)
         {
-            Storage::disk('public_my')->delete('upload/adverts/thumbs/' .$photo->name. '.' .$photo->ext);
+            Storage::disk('public_my')->delete('upload/begests/thumbs/' .$photo->name. '.' .$photo->ext);
             Storage::disk('public_my')->delete($photo->path);
             $advert_id = $photo->advert_id;
             $photo->delete();
@@ -24,8 +24,12 @@ class PhotoController extends Controller
                 $next_file->main = 1;
                 $next_file->save();
                 $image = Image::make($next_file->path);
-                $image->fit(290)->save('upload/adverts/thumbs/' .$next_file->name. '.' .$next_file->ext);
+                $image->fit(290)->save('upload/begests/thumbs/' .$next_file->name. '.' .$next_file->ext);
             }
+        }
+        else{
+            Storage::disk('public_my')->delete($photo->path);
+            $photo->delete();
         }
 
         return redirect()->back();
@@ -39,7 +43,7 @@ class PhotoController extends Controller
         If(count($all_photos))
         {
             foreach($all_photos as $phot):
-                Storage::disk('public_my')->delete('upload/adverts/thumbs/' .$phot->name. '.' .$phot->ext);
+                Storage::disk('public_my')->delete('upload/begests/thumbs/' .$phot->name. '.' .$phot->ext);
                 $phot->main = 0;
                 $phot->save();
             endforeach;
@@ -47,7 +51,7 @@ class PhotoController extends Controller
         $photo->main = 1;
         $photo->save();
         $image = Image::make($photo->path);
-        $image->fit(290)->save('upload/adverts/thumbs/' .$photo->name. '.' .$photo->ext);
+        $image->fit(290)->save('upload/begests/thumbs/' .$photo->name. '.' .$photo->ext);
         return redirect()->back();
     }
 }

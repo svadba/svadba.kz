@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Contractor;
+use App\Policies\AdvertPolicy;
 use App\Policies\ContPolicy;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -16,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
-        Contractor::class => ContPolicy::class,
+        'App\Contractor' => 'App\Policies\ContractorPolicy',
+        'App\Advert' => 'App\Policies\AdvertPolicy'
     ];
 
     /**

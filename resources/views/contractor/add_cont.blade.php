@@ -10,13 +10,13 @@
             <ul style="margin:5px 0px 10px -35px;">
             </ul>
           </div>
-          <a href="{{url('admin/contractors/my')}}" class="btn btn-default">
+          <a href="{{secure_url('admin/contractors/my')}}" class="btn btn-default">
             <i class="fa fa-star"></i> Мои подрядчики
           </a>
-          <a href="{{url('admin/contractors/all')}}" class="btn btn-default">
+          <a href="{{secure_url('admin/contractors/all')}}" class="btn btn-default">
             <i class="fa fa-list-ul"></i> Все подрядчики
           </a>
-          <a href="{{url('admin/contractors/add')}}" class="btn btn-default">
+          <a href="{{secure_url('admin/contractors/add')}}" class="btn btn-default">
             <i class="fa fa-plus"></i> Добавить подрядчика
           </a>
         </div>
@@ -26,7 +26,7 @@
           @include('common.errors')
 
           <!-- Форма новой задачи -->
-          <form style="max-width:300px; margin:20px auto;" action="{{ url('admin/contractors/save') }}" method="POST" class="form-horizontal">
+          <form style="max-width:300px; margin:20px auto;" action="{{ secure_url('admin/contractors/save') }}" method="POST" class="form-horizontal">
             {{ csrf_field() }}
             <!-- Имя задачи -->
             <div class="form-group">

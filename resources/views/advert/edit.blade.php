@@ -22,7 +22,7 @@
                     <!-- Отображение ошибок проверки ввода -->
                     @include('common.errors')
                     <div class="row">
-                        <form action="{{url('admin/adverts/edit_go')}}" method="POST" enctype="multipart/form-data" >
+                        <form action="{{secure_url('admin/adverts/edit_go')}}" method="POST" enctype="multipart/form-data" >
                             {{ csrf_field() }}
                             <input type="text" hidden="" name="advert_id" id="advert_id" value="{{$advert->id}}"/>
                             <div class="form-group">
@@ -157,12 +157,12 @@
                                      @if($adv_cito->dogovor == 1)
                                         <div class="tel">
                                             <span>{{$adv_cito->cit->name}}: </span><span>Договорная</span>
-                                            <a type="button" class="btn btn-danger btn-xs" href="{{url('admin/advert_cits/delete/'.$adv_cito->id)}}">&#10060;</a>
+                                            <a type="button" class="btn btn-danger btn-xs" href="{{secure_url('admin/advert_cits/delete/'.$adv_cito->id)}}">&#10060;</a>
                                         </div>
                                     @else
                                         <div class="tel">
                                             <span>{{$adv_cito->cit->name}}: </span><span>{{$adv_cito->price}}</span> - <span>{{$adv_cito->price_two}}</span>
-                                            <a type="button" class="btn btn-danger btn-xs" href="{{url('admin/advert_cits/delete/'.$adv_cito->id)}}">&#10060;</a>
+                                            <a type="button" class="btn btn-danger btn-xs" href="{{secure_url('admin/advert_cits/delete/'.$adv_cito->id)}}">&#10060;</a>
                                         </div>
                                     @endif
 
@@ -200,12 +200,12 @@
                                     <input type="file" name="photos[]" multiple/>
                                     @foreach($advert->photos as $photo)
                                     <div class="col-xs-2">
-                                        <img id="img-{{$photo->id}}" src="{{asset($photo->path)}}" class="img-responsive img-thumbnail" alt="Responsive image">
-                                        <a type="button" class="btn btn-danger btn-xs img_delete" href="{{url('admin/photos/delete/'.$photo->id)}}">X</a>
+                                        <img id="img-{{$photo->id}}" src="{{secure_asset($photo->path)}}" class="img-responsive img-thumbnail" alt="Responsive image">
+                                        <a type="button" class="btn btn-danger btn-xs img_delete" href="{{secure_url('admin/photos/delete/'.$photo->id)}}">X</a>
                                         @if($photo->main)
                                             <a type="button" title="Главное фото" style="position:absolute; top:19px; right:45px;" class="btn btn-success btn-xs" href="#"><i class="fa fa-star"></i></a>
                                         @else
-                                            <a type="button" title="Сделать главным" style="position:absolute; top:19px; right:45px;" class="btn btn-info btn-xs" href="{{url('admin/photos/set_main/'.$photo->id)}}"><i class="fa fa-star"></i></a>
+                                            <a type="button" title="Сделать главным" style="position:absolute; top:19px; right:45px;" class="btn btn-info btn-xs" href="{{secure_url('admin/photos/set_main/'.$photo->id)}}"><i class="fa fa-star"></i></a>
                                         @endif
                                     </div>
                                     @endforeach

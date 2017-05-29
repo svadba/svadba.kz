@@ -5,7 +5,7 @@
 	<div class="row body">
 		<div class="col-xs-12" style="margin-bottom: 30px;">
 			<video autoplay="autoplay" loop="loop" poster="" preload="auto">
-				<source src="{{asset('videos/bakyt.mov')}}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+				<source src="{{secure_asset('videos/bakyt.mov')}}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
 			</video>
 		</div>
 		<div class="col-xs-12 col-sm-9 text-center">
@@ -65,7 +65,7 @@
 			<p class="text-center">+7 (776) 125-78-53</p>
 		</div>
 		<div class="col-xs-12 col-sm-3">
-			<form action="{{url('basket/sent')}}" method="POST" class="center-block" style="max-width: 290px;">
+			<form action="{{secure_url('basket/sent')}}" method="POST" class="center-block" style="max-width: 290px;">
 				{{ csrf_field() }}
 				<div class="form-group">
 					<label for="exampleInputEmail1">Город:</label>

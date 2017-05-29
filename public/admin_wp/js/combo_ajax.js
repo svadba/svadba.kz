@@ -241,7 +241,6 @@ $(document).ready(function(){
                     added_city = {};
                     city_to_add.html('');
                     geted_cities.html('');
-                    $('#modalCity').modal('hide');
                     click_add_category();
 
                     delete_city_main();
@@ -349,7 +348,6 @@ $(document).ready(function(){
                     added_category = {};
                     category_to_add.html('');
                     geted_categories.html('');
-                    $('#modalCategory').modal('hide');
                     delete_category_main();
 
                 },
@@ -484,7 +482,6 @@ $(document).ready(function(){
                     added_advert= {};
                     adverts_to_add.html('');
                     geted_adverts.html('');
-                    $('#modalAdvert').modal('hide');
                     delete_advert_main();
                 },
                 errors:function(a,b) { alert('Сервер не отвечает');}

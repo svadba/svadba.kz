@@ -25,33 +25,10 @@ class MainPageController extends Controller
        return view('pages.main_page', [
            'categories' => $categories,
            'cities' => $cities,
-           'sn' => 'main_page'
+           'sn' => 'main_page',
+           'title' => 'Главная',
+           'description' => ''
        ]);
-    }
-
-    public function contacts()
-    {
-        return view('static.contacts', ['sn' => 'contacts']);
-    }
-
-    public function about()
-    {
-        return view('static.about', ['sn' => 'about']);
-    }
-
-    public function rulesAndHelp()
-    {
-        return view('static.rules_and_help', ['sn' => 'rules_and_help']);
-    }
-
-    public function advertising()
-    {
-        return view('pages.advertising', ['sn' => 'advertising']);
-    }
-
-    public function weddingPlan()
-    {
-        return view('pages.wedding_plan', ['sn' => 'contacts']);
     }
 
 

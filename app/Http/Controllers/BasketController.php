@@ -25,15 +25,37 @@ class BasketController extends Controller
 
         $cities = Cit::whereNotIn('id', [16,17,18])->get();
 
-        if(!(isset($_COOKIE['basket']) && isset($_COOKIE['combo'])))
+        if(!isset($_COOKIE['basket']))
         {
-            return redirect('/');
-        }else
-        {
-            if(!($_COOKIE['basket'] && $_COOKIE['combo']))
+            if(!isset($_COOKIE['combo']))
             {
                 return redirect('/');
             }
+            else
+            {
+                if(!$_COOKIE['combo'])
+                {
+                    return redirect('/');
+                }
+            }
+        }
+        else
+        {
+            IF(!$_COOKIE['basket'])
+            {
+                if(!isset($_COOKIE['combo']))
+                {
+                    return redirect('/');
+                }
+                else
+                {
+                    if(!$_COOKIE['combo'])
+                    {
+                        return redirect('/');
+                    }
+                }
+            }
+
         }
 
         if(isset($_COOKIE['basket'])) {
@@ -96,7 +118,16 @@ class BasketController extends Controller
         }
 
 
-        return view('basket.basket_show', ['combo' => $combo, 'combo_cit' => $combo_cit, 'combo_cook' => $combo_cook,'basket_adv' => $bask_advert, 'cities' => $cities, 'sn' => 'basket_show']);
+        return view('basket.basket_show', [
+            'combo' => $combo,
+            'combo_cit' => $combo_cit,
+            'combo_cook' => $combo_cook,
+            'basket_adv' => $bask_advert,
+            'cities' => $cities,
+            'sn' => 'basket_show',
+            'title' => "Корзина заказа",
+            'description' => 'Корзина с заказынными услугами'
+        ]);
     }
 
 
@@ -114,22 +145,52 @@ class BasketController extends Controller
             'email' => 'email|string|max:50'
         ]);
 
-        if(!(isset($_COOKIE['basket']) && isset($_COOKIE['combo'])))
+        if(!isset($_COOKIE['basket']))
         {
-            return redirect('/');
-        }else
-        {
-            if(!($_COOKIE['basket'] && $_COOKIE['combo']))
+            if(!isset($_COOKIE['combo']))
             {
                 return redirect('/');
             }
+            else
+            {
+                if(!$_COOKIE['combo'])
+                {
+                    return redirect('/');
+                }
+            }
+        }
+        else
+        {
+            IF(!$_COOKIE['basket'])
+            {
+                if(!isset($_COOKIE['combo']))
+                {
+                    return redirect('/');
+                }
+                else
+                {
+                    if(!$_COOKIE['combo'])
+                    {
+                        return redirect('/');
+                    }
+                }
+            }
+
         }
 
 
+        if(isset($_COOKIE['basket']))
+        {
+            $cooks = $_COOKIE['basket'];
+            $cooks_array = explode(',', $cooks);
+            if(!$cooks_array) $cooks = '';
+        }
+        else
+        {
+            $cooks = '';
+            $cooks_array = [];
+        }
 
-        $cooks = $_COOKIE['basket'];
-        $cooks_array = explode(',', $cooks);
-        if(!$cooks_array) return redirect('/');
 
         $gr = Basket_request::create([
             'name' => $request->name,
@@ -190,7 +251,7 @@ class BasketController extends Controller
                             'basket_request_id' => $gr->id,
                             'adverts' => $combo_adverts
                         ]);
-                        $request_combo_advert = Advert::whereIn('id', explode(',',$combo_adverts))->with('advert_categor')->get();
+                        $request_combo_advert = Advert::whereIn('id', explode(',',$combo_adverts))->with('advert_categor','photos')->get();
                     }
                     /*
                     else
@@ -202,19 +263,27 @@ class BasketController extends Controller
             }
 
         }
+        //Получение объекта города для имени на русском
+        $city = Cit::find($gr->cit_id);
+        //токен чат айди для тееграма и передачи собщения о заявке
+        $token = '341119502:AAEwGwsn0h-koif-WL4HkEjmaUUNE0SGUkM';
+        $chat_id = '-212178754';
+        $txt = "ВНИМАНИЕ!!! Добавлена новая заявка%0A Номер: <b>{$gr->id}</b>%0A Город: <b>{$city->name}</b>%0A Дата добавления: <b>{$gr->created_at}</b>%0A";
+        fopen("https://api.telegram.org/bot". $token ."/sendMessage?chat_id=" . $chat_id ."&parse_mode=html&text=". $txt,"r");
 
 
-        $request_adverts = Advert::whereIn('id', $cooks_array)->with('advert_categor')->get();
+        $request_adverts = Advert::whereIn('id', $cooks_array)->with('advert_categor','photos')->get();
 
         return view('basket.sented', [
             'br' => $gr,
             'request_adverts' => $request_adverts,
             'combo' => $combo,
             'combo_cit' => $combo_cit,
-            '$request_combo_advert' => $request_combo_advert,
-            'sn' => 'sented'
+            'request_combo_adverts' => $request_combo_advert,
+            'sn' => 'sented',
+            'title' => "Заказ № {$gr->id} отправлен",
+            'description' => 'Ваш заказ успешно отправлен!'
         ]);
-
     }
 
 
@@ -255,6 +324,11 @@ class BasketController extends Controller
         return $advert;
     }
 
+    public function delete_combo(Combo_request $combo_request)
+    {
+        $combo_request->delete();
+        return 'good';
+    }
 
     //показать одну заявку в отдельном окне админу
     /**
@@ -374,27 +448,15 @@ class BasketController extends Controller
     }
 
 
-    //выводит страницу свопросом точно ли удалить
-    /**
-     * @param Basket_request $basket
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
+    //удавляет заявку
+
     public function delete(Basket_request $basket_request)
     {
-        return view('delete', ['basket' => $basket_request]);
-    }
-
-
-    //удаляет заявку
-    /**
-     * @param Basket_request $basket
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function delete_go(Basket_request $basket_request)
-    {
         $basket_request->delete();
-        return redirect()->back();
+        return 'good';
     }
+
+
 
 
 }

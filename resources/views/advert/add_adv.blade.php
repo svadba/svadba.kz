@@ -10,10 +10,10 @@
                         <ul style="margin:5px 0px 10px -35px;">
                         </ul>
                     </div>
-                    <a href="{{url('admin/adverts/my')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/adverts/my')}}" class="btn btn-default">
                         <i class="fa fa-star"></i> Мои объявления
                     </a>
-                    <a href="{{url('admin/adverts/all')}}" class="btn btn-default">
+                    <a href="{{secure_url('admin/adverts/all')}}" class="btn btn-default">
                         <i class="fa fa-list-ul"></i> Все объявления
                     </a>
                 </div>
@@ -22,7 +22,7 @@
                     <!-- Отображение ошибок проверки ввода -->
                     @include('common.errors')
                     <div class="row">
-                        <form action="{{url('admin/adverts/save')}}" method="POST" enctype="multipart/form-data" >
+                        <form action="{{secure_url('admin/adverts/save')}}" method="POST" enctype="multipart/form-data" >
                             {{ csrf_field() }}
                             <input type="text" hidden="" name="contractor_id" id="contractor_id" value="{{$contr->id}}"/>
                             <div class="form-group">
