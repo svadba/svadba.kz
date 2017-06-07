@@ -265,15 +265,15 @@
             </div>
         </div>
     </div>
-    <div class="ui modal modal_miniature">
+    <div class="ui modal long scrolling modal_miniature">
         <i class="close icon"></i>
         <div class="header">
             Редактирование миниатюры объявления
         </div>
         <div class="content">
             <p>Вы можете загрузить изображение в формате JPG и PNG.</p>
-            <div style="margin:30px 0;">
-                <label style="background:#26b; text-align:center; margin-right:10px;" class="ui labeled icon button" for="image_upload">
+            <div style="margin:30px 0; text-align:center;">
+                <label style="background:#26b; color:white; text-align:center; margin-right:10px;" class="ui labeled icon button" for="image_upload">
                     <i class="plus icon"></i> Выбрать файл
                 </label>
                 <div id="adfde-{{$advert->id}}" class="ui positive labeled icon button uploadMiniatureAdvert">
@@ -283,14 +283,14 @@
 
                 <div style="height:330px; width:auto; margin:0 auto;" id="forSelectMiniature">
                 </div>
-                <div id="div_for_errors">
+                <div style="margin:10px 0;" id="div_for_errors">
 
                 </div>
             </div>
             <p>Либо выберите одно из ранее загруженных фото</p>
             <div style="padding:10px; border-top:1px solid rgba(34,36,38,.15);">
                 @foreach($advert->photos as $photo)
-                    <img id="photo-{{$photo->id}}" style="display:inline-block; margin:0 5px 5px 0; height:70px; width:auto; border:1px solid gray;" src="{{secure_url($photo->path)}}"/>
+                    <img id="photo-{{$photo->id}}" class="imagesHaveToCrop" style="cursor:pointer; display:inline-block; margin:0 5px 5px 0; height:70px; width:auto; border:1px solid gray;" src="{{secure_url($photo->path)}}"/>
                 @endforeach
             </div>
         </div>

@@ -110,7 +110,7 @@
             <ul class="nav navbar-nav">
                 <li>
                     <form method="GET" action="{{secure_asset('/services/filter')}}"
-                          class="ui inverted transparent icon input">
+                          class="fluid ui inverted transparent icon input" style="min-width: 280px;">
                         <input type="text" placeholder="Поиск..." name="search_name">
                         <button class="ui inverted icon button">
                             <i class="search icon"></i>
@@ -122,9 +122,6 @@
                 @if(Auth::check())
                     <li><a href="{{secure_url('/logout')}}"><i class="sign out icon"></i>Выйти</a></li>
                 @else
-                <!--<li style="padding: 7px;">
-                        <a class="ui inverted button" href="{{secure_url('login')}}">Вход/Регистрация</a>
-                    </li>-->
                     <li><a href="tel:+77770003383"><i class="call icon"></i>+7 (777) 000-3380</a></li>
                 @endif
             </ul>
@@ -191,6 +188,7 @@
     "https://plus.google.com/u/0/116419100382625238337"
   ]
 }
+
 
 
 

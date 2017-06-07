@@ -38,7 +38,7 @@
                         Каталог категорий
                     </div>
                     <div class="ui raised segment"
-                         style="max-height: 500px; overflow-y:scroll;box-shadow: 0 0 0 1px #00B5AD inset!important;margin-top:0;">
+                         style="max-height: 420px; overflow-y:scroll;margin-top:0;">
                         @foreach($sort_adverts as $sort)
                             <a href="{{secure_url('/services/filter?category='.$sort->id)}}" class="ui label"
                                style="background-color:transparent;">
@@ -79,13 +79,13 @@
                 </div>
             </div>
             <div class="sixteen wide tablet four wide computer column text center">
-                <div class="ui teal pointing below label">
+                <div class="fluid ui teal below label" style="margin-bottom: 1rem">
                     Вход/Регистрация для специалистов
                 </div>
-                <a href="{{secure_asset('login')}}" class="ui basic primary button" style="width: 47.5%;"><i
+                <a href="{{secure_asset('login')}}" class="ui basic primary button" style="width: 39.5%;"><i
                             class="sign in icon"></i>Вход</a>
                 <a href="{{secure_asset('register')}}" class="ui basic positive button"
-                   style="width: 47.5%;"> <i class="plus icon"></i>Регистрация</a>
+                   style="width: 55.5%;"> <i class="plus icon"></i>Регистрация</a>
                 <h1 class="ui teal top attached header margin top always">
                     Центр свадебной индустрии
                     <div class="sub header">
@@ -97,16 +97,16 @@
                     <div class="ui tiny images">
                         <a href="//www.facebook.com/Svadbakz-1511652225566976/" target="_blank">
                             <img src="{{secure_asset('images/icons/fb.png')}}" alt="fb"
-                                 class="ui bordered circular image" style="width:66px;"></a>
+                                 class="ui bordered circular image" style="width:48px;"></a>
                         <a href="//www.instagram.com/www_svadba_kz/" target="_blank">
                             <img src="{{secure_asset('images/icons/inst.png')}}" alt="inst"
-                                 class="ui bordered circular image" style="width:66px;"></a>
+                                 class="ui bordered circular image" style="width:48px;"></a>
                         <a href="//vk.com/svadbakz2017" target="_blank">
                             <img src="{{secure_asset('images/icons/vk.png')}}" alt="vk"
-                                 class="ui bordered circular image" style="width:66px;"></a>
+                                 class="ui bordered circular image" style="width:48px;"></a>
                         <a href="//www.youtube.com/channel/UCuqcno-2cTI49tl_RqVswTw" target="_blank">
                             <img src="{{secure_asset('images/icons/yout.png')}}" alt="yout"
-                                 class="ui bordered circular image" style="width:66px;"></a>
+                                 class="ui bordered circular image" style="width:48px;"></a>
                     </div>
                 </div>
             </div>

@@ -209,6 +209,7 @@ $(document).ready(function () {
         body.on('click', '#change_miniature_advert', function () {
             console.log('start change_miniature_advert');
             $('.ui.modal_miniature').modal('show').modal({
+                scroll: true,
                 onHidden: function(){
                     forSelectMiniature.innerHTML = '';
                     div_for_errors.innerHTML = '';
@@ -235,6 +236,7 @@ $(document).ready(function () {
                     div_error.className = 'ui negative message';
                     div_error.innerHTML = '<i class="close icon"></i><div class="header">Выбранный файл не является файлом формата JPG или PNG</div><p>Выберите другой формат файла</p>';
                     div_for_errors.appendChild(div_error);
+                    uploadMiniatureAdvert.hide();
                     return false;
                 }
                 var fileReader = new FileReader();
@@ -269,6 +271,30 @@ $(document).ready(function () {
                 };
                 fileReader.readAsDataURL(fileToUpload);
             }
+        });
+
+        body.on('click', '.imagesHaveToCrop', function()
+        {
+            div_for_errors.innerHTML = '';
+            forSelectMiniature.innerHTML = '';
+            forSelectMiniature.style.display = 'block';
+            var img = document.createElement('img');
+            img.id = 'toCropImgId';
+            img.className = 'toCropImg';
+            img.src = $(this).attr('src');
+            forSelectMiniature.appendChild(img);
+            var toCropImg = document.getElementById('toCropImgId');
+            var cropper = new Cropper(toCropImg, {
+                aspectRatio:1 / 1,
+                crop: function(e) {
+                    xc = e.detail.x;
+                    yc = e.detail.y;
+                    wc = e.detail.width;
+                    hc = e.detail.height;
+                    uploadMiniatureAdvert.show();
+                    fileSet = true;
+                }
+            });
         });
 
         uploadMiniatureAdvert.on('click', function(){
