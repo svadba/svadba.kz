@@ -265,7 +265,7 @@
             </div>
         </div>
     </div>
-    <div class="ui modal long scrolling modal_miniature">
+    <div class="ui basic modal long scrolling modal_miniature body">
         <i class="close icon"></i>
         <div class="header">
             Редактирование миниатюры объявления
@@ -279,7 +279,7 @@
                 <div id="adfde-{{$advert->id}}" class="ui positive labeled icon button uploadMiniatureAdvert">
                     <i class="upload icon"></i> Загрузить
                 </div>
-                <input hidden type="file" name="image_upload" id="image_upload"/>
+                <input style="display:none;" type="file" name="image_upload" id="image_upload"/>
 
                 <div style="height:330px; width:auto; margin:0 auto;" id="forSelectMiniature">
                 </div>
