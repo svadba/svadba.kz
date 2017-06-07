@@ -1,0 +1,69 @@
+@media only screen and (max-width: 1439px) {
+    .ui.stackable.menu {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .ui.stackable.menu .item {
+        width: 100% !important;
+    }
+
+    .ui.stackable.menu .item:before {
+        position: absolute;
+        content: '';
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: rgba(34, 36, 38, .1);
+    }
+}
+
+.ui.menu .item:before {
+    background: transparent;
+}
+
+.ui.form .field .ui.input input {
+    width: 100%;
+}
+
+.ui.inverted.transparent.icon.input {
+    padding: 7px 13px;
+    -webkit-transition: .2s ease-out;
+    -webkit-transition-delay: 0.25s;
+    -o-transition: .2s ease-out;
+    -o-transition-delay: 0.25s;
+    -moz-transition: .2s ease-out;
+    -moz-transition-delay: 0.25s;
+    transition: .2s ease-out;
+    transition-delay: 0.25s;
+}
+
+.ui.inverted.transparent.icon.input:hover {
+    background: #fff;
+    color: rgb(6, 164, 161);
+    -webkit-transition: .2s ease-out;
+    -webkit-transition-delay: 0.25s;
+    -o-transition: .2s ease-out;
+    -o-transition-delay: 0.25s;
+    -moz-transition: .2s ease-out;
+    -moz-transition-delay: 0.25s;
+    transition: .2s ease-out;
+    transition-delay: 0.25s;
+}
+
+.ui.inverted.transparent.icon.input:hover .ui.inverted.icon.button {
+    color: rgb(6, 164, 161);
+    -webkit-transition: .2s ease-out;
+    -webkit-transition-delay: 0.25s;
+    -o-transition: .2s ease-out;
+    -o-transition-delay: 0.25s;
+    -moz-transition: .2s ease-out;
+    -moz-transition-delay: 0.25s;
+    transition: .2s ease-out;
+    transition-delay: 0.25s;
+}

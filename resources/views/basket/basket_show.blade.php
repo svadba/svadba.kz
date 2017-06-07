@@ -3,165 +3,169 @@
 
 @section('content')
 
-<!-- Отображение ошибок проверки ввода -->
-@include('common.errors')
-<div class="row body">
-	<div class="col-xs-12 col-sm-9 padding-0-always ui link cards" style="background: rgba(111, 151, 213, .6);">
-		@if($combo && $combo_cit && $combo_cook)
-		<input type="hidden" name="combo" value="{{$combo->id}}">
-		<input type="hidden" name="combo_cit" value="{{$combo_cit->id}}">
-
-		<div class="col-xs-12 margin-top-always">
-			<div class="col-xs-12 col-sm-4 padding-0-always" style="margin-left: 33%;">
-				<div class="col-xs-3 padding-0-always">
-					<img src="{{secure_asset($combo->photo_path)}}" alt="" class="img-responsive">
-				</div>
-				<div class="col-xs-9 padding-0-always text-center">
-					<h2 style="color: #191e23; margin-top: 6px; margin-bottom: 6px;">{{$combo->name}}</h2>
-					<p style="color: #191e23; font-size: 18px;">{{$combo->price}}ТГ</p>
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-12 padding-0-always tab-content">
-			@foreach($combo_cit->combo_categors as $combo_categor2)
-			@if(array_key_exists($combo_categor2->id, $combo_cook))
-			@foreach($combo_categor2->adverts as $advert)
-			@if( $combo_cook[$combo_categor2->id] == $advert->id )
-			<div class="col-xs-12 baseAdvDiv-{{$combo_categor2->id}}" id="baseAd-{{$advert->id}}" style="width: 20%;">
-				<div class="card">
-					<div class="blurring dimmable image">
-						<div class="ui dimmer">
-							<div class="content">
-								<div class="center">
-									<div style="max-height: 72.5px; overflow: hidden; text-overflow: ellipsis;">
-										<?php echo $advert->description; ?>
-									</div>
-									@foreach($advert->photos as $photo)
-									<div class="col-xs-3 photo-advert" style="background-image: url({{secure_asset($photo->path)}});"></div>
-									@endforeach
-								</div>
-							</div>
-						</div>
-						<img src="{{secure_asset($advert->photo_main())}}" alt="">
-					</div>
-					<div class="content">
-						<div class="header text-center" style="font-size: 12px;">{{$advert->name}} {{$combo_categor2->advert_categor->name}}</div>
-					</div>
-					<div class="extra content">
-						<div class="ui two buttons">
-							<a id="change-{{$advert->id}}" href="#modal{{$combo_categor2->id}}" data-toggle="modal" class="ui basic teal button change_adv">Изменить</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			@endif
-			@endforeach
-			@endif
-			@endforeach
-			@foreach($combo_cit->combo_categors as $combo_categor3)
-			<div id="modal{{$combo_categor3->id}}" class="modal fade">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<!-- Заголовок модального окна -->
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<h4 class="modal-title">Изменение категории: {{$combo_categor2->advert_categor->name}}</h4>
-						</div>
-						<!-- Основное содержимое модального окна -->
-						<div class="modal-body">
-							<div class="geted_cities">
-								@foreach($combo_categor3->adverts as $advert)
-								<div id="minadv-{{$advert->id}}" class="col-xs-12 col-sm-4 minadvdiv-{{$combo_categor3->id}}" style="padding-right: 0;">
-									<div class="card">
-										<div class="blurring dimmable image">
-											<img class="minadvimg-{{$advert->id}}" src="{{secure_asset($advert->photo_main())}}" alt="">
-										</div>
-										<div class="content">
-											<div class="header text-center">{{$advert->name}}</div>
-										</div>
-										<div class="extra content">
-											<span style="float: left;"><i class="unhide icon"></i> {{$advert->views}} </span>
-											<span style="float: right;"><i class="star icon"></i> {{$advert->rating}} </span>
-										</div>
-										<div class="extra content">
-											<div class="ui two buttons">
-												<a href="#" id="take-{{$advert->id}}-{{$combo_categor3->id}}" class=" ui basic teal button take_adv">Выбрать</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								@endforeach
-							</div>
-						</div>
-						<!-- Футер модального окна -->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-							<button type="button" id="save-{{$combo_categor3->id}}" data-dismiss="modal" class="btn ui primary button save_adv">Сохранить изменения</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			@endforeach
-		</div>
-		@else
-		<h1>nety combo</h1>
-		@endif
-	</div>
-	<form action="{{secure_url('basket/sent')}}" method="POST" class="center-block col-xs-12 col-sm-3" style="max-width: 290px;">
-		{{ csrf_field() }}
-		<div class="form-group">
-			<label for="exampleInputEmail1">Имя:</label>
-			<input type="text" class="form-control" name="name" value="{{Request::old('name')}}" placeholder="Имя">
-		</div>
-		<div class="form-group">
-			<label for="exampleInputEmail1">Город:</label>
-			<select name="city" id="" class="form-control">
-				@foreach($cities as $cit)
-				<option value="{{$cit->id}}">{{$cit->name}}</option>
-				@endforeach
-			</select>
-		</div>
-		<div class="form-group">
-			<label for="exampleInputEmail1">Телефон:</label>
-			<input type="text" class="form-control" name="phone" value="{{Request::old('phone')}}" placeholder="Телефон">
-		</div>
-		<div class="form-group">
-			<label for="exampleInputEmail1">Электронный адрес:</label>
-			<input type="text" class="form-control" name="email" value="{{Request::old('email')}}" placeholder="Электронный адрес">
-		</div>
-		<button type="submit" class="btn btn-default">Отправить</button>
-	</form>
-	<div class="col-xs-12 col-sm-9 padding-0-always ui link cards">
-		@if($basket_adv)
-		@foreach($basket_adv as $bask)
-		<div id="bask_{{$bask->id}}" class="col-xs-12 col-sm-4 padding-0-always">
-			<div class="card">
-				<div class="image">
-					@if($bask->photos->first())
-					<img src="{{secure_asset('upload/begests/thumbs/'.$bask->photos->first()['name'].'.'.$bask->photos->first()['ext'])}}" alt="{{$bask->name}}" title="{{$bask->name}}">
-					@else
-					<img src="{{secure_asset('images/no-avatar.png')}}" alt="{{$bask->name}}" title="{{$bask->name}}">
-					@endif
-				</div>
-				<div class="content">
-					<a href="{{secure_url('advert/'.$bask->id)}}" class="header">{{$bask->name}}</a>
-					<div class="meta">
-						<a href="{{secure_url('services/filter?category='.$bask->advert_categor_id)}}" class="date">{{$bask->advert_categor->name}}</a>
-					</div>
-				</div>
-				<div class="extra content">
-					<div id='{{$bask->id}}' class="ui basic red button del_from_bask">Убрать</div>
-				</div>
-			</div>
-		</div>
-		@endforeach
-		@endif
-	</div>
-</div>
-	<script type="text/javascript">
-
-
-
-	</script>
+    <!-- Отображение ошибок проверки ввода -->
+    @include('common.errors')
+    <div class="oneHalfBody center-block">
+        <h2 class="ui teal header">
+            <i class="circular shopping basket icon"></i>
+            <div class="content">
+                Ваша корзина
+                <div class="sub header">Определитесь окончательно с выбранными специалистами и оформите заявку ниже
+                </div>
+            </div>
+        </h2>
+        @if($combo && $combo_cit && $combo_cook)
+            <div id="combo" class="ui piled segment" style="border-color:#0ABAB5;">
+                <h4 class="ui header items">
+                    <div class="ui item">
+                        <div class="ui tiny circular image">
+                            <img src="{{secure_asset($combo->photo_path)}}">
+                        </div>
+                        <div class="middle aligned content">
+                            <div class="header">{{$combo->name}}</div>
+                            <button class="negative compact ui right floated labeled icon button remove_combo">
+                                <i class="remove icon"></i> Удалить пакет
+                            </button>
+                        </div>
+                    </div>
+                </h4>
+                <div class="ui stackable five column grid">
+                    <input type="hidden" name="combo" value="{{$combo->id}}">
+                    <input type="hidden" name="combo_cit" value="{{$combo_cit->id}}">
+                    @foreach($combo_cit->combo_categors as $combo_categor2)
+                        @if(array_key_exists($combo_categor2->id, $combo_cook))
+                            @foreach($combo_categor2->adverts as $advert)
+                                @if( $combo_cook[$combo_categor2->id] == $advert->id )
+                                    <div class="column baseAdvDiv-{{$combo_categor2->id}}" id="baseAd-{{$advert->id}}">
+                                        <div class="ui card">
+                                            <div class="image">
+                                                <img src="{{secure_asset($advert->photo_main())}}" alt="">
+                                            </div>
+                                            <div class="content">
+                                                <div class="header">{{$advert->name}}</div>
+                                                <div class="meta">
+                                                    <span class="date">{{$combo_categor2->advert_categor->name}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="extra content">
+                                                <a id="change-{{$combo_categor2->id}}-{{$advert->id}}"
+                                                   class="fluid ui basic teal button changeComboAdvertBasket">
+                                                    <i class="exchange icon"></i>Изменить</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+            @foreach($combo_cit->combo_categors as $combo_categor3)
+                <div id="combomodal-{{$combo_categor3->id}}" class="ui basic long scrolling modal combo_modal">
+                    <div class="ui icon header">
+                        <i class="exchange icon"></i>
+                        Редактирование категории пакета
+                    </div>
+                    <div class="content">
+                        <div class="ui link cards">
+                            @foreach($combo_categor3->adverts as $advert)
+                                <div class="card">
+                                    <div class="image">
+                                        <img id="chAdvImg-{{$advert->id}}" src="{{secure_url($advert->photo_main())}}">
+                                    </div>
+                                    <div class="content">
+                                        <div id="chAdvName-{{$advert->id}}" class="header">{{$advert->name}}</div>
+                                        <div class="meta">
+                                            <a id="chAdvCategName-{{$advert->id}}">{{$combo_categor3->advert_categor->name}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="extra content">
+                                        <span class="right floated">
+                                            <div class="ui heart rating" data-rating="{{$advert->rating}}"
+                                                 data-max-rating="5"></div>
+                                        </span>
+                                        <span><i class="unhide icon"></i>{{$advert->views}}</span>
+                                    </div>
+                                    <div class="extra content">
+                                        <div id="setComAdv-{{$combo_categor3->id}}-{{$advert->id}}"
+                                             class="fluid ui basic green button set_change_adv_combo">Выбрать
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div class="ui red basic cancel inverted button">
+                            <i class="remove icon"></i>
+                            Не изменять
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        @endif
+        <div class="ui tall stacked segment">
+            <div class="ui stackable four column grid">
+                @if($basket_adv)
+                    @foreach($basket_adv as $bask)
+                        <div class="column" id="bask_{{$bask->id}}">
+                            <div class="ui card">
+                                <a class="image" href="{{secure_url('advert/'.$bask->id)}}">
+                                    @if($bask->photos->first())
+                                        <img src="{{secure_asset('upload/begests/thumbs/'.$bask->photos->first()['name'].'.'.$bask->photos->first()['ext'])}}"
+                                             alt="{{$bask->name}}" title="{{$bask->name}}">
+                                    @else
+                                        <img src="{{secure_asset('images/no-avatar.png')}}" alt="{{$bask->name}}"
+                                             title="{{$bask->name}}">
+                                    @endif
+                                </a>
+                                <div class="content">
+                                    <a href="{{secure_url('advert/'.$bask->id)}}" class="header">{{$bask->name}}</a>
+                                    <div class="meta">
+                                        <a href="{{secure_url('services/filter?category='.$bask->advert_categor_id)}}"
+                                           class="date">{{$bask->advert_categor->name}}</a>
+                                    </div>
+                                </div>
+                                <div class="extra content">
+                                    <a id='{{$bask->id}}' class="fluid ui basic red button del_from_bask">
+                                        <i class="remove icon"></i> Удалить</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+        <div class="ui horizontal divider">Оформить заявку</div>
+        <form class="ui form segment" action="{{secure_url('basket/sent')}}" method="POST">
+            {{ csrf_field() }}
+            <div class="two fields">
+                <div class="field">
+                    <label>Имя</label>
+                    <input placeholder="Имя" name="name" type="text" value="{{Request::old('name')}}">
+                </div>
+                <div class="field">
+                    <label>Город</label>
+                    <select class="ui search dropdown" name="city">
+                        @foreach($cities as $cit)
+                            <option value="{{$cit->id}}">{{$cit->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Телефон</label>
+                    <input placeholder="Телефон" name="phone" type="number" value="{{Request::old('phone')}}">
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input placeholder="Email" type="email" name="email" value="{{Request::old('email')}}">
+                </div>
+            </div>
+            <button type="submit" class="ui primary submit button">Отправить</button>
+            <div class="ui error message"></div>
+        </form>
+    </div>
 @endsection
 

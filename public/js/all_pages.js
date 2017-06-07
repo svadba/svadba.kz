@@ -91,9 +91,40 @@ $(document).ready(function () {
                     $('#bask_' + id).remove();
                 }
             }
+
+            var combo = getCookie('combo');
+            var basket_new = getCookie('basket');
+            if (!combo) {
+                if (!basket_new) {
+                    window.location.replace('/');
+                }
+            }
+
         });
     }
 
+    function deleteComboInBasket() {
+        $('body').on('click', '.remove_combo', function () {
+
+            var combo = '';
+            var date = new Date;
+            date.setDate(date.getDate() - 3);
+            date = date.toUTCString();
+            setCookie('combo', combo, date);
+            var basket = getCookie('basket');
+            if (!basket) {
+                window.location.replace('/');
+            }
+            else {
+                $('#combo').remove();
+                $('.combo_modal').remove();
+            }
+
+        });
+
+    }
+
+    deleteComboInBasket();
 
     function buyer() {
         $('.buy-btn').on('click', function () {
@@ -133,21 +164,6 @@ $(document).ready(function () {
         });
     }
 
-    function semantic_ui() {
-        // hover for cards
-        $('.special.cards .image').dimmer({
-            on: 'hover'
-        });
-        // rating views
-        $('.ui.rating')
-            .rating('disable')
-        ;
-        //dropdown for select
-        $('.ui.dropdown')
-            .dropdown()
-        ;
-    }
-
     function lightbox_options() {
         lightbox.option({
             'resizeDuration': 200,
@@ -159,7 +175,6 @@ $(document).ready(function () {
 
 
     $('.dekBut').on('click', function () {
-
         var id = $(this).attr('id');
         var split_id = id.split('-');
         var advert_id = split_id[2];
@@ -168,9 +183,6 @@ $(document).ready(function () {
         $('#baseAd-' + advert_id).addClass('activeAdvert');
         $('.radio-' + categor_id).attr('checked', false);
         $('#' + advert_id).attr('checked', true);
-        console.log(advert_id);
-        console.log(categor_id);
-        console.log($('.radioAdv[checked]'));
     });
 
     $('.setCombo').on('click', function () {
@@ -218,122 +230,86 @@ $(document).ready(function () {
         }
     }
 
-    function combo_change() {
-        var chenged_adv = '';
+    function edit_combo_in_basket() {
 
-        $('.change_adv').on('click', function () {
+        var last_advert_id = '';
+        var body = $('body');
+
+        body.on('click', '.changeComboAdvertBasket', function () {
+
             var id = $(this).attr('id');
-            var split_id = id.split('-');
-            chenged_adv = split_id[1];
-            console.log(chenged_adv);
+            id = id.split('-');
+            var categor_id = id[1];
+            last_advert_id = id[2];
+
+            $('.ui.basic.modal#combomodal-' + categor_id).modal({blurring: true}).modal('show');
         });
 
-        $('.take_adv').on('click', function () {
-            var id = $(this).attr('id');
-            var split_id = id.split('-');
-            var advert_id = split_id[1];
-            var categor_id = split_id[2];
-            console.log(advert_id);
-            console.log(categor_id);
-            $('.minadvdiv-' + categor_id).removeClass('activeMinAdv');
-            console.log($('.minadvdiv-' + categor_id));
-            $('#minadv-' + advert_id).addClass('activeMinAdv');
-            console.log($('#minadv-' + advert_id));
-            advert_desibl = $(this);
-            console.log(advert_desibl);
-        });
+        body.on('click', '.set_change_adv_combo', function () {
 
-        $('.save_adv').on('click', function () {
-            var id = $(this).attr('id');
-            var split_id = id.split('-');
-            var categor_id = split_id[1];
-            var take_adv = $('.minadvdiv-' + categor_id + '.activeMinAdv').attr('id');
-            var take_adv_id = take_adv.split('-');
-            take_adv_id = take_adv_id[1];
-            console.log(take_adv_id);
+            if (last_advert_id)
+
+                var id = $(this).attr('id');
+            id = id.split('-');
+            var categor_id = id[1];
+            var advert_id = id[2];
+
             var combo_cook = getCookie('combo');
-
             combo_cook = JSON.parse(combo_cook);
-
             if (categor_id in combo_cook) {
-                combo_cook[categor_id] = take_adv_id;
+                combo_cook[categor_id] = advert_id;
                 combo_cook = JSON.stringify(combo_cook);
                 var date = new Date;
                 date.setDate(date.getDate() + 3);
                 date = date.toUTCString();
                 setCookie('combo', combo_cook, date);
+                var adv_photo = $('#chAdvImg-' + advert_id).attr('src');
+                var adv_name = $('#chAdvName-' + advert_id).html();
+                var categor_name = $('#chAdvCategName-' + advert_id).html();
 
-                $.ajax({
-                    url: "/ajax/get_advert/" + take_adv_id,
-                    type: "get",
-                    headers: {
-                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                    },
+                var render = '' +
+                    '<div class="column baseAdvDiv-' + categor_id + '" id="baseAd-' + advert_id + '">' +
+                    '<div class="ui card">' +
+                    '<div class="image">' +
+                    '<img src="' + adv_photo + '" alt="">' +
+                    '</div>' +
+                    '<div class="content">' +
+                    '<div class="header">' + adv_name + '</div>' +
+                    '<div class="meta">' +
+                    '<span class="date">' + categor_name + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="extra content">' +
+                    '<a id="change-' + categor_id + '-' + advert_id + '" class="fluid ui basic teal button changeComboAdvertBasket">' +
+                    '<i class="exchange icon"></i>Изменить</a>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
 
-                    success: function (data) {
-                        var main_photo = '';
-                        var photos = '';
-                        data.photos.forEach(function (item) {
-                            if (item.main == 1) {
-                                main_photo = '<img src="/upload/adverts/thumbs/' + item.name + '.' + item.ext + '" alt="">';
-                            }
-                            else {
-                                photos = photos + '<div class="col-xs-3 photo-advert" style="background-image: url(' + item.path + ');"></div>';
-                            }
-                        });
-                        var render =
-                            '<div class="col-xs-12 baseAdvDiv-' + categor_id + '" id="baseAd-' + data.id + '" style="width: 20%;">' +
-                            '<div class="card">' +
-                            '<div class="blurring dimmable image">' +
-                            '<div class="ui dimmer">' +
-                            '<div class="content">' +
-                            '<div class="center">' +
-                            '<div style="max-height: 72.5px; overflow: hidden; text-overflow: ellipsis;">' +
-                            data.description + '</div>' +
-                            photos +
-                            '</div></div></div>' +
-                            main_photo +
-                            '</div>' +
-                            '<div class="content">' +
-                            '<div class="header text-center" style="font-size: 12px;">' + data.name + ' ' + data.advert_categor.name + '</div>' +
-                            '</div>' +
-                            '<div class="extra content">' +
-                            '<div class="ui two buttons">' +
-                            '<a id="change-' + data.id + '" href="#modal' + categor_id + '" data-toggle="modal" class="ui basic teal button">Изменить</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            "</div>";
-                        var baseAdvert = $('#baseAd-' + chenged_adv);
-                        console.log(baseAdvert);
-                        console.log(render);
-                        var prepAdvert = baseAdvert.prev();
+                var baseAdvert = $('#baseAd-' + last_advert_id);
+                var prepAdvert = baseAdvert.prev();
 
-                        if (prepAdvert.length) {
-                            prepAdvert.after(render);
-                            console.log('prep');
-                            console.log(prepAdvert);
-                        }
-                        else {
-                            var parentAdvert = baseAdvert.parent();
-                            parentAdvert.append(render);
-                            console.log('parent');
-                            console.log(parentAdvert);
-                        }
-                        baseAdvert.remove();
-                    },
-                    error: function (a, b) {
-                        alert('Сервер не отвечает попробуйте позже!')
-                    }
-                });
-
-                console.log(combo_cook);
+                if (prepAdvert.length) {
+                    prepAdvert.after(render);
+                    console.log('prep');
+                    console.log(prepAdvert);
+                }
+                else {
+                    var parentAdvert = baseAdvert.parent();
+                    parentAdvert.append(render);
+                    console.log('parent');
+                    console.log(parentAdvert);
+                }
+                baseAdvert.remove();
+                $('.ui.basic.modal#combomodal-' + categor_id).modal('hide');
             }
 
-            //$('#modal' + categor_id).modal('hide');
-
         });
+
     }
+
+    edit_combo_in_basket();
+
 
     function AddToBasket() {
         var modal = document.getElementById('myModal');
@@ -352,106 +328,154 @@ $(document).ready(function () {
         }
     }
 
-    $('.createPrice').on('click', function (event) {
-        event.preventDefault();
-        var checkboxIds = [];
-        $('.checkbox').each(function (index) {
-            checkboxIds[index] = $(this).attr('id');
+    function semantic_ui() {
+        // hover for cards
+        $('.special.cards .image').dimmer({
+            on: 'hover'
         });
-        var lastCheckboxIds = checkboxIds[checkboxIds.length - 1];
-        var lastId = lastCheckboxIds.substr(8);
-        var id = Number(lastId) + 1;
-        var priceWithoutClose = document.getElementsByClassName("priceWithoutClose");
-        var price = $(priceWithoutClose).clone();
-        $(price).find('input').val('');
-        var price = $(price).removeClass('priceWithoutClose');
-        $(price).find('.checkbox').attr('id', 'checkbox' + id);
-        $(price).find('.checkbox').attr('name', 'dogovor[' + id + ']');
-        $(price).find('label').attr('for', 'checkbox' + id);
-        $(price).find('select').attr('name', 'advert_cits[' + id + ']');
-        $(price).find('.prices').attr('name', 'prices[' + id + ']');
-        $(price).find('.prices_two').attr('name', 'prices_two[' + id + ']');
-        var closeButton;
-        closeButton.innerHTML = '<div class="ui negative submit button" onclick="$(this).closest(\'.price\').remove()">Удалить</div>';
-        $(price).prepend(closeButton);
-        price.insertBefore('.createPrice');
-    });
+        // rating views
+        $('.ui.rating')
+            .rating('disable')
+        ;
+        $('.ui.dropdown')
+            .dropdown()
+        ;
+        //tab
+        $('.menu .item')
+            .tab()
+        ;
+    }
 
     $('.addVideo').on('click', function () {
         var video = document.getElementById("youtube_videoId").value;
-        $('#youtube_videoId').css('color', '#555');
+        var youtube_vid = $('#youtube_videoId');
+        youtube_vid.css('color', '#555');
         var videoUrl = /(^https:\/\/youtu.be\/)[a-zA-Z0-9-]/;
-        var videoValidation = videoUrl.test(video);
-        if (videoValidation == true) {
+        if (videoUrl.test(video)) {
             var videoId = video.substr(17);
             var videoBlock = document.createElement('div');
             videoBlock.className = "col-xs-4 col-sm-3 col-md-2";
             videoBlock.innerHTML = '<img src="//img.youtube.com/vi/' + videoId + '/1.jpg" class="img-responsive margin-top-always advert_video center-block" id="' + videoId + '">';
             $(".videoPanel").append(videoBlock);
         } else {
-            $('#youtube_videoId').css('color', '#FF4469');
-            $('#youtube_videoId').addClass('unvalid');
+            youtube_vid.css('color', '#FF4469');
+            youtube_vid.addClass('unvalid');
             setTimeout(function () {
-                $('#youtube_videoId').removeClass('unvalid');
+                youtube_vid.removeClass('unvalid');
             }, 666);
-            $('#youtube_videoId').val('Ссылка неверна');
+            youtube_vid.val('Ссылка неверна');
         }
     });
 
-    $('.saveVideoAdvert').on('click', function () {
-        var videoIds = '';
-        var advertId = $('.massive.fluid.ui.teal.basic.button').attr('id');
+    function del_video_in_base() {
+        $('.delvideoInBase').on('click', function () {
 
-        $('.video_panel img').each(function (index) {
+            var this_id = $(this).attr('id');
+            this_id = this_id.split('-');
+            var advert_id = this_id[1];
+            var video_id = this_id[2];
+
+            if (advert_id && video_id) {
+                $.ajax({
+                    url: '/home/adverts/videos/delete',
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        "video_id": video_id,
+                        "advert_id": advert_id
+                    },
+                    success: function (data) {
+                        if (data == video_id) {
+                            $('#video-' + video_id).remove();
+                            var countVideos = $('#countVideos');
+                            countVideos.html(Number(countVideos.html()) - 1);
+                        }
+                    },
+                    error: function (jqHML) {
+                        alert('Сервер не отвечает, попробуйте позже');
+                    }
+                });
+            }
+        });
+    }
+
+    $('.saveVideoAdvert').on('click', function () {
+        console.log('start_saveVIdeo');
+        var videoIds = '';
+        var attr_id = $(this).attr('id');
+        attr_id = attr_id.split('-');
+        attr_id = attr_id[1];
+        console.log('attr id ' + attr_id);
+        $('.advert_video').each(function (index) {
             videoIds = videoIds + $(this).attr('id') + ',';
         });
         videoIds = videoIds.substr(0, videoIds.length - 1);
-        var ids_array = videoIds.split(',');
-        var render = '';
-        ids_array.forEach(function (item, i, arr) {
-            alert(i + ": " + item + " (массив:" + arr + ")");
-            //render = render + '<a href="https://youtu.be/' + element + '" data-lity><img src="//img.youtube.com/vi/' + element + '/1.jpg" class="img-responsive"></a>';
-        });
-        var videoBlock = document.createElement('div');
-        videoBlock.className = "col-xs-4";
-        videoBlock.innerHTML = render;
-        $(".video_panel").append(videoBlock);
-        /*if (videoIds) {
-         $.ajax({
-         url: '/admin/requests/basket/edit_combo_adverts/' + advertId,
-         type: "POST",
-         headers: {
-         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-         },
-         data: {
-         "videoIds": videoIds
-         },
-         success: function (data) {
-         if (data) {
-         var ids_array = videoIds.split(',');
-         var render = '';
-         ids_array.forEach(element)
-         {
-         render = render + '<div><img src=""/></div>';
-         }
-         innerHTML = render;
-         }
-         },
-         error: function () {
-         $('#modal' + take_categor_id).modal('hide');
-         alert('Сервер не отвечает, попробуйте позже');
-         }
-         });
-         }*/
+        console.log('videoIds ' + videoIds);
+        if (videoIds) {
+            console.log('videoIds start_ajax id ' + videoIds);
+            $.ajax({
+                url: '/home/adverts/videos/add',
+                type: "POST",
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    "videoIds": videoIds,
+                    "advert_id": attr_id
+                },
+                success: function (data) {
+                    if (data.result = 'true') {
+                        var data_json = JSON.parse(data);
+                        console.log(data);
+                        var ids = data_json.videos;
+                        var countVideos = $('#countVideos');
+                        var nowCountVideos = Number(countVideos.html());
+                        var render = '';
+                        ids.forEach(function (element) {
+                            render = render +
+                                '<div id="video-' + element.id + '" class="col-xs-6 col-md-4 margin-top-always">' +
+                                '<a href="//www.youtube.com/watch?v=' + element.youtube_video_id + '" data-lity style="width:100%;">' +
+                                '<img src="//img.youtube.com/vi/' + element.youtube_video_id + '/1.jpg" class="img-responsive center-block" id="">' +
+                                '</a>' +
+                                '<button class="fluid mini ui negative button delvideoInBase" id="delvideo-' + attr_id + '-' + element.id + '" style="border-top-left-radius: 0;border-top-right-radius: 0;">' +
+                                '<i class="remove icon" title="Удалить видео"></i>' +
+                                '</button>' +
+                                '</div>';
+                            nowCountVideos++;
+                        });
+
+                        countVideos.html(nowCountVideos);
+                        $('.videoBlock').append(render);
+                        del_video_in_base();
+                    }
+                    else {
+                        if (data.error = 'bad_ids_array') {
+                            alert('Ошибка в переданных данных!');
+                        }
+                        else {
+                            alert('Неизвестная ошибка!');
+                        }
+                    }
+                },
+                error: function () {
+                    //$('#modal' + take_categor_id).modal('hide');
+                    alert('Сервер не отвечает, попробуйте позже');
+                }
+            });
+        }
+        $('.videoPanel').html('');
     });
+
 
     like_svadba();
     lightbox_options();
     setCountBasket();
     deleteFromBasket();
     buyer();
+    del_video_in_base();
     //set_checked();
-    combo_change();
     //ranjer();
     semantic_ui();
 });

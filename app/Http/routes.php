@@ -31,7 +31,7 @@
         Route::get('{combo}/{combo_cit}', 'ComboController@viewUser'); //good
     });
 
-    //Route::get('/bakyt', 'ComboController@bakyt'); //good
+    Route::get('/bakyt', 'ComboController@bakyt'); //good
 
     Route::group(['prefix' => 'services'], function(){
         Route::get('', 'ServicesController@all'); //good
@@ -60,8 +60,13 @@
             Route::get('edit/{advert}/step3', 'HomeController@edit_advert_st3_get');
             Route::post('edit/step3', 'HomeController@edit_advert_st3_post');
 
+            Route::group(['prefix' => 'videos'], function(){
+                Route::post('add', 'VideoController@add_ajax');
+                Route::post('delete', 'VideoController@delete_ajax');
+            });
+
             Route::group(['prefix' => 'musics'], function(){
-                Route::post('add', 'MusicController@save_ajax');
+                Route::post('add', 'MusicController@add_ajax');
                 Route::post('delete', 'MusicController@delete_ajax');
             });
 
@@ -69,9 +74,15 @@
                 Route::post('add', 'HomeController@save_advert_photo');
                 Route::post('set_main', 'HomeController@setmain_advert_photo');
                 Route::post('delete', 'HomeController@delete_advert_photo');
+                Route::post('set_advert_miniature', 'PhotoController@ajax_set_advert_miniature');
             });
 
+            Route::group(['prefix' => 'cities'], function(){
+                Route::post('add', 'AdvertCitController@add_ajax');
+                Route::post('delete', 'AdvertCitController@delete_ajax');
+            });
 
+            Route::get('{advert}', 'HomeController@open_advert');
             Route::get('delete/{advert}', 'HomeController@delete_advert');
         });
     });

@@ -12,17 +12,15 @@ function load_images_ajax() {
     var uploaded_holder = $('#uploaded-holder');
     var dropped_files = $('#dropped-files');
     var sendme = $('#sendme');
-    var loading = $(".loading");
-    var loading_content = $('.loading-content');
-    var loading_color = $('.loading-color');
     var ready_images = $('.readyImages');
     var upload_button = $('.upload-button'); //кнопка перекачки на сервер
-    var uploaded_files = $('#uploaded-files');
     var imagesDir = $('.image');
     var body = $("body");
     var countPhotos = $('#countPhotos');
+    var progress = $('#progresPhotos');
 
     upload_button.hide();
+    progress.hide();
 
     // Процедура добавления эскизов на страницу
     function addImage(ind) {
@@ -40,6 +38,7 @@ function load_images_ajax() {
             // Если пустой массив скрываем кнопки и всю область
             upload_button.hide();
             uploaded_holder.hide();
+            progress.hide();
         }
         // Цикл для каждого элемента массива
         for (i = start; i < end; i++) {
@@ -71,6 +70,7 @@ function load_images_ajax() {
 
             // Несколько оповещений при попытке загрузить не изображение
             if (!files[index].type.match('image.*')) {
+                alert('Для загрузки разрешенны файлы форматов jpg,png,bnp!');
                 return false;
             }
 
@@ -78,9 +78,10 @@ function load_images_ajax() {
             if ((dataArray.length + files.length) <= maxFiles) {
                 // показываем область с кнопками
                 upload_button.show();
+                progress.show();
             }
             else {
-                alert('You can not upload more ' + maxFiles + ' images!');
+                alert('Вы не можете загрузить за раз более' + maxFiles + ' изображений!');
                 return;
             }
             array_files.push(file);
@@ -115,7 +116,7 @@ function load_images_ajax() {
             // Передаем массив с файлами в функцию загрузки на предпросмотр
             loadInView(files);
         } else {
-            alert('You can not upload more ' + maxFiles + ' images!');
+            alert('Вы не можете загрузить за раз более' + maxFiles + ' изображений!');
             files.length = 0;
         }
     });
@@ -133,7 +134,7 @@ function load_images_ajax() {
                 this.reset();
             });
         } else {
-            alert('You can not upload more ' + maxFiles + ' images!');
+            alert('Вы не можете загрузить за раз более' + maxFiles + ' изображений!');
             files.length = 0;
         }
     });
@@ -184,7 +185,7 @@ function load_images_ajax() {
 
             },
             error: function () {
-                alert('Сервер не отвечает попробуйте позже!');
+                alert('Сервер ответил: ' + jqXHR.responseText);
             },
             success: function (data) {
                 if (data == temp[2]) {
@@ -217,7 +218,7 @@ function load_images_ajax() {
 
             },
             error: function () {
-                alert('Сервер не отвечает попробуйте позже!');
+                alert('Сервер ответил: ' + jqXHR.responseText);
             },
             success: function (data) {
                 switch(data)
@@ -244,25 +245,9 @@ function load_images_ajax() {
         var advert_id = $(this).attr('id');
         var temp = advert_id.split('-');
         advert_id = temp[1];
-        // Показываем прогресс бар
-        loading.show();
-        loading_color.css({'width': '0%'});
-        loading_content.html('Загрузка начата!');
-        // переменные для работы прогресс бара
-        var totalPercent = 100 / dataArray.length;
-        var x = 0;
         dataArray2 = dataArray;
         // Для каждого файла
         $.each(array_files, function (index, file) {
-            //elem img this
-            var elemImageDiv = $('#img-' + index);
-            //elem load this
-            var elemLoadDiv = $('#loadingDiv-' + index);
-            //elem the load this
-            var theElemLoadDiv = $('#theLoadingImg-' + index);
-            //elem loadgood img this
-            var theElemGoodImg = $('#goodImg-' + index);
-            //record this file in form
             var myform = new FormData;
             myform.append('img', file);
             myform.append('advert_id', advert_id);
@@ -278,27 +263,24 @@ function load_images_ajax() {
                 },
                 data: myform,
                 beforeSend: function () {
-                    elemImageDiv.addClass('trueImage');//add height+20;
-                    elemLoadDiv.addClass('activeLoadingDiv');//add display:block;
-                    theElemLoadDiv.css({'width': '15%'});
-                    theElemLoadDiv.css({'width': '30%'});
-                    theElemLoadDiv.css({'width': '47%'});
+                    progress
+                        .progress({
+                            value: 1,
+                            total: dataArray.length,
+                            text: {
+                                ratio: '{value} из {total}',
+                                active  : 'Загрузка {value} из {total} фотографий',
+                                success : '{total} Фотографий загруженно!'
+                            }
+                        });
                 },
                 error: function (a, b, c) {
-                    console.log(a);
-                    console.log(b);
-                    console.log(c);
-                    alert('Сервер не отвечает! Попробуйте позже!');
+                    alert('Сервер ответил: ' + jqXHR.responseText);
                 },
                 success: function (data) {
                     console.log(data);
                     if (data.result == 'true') {
-                        theElemLoadDiv.css({'width': '75%'});
-                        theElemLoadDiv.css({'width': '100%'});
-                        theElemGoodImg.removeClass('disnone');
-                        ++x;
-                        // Изменение бара загрузки
-                        loading_color.css({'width': totalPercent * (x) + '%'});
+                        progress.progress('increment');
                         $("div#img-" + index).remove();
                         ready_images.append('' +
                             '<div id="readyImage-' + data.photo_id + '" class="readyImage">' +
@@ -313,12 +295,6 @@ function load_images_ajax() {
                             '</div>');
                         countPhotos.html( Number(countPhotos.html()) + 1);
                         upload_button.hide();
-                        // Если загрузка закончилась
-                        if (totalPercent * (x) == 100) {
-                            // Загрузка завершена
-                            loading_content.html('Загрузка завершена!');
-                            // если еще продолжается загрузка
-                        }
                     }
                     else {
                         alert('Изображение не загруженно!');
@@ -333,7 +309,6 @@ function load_images_ajax() {
         return false;
     });
 
-    $('i')
 
 }
 

@@ -16,7 +16,7 @@ class MusicController extends Controller
         $this->middleware('auth');
     }
 
-    public function save_ajax(Request $request)
+    public function add_ajax(Request $request)
     {
         $this->validate($request, [
             'advert_id' => 'required|exists:adverts,id,user_id,' . $request->user()->id,

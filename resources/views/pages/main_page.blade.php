@@ -2,213 +2,185 @@
 
 
 @section('content')
-    <div class="row body">
-        <div class="col-xs-12 padding-bottom">
-            <div class="col-xs-12 col-md-9 xs-padding-right-left-hidden">
-                <div class="col-xs-12 padding">
-                    <div class="col-xs-12 col-md-3">
-                        <h2 class="text-center">Ваш город:</h2>
+    <div class="body">
+        <div class="ui stackable grid">
+            <div class="eight wide tablet four wide computer column">
+                @if(Auth::check())
+                    <div class="ui card" style="margin-left: auto; margin-right: auto;">
+                        <a class="image" href="{{secure_url('/home')}}">
+                            @if(Auth::user()->contractors()->first()['ava_path'])
+                                <img src="{{secure_asset(Auth::user()->contractors()->first()['ava_path'])}}"
+                                     alt="">
+                            @else
+                                <img src="{{secure_asset('images/no-avatar.png')}}" alt="">
+                            @endif
+                        </a>
+                        <div class="content">
+                            <a class="header" href="{{secure_url('/home')}}">{{Auth::user()->name}}</a>
+                            <div class="meta">
+                                <span class="date">Создан в 09.2014</span>
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <span class="right floated">Объявлений (2)</span>
+                            <span>
+                                    <div class="ui heart rating" data-rating="1" data-max-rating="5"></div>
+                                </span>
+                        </div>
+                        <a href="{{secure_url('/home')}}"
+                           class="ui labeled icon bottom attached button text center">
+                            <i class="right arrow icon"></i>
+                            Личный кабинет
+                        </a>
                     </div>
-                    <form method="GET" action="{{secure_url('/city/by_id')}}">
-                        <div class="col-xs-12 col-md-9 input-group">
-                            {{csrf_field()}}
-                            <select name="city" id="cities" class="form-control">
+                @else
+                    <div class="ui teal pointing below label">
+                        Каталог категорий
+                    </div>
+                    <div class="ui raised segment"
+                         style="max-height: 500px; overflow-y:scroll;box-shadow: 0 0 0 1px #00B5AD inset!important;margin-top:0;">
+                        @foreach($sort_adverts as $sort)
+                            <a href="{{secure_url('/services/filter?category='.$sort->id)}}" class="ui label"
+                               style="background-color:transparent;">
+                                <img class="ui right spaced image"
+                                     src="{{secure_asset('images/categoryIcons/'.$sort->id.'.png')}}">
+                                {{$sort->name}} ({{$sort->adverts_count}})
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+            <div class="eight wide computer column">
+                <form method="GET" action="{{secure_url('/city/by_id')}}" class="ui form">
+                    <div class="field">
+                        {{csrf_field()}}
+                        <div class="ui teal pointing below label">
+                            Выберите Ваш город
+                        </div>
+                        <div class="ui action input">
+                            <select name="city" id="cities" class="fluid ui search dropdown">
                                 @foreach($cities as $cit)
                                     <option value="{{$cit->id}}">{{$cit->name}}</option>
                                 @endforeach
                                 <option value="16">Артисты Казахстана</option>
-                                <option value="17">Артисты России</option>
+                                <option value="17">Артисты СНГ</option>
                                 <option value="18">Артисты Мира</option>
                             </select>
-                            <span class="input-group-btn">
-							<button class="btn btn-default" type="submit">Выбрать!</button>
-						</span>
+                            <button class="ui teal right labeled icon button">
+                                <i class="location arrow icon"></i>Выбрать
+                            </button>
                         </div>
-                    </form>
-                </div>
-                <div class="col-xs-12 col-md-3 padding-right-0 text-center">
-                    <h1 style="font-size: 16px;">Центр свадебной индустрии</h1> - удобный сервис для подготовки к
-                    свадьбе! На нашем Республиканском портале Вы найдёте все необходимое для вашей свадьбы.
-                    <a href="#">
-                        <img src="{{secure_asset('videos/main_page-ad.gif')}}" alt=""
-                             class="img-responsive center-block main_page-ad ad">
-                    </a>
-                </div>
-                <div class="col-xs-12 col-md-9 padding-left-0">
+                    </div>
+                </form>
+                <div class="ui raised segment">
                     <video autoplay="" loop="" muted="">
-                        <source type="video/mp4" src="{{secure_asset('videos/main_video.mov')}}">
+                        <source type="video/mp4" src="{{secure_asset('videos/mainVideo.mp4')}}">
                     </video>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-3 padding">
-                <div class="col-xs-12">
-                    <a href="#" class="col-xs-3 icons"><img src="{{secure_asset('images/icons/fb.png')}}" alt=""
-                                                            class="img-responsive"></a>
-                    <a href="https://www.instagram.com/www_svadba_kz/" class="col-xs-3 icons"><img
-                                src="{{secure_asset('images/icons/inst.png')}}" alt="" class="img-responsive"></a>
-                    <a href="#" class="col-xs-3 icons"><img src="{{secure_asset('images/icons/vk.png')}}" alt=""
-                                                            class="img-responsive"></a>
-                    <a href="//www.youtube.com/channel/UCuqcno-2cTI49tl_RqVswTw" class="col-xs-3 icons"><img
-                                src="{{secure_asset('images/icons/yout.png')}}" alt="" class="img-responsive"></a>
+            <div class="sixteen wide tablet four wide computer column text center">
+                <div class="ui teal pointing below label">
+                    Вход/Регистрация для специалистов
                 </div>
-                <div class="col-xs-12 margin-top-always xs-padding-right-left-hidden">
-                @if(Auth::check())
-                    <div style="border:1px solid black; padding:15px;">
-                        <h4>Добро пожаловать - {{Auth::user()->name}}!</h4>
-                        @if(Auth::user()->contractors()->first()['ava_path'])
-                            <img style="height:200px;" src="{{secure_asset(Auth::user()->contractors()->first()['ava_path'])}}"/>
-                        @else
-                            <img style="height:200px;" src="{{secure_asset('images/no-avatar.png')}}"/>
-                        @endif
-                        <h5><a href="{{secure_url('/home')}}">Вход в личный кабинет</a></h5>
+                <a href="{{secure_asset('login')}}" class="ui basic primary button" style="width: 47.5%;"><i
+                            class="sign in icon"></i>Вход</a>
+                <a href="{{secure_asset('register')}}" class="ui basic positive button"
+                   style="width: 47.5%;"> <i class="plus icon"></i>Регистрация</a>
+                <h1 class="ui teal top attached header margin top always">
+                    Центр свадебной индустрии
+                    <div class="sub header">
+                        удобный сервис для подготовки к свадьбе! На нашем Республиканском портале Вы найдёте все
+                        необходимое для вашей свадьбы.
                     </div>
-                @else
-                    <!-- Навигационные вкладки -->
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active checkIn">
-                                <a href="#checkIn" aria-controls="checkIn" role="tab"
-                                   data-toggle="tab">Регистрация</a>
-                            </li>
-                            <li role="presentation" class="toComeIn">
-                                <a href="#toComeIn" aria-controls="toComeIn" role="tab" data-toggle="tab">Войти</a>
-                            </li>
-                        </ul>
-                        <!-- Вкладки -->
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade in active" id="checkIn">
-                                <div class="col-xs-12 checkIn">
-                                    <h3 class="text-center padding-bottom" style="color: #fff; margin-top: 15px;">Добавьте
-                                        свою
-                                        анкету</h3>
-                                    <form method="POST" action="{{ secure_url('/register') }}">
-                                        {{ csrf_field() }}
-                                        <input class="form-control" placeholder="Имя" name="name" type="text">
-                                        @if ($errors->has('name'))
-                                            <span class="help-block">
-							<strong>{{ $errors->first('name') }}</strong>
-						</span>
-                                        @endif
-                                        <input type="email" class="form-control margin-top-always" name="email"
-                                               placeholder="Email">
-                                        @if ($errors->has('email'))
-                                            <span class="help-block">
-							<strong>{{ $errors->first('email') }}</strong>
-						</span>
-                                        @endif
-                                        <input type="password" name="password" class="form-control margin-top-always"
-                                               placeholder="Пароль">
-                                        @if ($errors->has('password'))
-                                            <span class="help-block">
-							<strong>{{ $errors->first('password') }}</strong>
-						</span>
-                                        @endif
-                                        <button class="btn btn-default btn-lg btn-block"
-                                                style="margin-top: 15px; margin-bottom: 15px;"> + Добавить
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="toComeIn">
-                                <div class="col-xs-12 toComeIn">
-                                    <h3 class="text-center padding-bottom" style="color: #fff; margin-top: 15px;">Личный
-                                        кабинет</h3>
-                                    <form method="POST" action="{{ secure_url('/login') }}">
-                                        {{ csrf_field() }}
-                                        <input type="email" class="form-control" name="email"
-                                               placeholder="Email">
-                                        @if ($errors->has('email'))
-                                            <span class="help-block">
-							<strong>{{ $errors->first('email') }}</strong>
-						</span>
-                                        @endif
-                                        <input type="password" name="password" class="form-control margin-top-always"
-                                               placeholder="Пароль">
-                                        @if ($errors->has('password'))
-                                            <span class="help-block">
-							<strong>{{ $errors->first('password') }}</strong>
-						</span>
-                                        @endif
-                                        <button class="btn btn-default btn-lg btn-block"
-                                                style="margin-top: 15px; margin-bottom: 15px;"> Войти
-                                        </button>
-                                        <a class="btn btn-default btn-lg btn-block" href="{{ secure_url('/password/reset') }}"
-                                           style="margin-top: 15px; margin-bottom: 15px;">Забыли
-                                            пароль?</a>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                @endif
+                </h1>
+                <div class="ui attached center aligned tall stacked segment">
+                    <div class="ui tiny images">
+                        <a href="//www.facebook.com/Svadbakz-1511652225566976/" target="_blank">
+                            <img src="{{secure_asset('images/icons/fb.png')}}" alt="fb"
+                                 class="ui bordered circular image" style="width:66px;"></a>
+                        <a href="//www.instagram.com/www_svadba_kz/" target="_blank">
+                            <img src="{{secure_asset('images/icons/inst.png')}}" alt="inst"
+                                 class="ui bordered circular image" style="width:66px;"></a>
+                        <a href="//vk.com/svadbakz2017" target="_blank">
+                            <img src="{{secure_asset('images/icons/vk.png')}}" alt="vk"
+                                 class="ui bordered circular image" style="width:66px;"></a>
+                        <a href="//www.youtube.com/channel/UCuqcno-2cTI49tl_RqVswTw" target="_blank">
+                            <img src="{{secure_asset('images/icons/yout.png')}}" alt="yout"
+                                 class="ui bordered circular image" style="width:66px;"></a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-12">
-            <a href="">
-                <img src="{{secure_asset('images/main_page-ad.png')}}" alt="" class="img-responsive ad">
+        <div class="ui steps stackable four column grid text center margin top always" style="margin: 0;">
+            <a href="#cities-block" class="link step column">
+                <div class="content">
+                    <img class="ui small image center-block" src="{{secure_asset('images/icons/city.png')}}" alt="">
+                    <div class="title">Выбрать город</div>
+                    <div class="description">Выберите Ваш город проживания</div>
+                </div>
             </a>
-        </div>
-        <div class="col-xs-12 margin-top-always">
-            <div class="ui steps center-block text-center">
-                <a href="#cities-block" class="link step col-xs-12 col-md-3 xs-padding-right-left-hidden">
-                    <div class="content">
-                        <img src="{{secure_asset('images/icons/city.png')}}" alt="">
-                        <div class="title">Выбрать город</div>
-                        <div class="description">Выберите Ваш город проживания</div>
-                    </div>
-                </a>
-                <a href="#cities-block" class="link step col-xs-12 col-md-3 xs-padding-right-left-hidden">
-                    <div class="content">
-                        <img src="{{secure_asset('images/icons/marry.png')}}" alt="">
-                        <div class="title">Собрать пакет</div>
-                        <div class="description">Соберите пакет свадебных услуг</div>
-                    </div>
-                </a>
-                <a href="#cities-block" class="link step col-xs-12 col-md-3 xs-padding-right-left-hidden">
-                    <div class="content">
-                        <img src="{{secure_asset('images/icons/call.png')}}" alt="">
-                        <div class="title">Оставить заявку</div>
-                        <div class="description">После добавления всех услуг отправьте нам заявку</div>
-                    </div>
-                </a>
-                <div class="link step col-xs-12 col-md-3 xs-padding-right-left-hidden">
-                    <div class="content">
-                        <img src="{{secure_asset('images/icons/operator.png')}}" alt="">
-                        <div class="title">Бесплатная консультация</div>
-                        <div class="description">Если у вас возникнут трудности, нажмите кнопку звонок</div>
-                    </div>
+            <a href="#cities-block" class="link step column">
+                <div class="content">
+                    <img class="ui small image center-block" src="{{secure_asset('images/icons/marry.png')}}" alt="">
+                    <div class="title">Собрать пакет</div>
+                    <div class="description">Соберите пакет свадебных услуг</div>
+                </div>
+            </a>
+            <a href="#cities-block" class="link step column">
+                <div class="content">
+                    <img class="ui small image center-block" src="{{secure_asset('images/icons/call.png')}}" alt="">
+                    <div class="title">Оставить заявку</div>
+                    <div class="description">После добавления всех услуг отправьте нам заявку</div>
+                </div>
+            </a>
+            <div class="link step column">
+                <div class="content">
+                    <img class="ui small image center-block" src="{{secure_asset('images/icons/operator.png')}}" alt="">
+                    <div class="title">Бесплатная консультация</div>
+                    <div class="description">Если у вас возникнут трудности, нажмите кнопку звонок</div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 cities-block" id="cities-block">
-            <h2 class="text-center margin-top-always">Выберите Ваш город</h2>
-            @foreach($cities as $cit)
-                <div class="col-xs-12 col-md-2">
-                    <a href="{{secure_url('cities/'.$cit->name_eng)}}"
-                       class="center-block ui small circular rotate left reveal image">
-                        <img alt="{{$cit->name_eng}}" src="{{secure_asset('images/icons/'.$cit->name_eng.'.png')}}"
-                             class="visible content">
-                        <img alt="{{$cit->name_eng.'-flo'}}" src="{{secure_asset('images/icons/'.$cit->name_eng.'-flo.png')}}"
-                             class="hidden content">
+        <a href="{{secure_url('bakyt')}}" class="ui fluid bordered image margin top always">
+            <img src="{{secure_asset('images/main_page-ad.png')}}" alt="bakyt">
+        </a>
+        <div class="text center">
+            <div class="ui teal pointing below big label margin top always">
+                <i class="marker icon"></i>
+                Выберите Ваш город
+            </div>
+            <div class="ui stackable six column grid" id="cities-block">
+                @foreach($cities as $cit)
+                    <div class="column">
+                        <a href="{{secure_url('cities/'.$cit->name_eng)}}"
+                           class="fluid ui circular bordered rotate left reveal image">
+                            <img alt="{{$cit->name_eng}}" src="{{secure_asset('images/icons/'.$cit->name_eng.'.png')}}"
+                                 class="visible content">
+                            <img alt="{{$cit->name_eng.'-flo'}}"
+                                 src="{{secure_asset('images/icons/'.$cit->name_eng.'-flo.png')}}"
+                                 class="hidden content">
+                        </a>
+                    </div>
+                @endforeach
+                <div class="column">
+                    <a href="{{secure_url('services/filter?search_name=&price=&category=0&city=16&sort=1')}}"
+                       class="fluid ui circular bordered rotate left reveal image">
+                        <img alt="Artists_of_Kazakhstan"
+                             src="{{secure_asset('images/icons/Artists_of_Kazakhstan.png')}}">
                     </a>
                 </div>
-            @endforeach
-            <div class="col-xs-12 col-md-2 text-center">
-                <a href="{{secure_url('cities/Artists_of_Kazakhstan')}}"
-                   class="center-block ui small circular rotate left reveal image">
-                    <img alt="Artists_of_Kazakhstan" src="{{secure_asset('images/icons/Artists_of_Kazakhstan.png')}}">
-                </a>
-            </div>
-            <div class="col-xs-12 col-md-2 text-center">
-                <a href="{{secure_url('cities/Artists_of_Russia')}}"
-                   class="center-block ui small circular rotate left reveal image">
-                    <img alt="Artists_of_Russia" src="{{secure_asset('images/icons/Artists_of_Russia.png')}}">
-                </a>
-            </div>
-            <div class="col-xs-12 col-md-2 text-center">
-                <a href="{{secure_url('cities/Artists_of_the_World')}}"
-                   class="center-block ui small circular rotate left reveal image">
-                    <img alt="Artists_of_the_World" src="{{secure_asset('images/icons/Artists_of_the_World.png')}}">
-                </a>
+                <div class="column">
+                    <a href="{{secure_url('services/filter?search_name=&price=&category=0&city=17&sort=1')}}"
+                       class="fluid ui circular bordered rotate left reveal image">
+                        <img alt="Artists_of_Russia" src="{{secure_asset('images/icons/Artists_of_SNG.png')}}">
+                    </a>
+                </div>
+                <div class="column">
+                    <a href="{{secure_url('services/filter?search_name=&price=&category=0&city=18&sort=1')}}"
+                       class="fluid ui circular bordered rotate left reveal image">
+                        <img alt="Artists_of_the_World" src="{{secure_asset('images/icons/Artists_of_the_World.png')}}">
+                    </a>
+                </div>
             </div>
         </div>
     </div>

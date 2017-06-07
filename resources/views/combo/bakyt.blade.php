@@ -3,25 +3,8 @@
 @section('content')
 <div class="container-fluid">
 	<div class="row body">
-		<div class="col-xs-12" style="margin-bottom: 30px;">
-			<video autoplay="autoplay" loop="loop" poster="" preload="auto">
-				<source src="{{secure_asset('videos/bakyt.mov')}}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
-			</video>
-		</div>
+
 		<div class="col-xs-12 col-sm-9 text-center">
-			<p class="text-center">
-				Таусылмайтын мәселе, шаршатқан жалғыздық, бітпейтін күйзеліс, жетпейтін ақша, көңіл толмайтын келбет, артық салмақ, арпалыс өмір, жатып ішер күйеу, аурушаң бала.....STOP!
-			</p>
-			<p class="text-center">
-				Өміріңді өзгерту өз қолыңда!
-			</p>
-			<p class="text-center">
-				Әлем ӘЙЕЛДІҢ алақанында!
-			</p>
-			<p class="text-center">
-				Жуырда ЖАҢА жоба еліміздің 7 бірдей қаласына жол тартпақ.
-				Бақыт формуласы, берекелі отбасы, мінсіз келбет, сұлулық сыры, қыздың қырық қулығы мен қылығы, әйел псиxологиясы....Бақытты болуға ештеңе кедергі емес! Ендеше ашық әңгімеге қосылыңыз, сырыңызбен бөлісіңіз! Сондай-ақ, нәзік жандыларды ұтыс билеттері мен арнайы сертификаттар күтеді! Мұнымен тосын сыйлар бітпейді! Өзіңізді жақыннан таныңыз!
-			</p>
 			<h2 class="text-center">Спикеры Мастер Класса</h2>
 			<p><span style="font-weight: bold;">Ләйля Султанқызы</span><span> – телеведущая</span></p>
 			<p><span style="font-weight: bold;">Марал Сарбасқызы</span><span> – Психолог</span></p>
@@ -64,7 +47,7 @@
 			<p class="text-center">+7 (776) 125-78-53</p>
 			<p class="text-center">+7 (776) 125-78-53</p>
 		</div>
-		<div class="col-xs-12 col-sm-3">
+		<div class="col-xs-12 col-sm-3"><!--
 			<form action="{{secure_url('basket/sent')}}" method="POST" class="center-block" style="max-width: 290px;">
 				{{ csrf_field() }}
 				<div class="form-group">
@@ -89,7 +72,7 @@
 				</div>
 				<button type="submit" class="btn btn-default">Отправить</button>
 			</form>
-		</div>
+		</div>-->
 	</div>
 </div>
 @endsection

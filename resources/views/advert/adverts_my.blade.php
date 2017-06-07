@@ -84,7 +84,8 @@
                             <td>{{$adv->advert_stat->name}}</td>
                             <td>{{$adv->allow_type->name}}</td>
                             <?php  $count++; ?>
-                            <td style=" width:172px; text-align: right;">
+                            <td style=" width:175px; text-align: right;">
+                                <a style="" class="btn btn-info" title="Перейти к подрядчику" href="{{secure_url('admin/contractors/edit/'.$adv->contractor_id)}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
                                 @if(ServiceMan::canView())
                                     @if($adv->allow_type->id == 1)
                                     <a style="" class="btn btn-primary" title="Снять с публикации" href="{{secure_url('admin/adverts/unallow/'.$adv->id)}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></a>

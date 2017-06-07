@@ -27,20 +27,17 @@ function load_musics_ajax() {
     var dataArray2 = [];
     var files; //переменная загруженных файлов
     var defaultUploadBtn = $('#uploadInputMusics'); //кнопка загрузки инпут
-    var uploaded_holder = $('#uploaded-holder');
     var dropped_files = $('#droppedMusics');
-    var loading = $(".loadingMusics");
-    var loading_content = $('.loadingContentMusics');
-    var loading_color = $('.loadingColorMusics');
     var readyItems = $('.readyMusics');
     var upload_button = $('.uploadButtonMusics'); //кнопка перекачки на сервер
-    var uploaded_files = $('#uploaded-files');
     var imagesDir = $('.image');
     var body = $("body");
     var countItems = $('#countMusics');
+    var progress = $('#progresMusics');
     console.log('start');
 
     upload_button.hide();
+    progress.hide();
 
     //Обрезка текста до 10 символов
     function cutLongText(text, size) {
@@ -66,20 +63,20 @@ function load_musics_ajax() {
         if (dataArray.length == 0) {
             // Если пустой массив скрываем кнопки и всю область
             upload_button.hide();
-            uploaded_holder.hide();
+            progress.hide();
         }
         // Цикл для каждого элемента массива
         for (i = start; i < end; i++) {
             // размещаем загруженные изображения
             if (imagesDir.length <= maxFiles) {
                 dropped_files.append('' +
-                    '<div id="music-' + i + '" class="toLoadImage">' +
-                        '<i class="file audio outline icon"></i>' +
-                        '<span style="font-size:0.7em;" >' + cutLongText(dataArray[i].name, 20) + '</span>' +
-                        '<div id="loadingDivMusics-' + i + '" class="loadingDivMusic">' +
-                            '<div id="theLoadingMusics-' + i + '" class="theLoadingDivMusic"></div>' +
-                        '</div>' +
-                        '<a id="dropMusic-' + i + '" class="dropInMusic" title="Delete"><i class="remove icon" title="Удалить аудио из предзагрузки"></i></a>' +
+                    '<div id="music-' + i + '" class="toLoadMusic">' +
+                    '<a id="dropMusic-' + i + '" class="dropInMusic text-right" title="Delete"><i class="remove icon" title="Удалить аудио из предзагрузки"></i></a>' +
+                    '<p></p><i class="circular inverted teal large sound icon"></i><p></p>' +
+                    '<span style="white-space: nowrap;" >' + cutLongText(dataArray[i].name, 20) + '</span>' +
+                    '<div id="loadingDivMusics-' + i + '" class="loadingDivMusic">' +
+                    '<div id="theLoadingMusics-' + i + '" class="theLoadingDivMusic"></div>' +
+                    '</div>' +
                     '</div>');
             }
         }
@@ -92,20 +89,20 @@ function load_musics_ajax() {
         // Для каждого файла
         $.each(files, function (index, file) {
             // Несколько оповещений при попытке загрузить не изображение
-            if ( files[index].type != 'audio/mp3'  ) {
+            if (files[index].type != 'audio/mp3') {
                 alert('Разрешенные аудиофайлы только формата "mp3"! ' + file.name);
                 return false;
             }
 
-            if ( files[index].size >= 20*1024*1024  ) {
-                alert('Превышен максимальный размер файла 20мб! Файл - ' + file.name );
+            if (files[index].size >= 20 * 1024 * 1024) {
+                alert('Превышен максимальный размер файла 20мб! Файл - ' + file.name);
                 return false;
             }
 
             // Проверяем количество загружаемых элементов
             if (!(dataArray.length + files.length <= maxFiles)) {
                 // показываем область с кнопками
-                alert('You can not upload more ' + maxFiles + ' images!');
+                alert('Вы не можете загрузить за один раз более ' + maxFiles + ' аудиозаписей!');
                 return;
             }
             array_files.push(file);
@@ -126,12 +123,10 @@ function load_musics_ajax() {
             fileReader.readAsDataURL(file);
         });
         console.log(dataArray);
-        if(array_files.length > 0) {
-            // Показываем обасть предпросмотра
-            uploaded_holder.show();
+        if (array_files.length > 0) {
+            progress.show();
             // Показываем окнопку загрузки
             upload_button.show();
-            console.log('upload show');
         }
         return false;
     }
@@ -150,7 +145,7 @@ function load_musics_ajax() {
             // Передаем массив с файлами в функцию загрузки на предпросмотр
             loadInView(files);
         } else {
-            alert('Вы не можете загрузить за один раз более ' + maxFiles + ' песен!');
+            alert('Вы не можете загрузить за один раз более ' + maxFiles + ' аудиозаписей!');
             files.length = 0;
         }
     });
@@ -169,7 +164,7 @@ function load_musics_ajax() {
                 this.reset();
             });
         } else {
-            alert('Вы не можете загрузить за один раз более ' + maxFiles + ' песен!');
+            alert('Вы не можете загрузить за один раз более ' + maxFiles + ' аудиозаписей!');
             files.length = 0;
         }
     });
@@ -220,12 +215,12 @@ function load_musics_ajax() {
 
             },
             error: function () {
-                alert('Сервер не отвечает попробуйте позже!');
+                alert('Сервер ответил: ' + jqXHR.responseText);
             },
             success: function (data) {
                 if (data == temp[2]) {
                     $("div#readyMusic-" + temp[1] + '-' + temp[2]).remove();
-                    countItems.html( Number(countItems.html()) - 1);
+                    countItems.html(Number(countItems.html()) - 1);
                     AddToBasket('Music', 'Del');
                 }
             }
@@ -238,25 +233,9 @@ function load_musics_ajax() {
         var advert_id = $(this).attr('id');
         var temp = advert_id.split('-');
         advert_id = temp[1];
-        // Показываем прогресс бар
-        loading.show();
-        loading_color.css({'width': '0%'});
-        loading_content.html('Загрузка начата!');
-        // переменные для работы прогресс бара
-        var totalPercent = 100 / dataArray.length;
-        var x = 0;
         dataArray2 = dataArray;
         // Для каждого файла
         $.each(array_files, function (index, file) {
-            //elem img this
-            var elemImageDiv = $('#music-' + index);
-            //elem load this
-            var elemLoadDiv = $('#loadingDivMusics-' + index);
-            //elem the load this
-            var theElemLoadDiv = $('#theLoadingMusics-' + index);
-            //elem loadgood img this
-            //var theElemGoodImg = $('#goodImg-' + index);
-            //record this file in form
             var myform = new FormData;
             myform.append('music', file);
             myform.append('advert_id', advert_id);
@@ -272,45 +251,37 @@ function load_musics_ajax() {
                 },
                 data: myform,
                 beforeSend: function () {
-                    elemLoadDiv.show();//add display:block;
-                    theElemLoadDiv.css({'width': '15%'});
-                    theElemLoadDiv.css({'width': '30%'});
-                    theElemLoadDiv.css({'width': '47%'});
+                    progress
+                        .progress({
+                            value: 1,
+                            total: dataArray.length,
+                            text: {
+                                ratio: '{value} из {total}',
+                                active  : 'Загрузка {value} из {total} аудиозаписей',
+                                success : '{total} Аудиозаписей загруженно!'
+                            }
+                        });
                 },
                 error: function (a, b, c) {
-                    console.log(a);
-                    console.log(b);
-                    console.log(c);
-                    alert('Сервер не отвечает! Попробуйте позже!');
+                    alert('Сервер ответил: ' + jqXHR.responseText);
                 },
                 success: function (data) {
                     console.log(data);
                     if (data.result == 'true') {
-                        theElemLoadDiv.css({'width': '75%'});
-                        theElemLoadDiv.css({'width': '100%'});
-                        console.log('true');
-                        ++x;
-                        // Изменение бара загрузки
-                        loading_color.css({'width': totalPercent * (x) + '%'});
+                        progress.progress('increment');
                         $("div#music-" + index).remove();
                         readyItems.append('' +
-                            '<div id="readyMusic-' + advert_id + '-' + data.music.id + '" class="readyMusic">' +
-                                '<audio src="' + dataArray2[index].value + '" controls class="col-xs-12"></audio>' +
-                                '<span class="col-xs-12">' + data.music.name + '</span>' +
-                                '<a id="drop-' + advert_id + '-' + data.music.id + '" class="dropInMusic2" title="Delete"><i class="remove icon" title="Удалить аудио"></i></a>' +
+                            '<div id="readyMusic-' + advert_id + '-' + data.music.id + '" class="readyMusic col-xs-12 margin-top-always">' +
+                            '<span class="col-xs-10">' + data.music.name + '</span>' +
+                            '<a id="drop-' + advert_id + '-' + data.music.id + '" class="dropInMusic2 col-xs-2 text-right" title="Delete"><i class="remove icon" title="Удалить аудио"></i></a>' +
+                            '<audio src="' + dataArray2[index].value + '" controls class="col-xs-12"></audio>' +
                             '</div>');
                         AddToBasket('Music', 'Add');
-                        countItems.html( Number(countItems.html()) + 1 );
+                        countItems.html(Number(countItems.html()) + 1);
                         upload_button.hide();
-                        // Если загрузка закончилась
-                        if (totalPercent * (x) == 100) {
-                            // Загрузка завершена
-                            loading_content.html('Загрузка завершена!');
-                            // если еще продолжается загрузка
-                        }
                     }
                     else {
-                        alert('Изображение не загруженно!');
+                        alert('Аудиозапись не загруженна!');
                     }
                 }
             });

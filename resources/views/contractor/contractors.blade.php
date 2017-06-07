@@ -53,7 +53,6 @@
                             <?php  $count++; ?>
                             <td style="width: 172px; text-align: right;">
                                 <a class="btn btn-primary" title="Добавить объявление" href="{{secure_url('admin/adverts/add/'.$contr->id)}}"><i class="fa fa-plus"></i></a>
-                                <a class="btn btn-info" title="Открыть подрядчика" href="{{secure_url('admin//contractors/view/'.$contr->id)}}"><i class="fa fa-external-link"></i></a>
                                 <a class="btn btn-warning" title="Редактировать подрядчика" href="{{secure_url('admin/contractors/edit/'.$contr->id)}}"><i class="fa fa-pencil"></i></a>
                                 <a class="btn btn-danger" title="Удалить подрядчика" href="{{secure_url('admin/contractors/delete/'.$contr->id)}}"><i class="fa fa-trash-o"></i></a>
                             </td>

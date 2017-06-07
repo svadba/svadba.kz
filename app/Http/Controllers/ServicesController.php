@@ -30,23 +30,26 @@ class ServicesController extends Controller
         $cities = Cit::all();
 
         $search_name = ($request->has('search_name')) ? $request->search_name : '';
-        $city = ($request->has('city')) ? $request->city : '';
-        $category = ($request->has('category')) ? $request->category : '';
+        $city = ($request->city) ? $request->city : '';
+        $category = ($request->category) ? $request->category : '';
+        $price = ($request->has('price')) ? $request->price : '';
         IF($request->has('sort'))
         {
             switch($request->sort)
             {
-                case 'created_at':  break;
-                case 'published_at':  break;
-                default : $sort = 'created_at'; break;
+                case '2':  $sort = 'views'; break;
+                case '1':  $sort = 'rating'; break;
+                case '3':  $sort = 'created_at'; break;
+                default : $sort = 'rating'; break;
             }
         }
+        else
         {
-            $sort = 'created_at';
+            $sort = 'rating';
         }
 
 
-        $adverts = Advert::with('advert_cits')->with('advert_categor')->with('advert_stat')->with(['photos' => function($query) {
+        $adverts = Advert::where('allow_type_id',1)->with('advert_cits')->with('advert_categor')->with('advert_stat')->with(['photos' => function($query) {
                 $query->where('main', 1);
             }])
             ->when($search_name, function($query) use ($search_name){
@@ -60,6 +63,11 @@ class ServicesController extends Controller
                     $q->select('cit_id','advert_id')->from('advert_cits')->whereRaw('advert_cits.advert_id = adverts.id')->where('cit_id', '=', $city);
                 });
             })
+            ->when($price, function($q) use ($price){
+                return $q->whereExists(function($q) use ($price){
+                    $q->select('price','advert_id')->from('advert_cits')->whereRaw('advert_cits.advert_id = adverts.id')->where('price', '<=', $price);
+                });
+            })
             ->orderBy($sort, 'desc')
             ->paginate(12);
 
@@ -67,10 +75,16 @@ class ServicesController extends Controller
             'adverts' => $adverts,
             'city_filter' => $city,
             'category_filter' => $category,
-            'sort_filter' => $sort,
+            'sort_by' => $request->sort,
             'search_name' => $search_name,
             'categories' => $categories,
+            'price' => $price,
             'cities' => $cities,
+            'sort_list' => [
+                '1' => 'По рейтингу',
+                '2' => 'По просмотрам',
+                '3' => 'По дате'
+                ],
             'sn' => 'services_by_filter',
             'title' => 'Список объявлений по фильтру',
             'description' => 'Объявления отсортированные по городу и категории'

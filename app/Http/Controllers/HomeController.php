@@ -45,6 +45,18 @@ class HomeController extends Controller
             ]);
     }
 
+    public function open_advert(Request $request, Advert $advert){
+        If(!($request->user()->id == $advert->user_id)) {return redirect('/home');}
+        $advert->load('advert_categor', 'allow_type', 'advert_stat', 'musics', 'videos', 'photos', 'advert_cits.cit');
+        return view('home.open_advert',
+            [
+                'advert' => $advert,
+                'sn' => 'advert_open',
+                'title' => 'Страница объявления - ' . $advert->name,
+                'description' => 'Стартовая страница для управления объявлением'
+            ]);
+    }
+
     public function add_advert_st1_get(Contractor $contractor)
     {
         $categories = Advert_categor::all();
@@ -67,7 +79,7 @@ class HomeController extends Controller
             "contractor" => "required|integer|exists:contractors,id,user_id," . $request->user()->id,
             "name" => "required|min:2|max:100",
             'category' => "required|integer|exists:advert_categors,id",
-            'description' => "required|min:500|max:1500",
+            'description' => "required|min:300|max:1500",
         ]);
 
         $advert = $contractor->adverts()->create([
@@ -75,7 +87,7 @@ class HomeController extends Controller
             'description' => $request->description,
             'advert_categor_id' => $request->category,
             'advert_stat_id' => 2,
-            'allow_type_id' => 2,
+            'allow_type_id' => 3,
             'user_id' => $request->user()->id,
             'rating' => 0,
             'views' => 0
@@ -142,74 +154,6 @@ class HomeController extends Controller
         ]);
     }
 
-    public function edit_advert_st2_post(Request $request)
-    {
-
-        $advert = Advert::findOrFail($request->advert);
-
-        $this->validate($request, [
-            'advert' => 'required|integer|exists:adverts,id,user_id,' . $request->user()->id,
-            'advert_cits.*' => 'required|numeric|exists:cits,id|distinct',
-            'prices.*' => 'numeric|max:200000000',
-            'prices_two.*' => 'numeric|max:200000000',
-            'dogovor.*' => 'numeric|max:1'
-        ]);
-
-        IF ($request->has('advert_cits') && $request->has('prices') && $request->has('prices_two')) {
-
-            $count_cits = count($request->advert_cits);
-            $count_prices = count($request->prices);
-            $count_prices_two = count($request->prices_two);
-
-            IF (($count_cits == $count_prices) && ($count_cits == $count_prices_two)) {
-                foreach ($request->advert_cits as $key => $advc):
-
-                    IF (!$advc) {
-                        break;
-                    }
-
-                    IF ($request->has('dogovor')) {
-                        IF (isset($request->dogovor[$key])) {
-                            $advert->advert_cits()->create([
-                                'cit_id' => $advc,
-                                'price' => 0,
-                                'price_two' => 0,
-                                'dogovor' => 1,
-                            ]);
-                        } ELSEIF ($request->prices[$key] || $request->prices_two[$key]) {
-                            $price1 = ($request->prices[$key]) ? $request->prices[$key] : 0;
-                            $price2 = ($request->prices_two[$key]) ? $request->prices_two[$key] : 20000000;
-                            $advert->advert_cits()->create([
-                                'cit_id' => $advc,
-                                'price' => $price1,
-                                'price_two' => $price2,
-                                'dogovor' => 0,
-                            ]);
-                        }
-                    } ELSEIF ($request->prices[$key] || $request->prices_two[$key]) {
-                        $price1 = ($request->prices[$key]) ? $request->prices[$key] : 0;
-                        $price2 = ($request->prices_two[$key]) ? $request->prices_two[$key] : 0;
-                        $advert->advert_cits()->create([
-                            'cit_id' => $advc,
-                            'price' => $price1,
-                            'price_two' => $price2,
-                            'dogovor' => 0,
-                        ]);
-                    }
-                endforeach;
-            } else {
-                return redirect('/home/adverts/edit/' . $advert->id .'/step2')->withErrors([
-                    'Добавление города с ценами не выполнено! Причина: несовпадение массивов данных.'
-                ]);
-            }
-        } else {
-            return redirect('/home/adverts/edit/' . $advert->id .'/step2')->withErrors([
-                'Добавление города с ценами не выполнено! Причина: одно или несколько значений не существует в переданных данных.'
-            ]);
-        }
-
-        return redirect('/home/adverts/edit/' . $advert->id . '/step3');
-    }
 
     public function edit_advert_st3_get(Advert $advert)
     {
@@ -233,7 +177,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'advert_id' => 'required|exists:adverts,id,user_id,'.$request->user()->id,
-            'img' => 'required|mimes:jpeg,bmp,png,jpg|file'
+            'img' => 'required|mimes:jpeg,png,jpg|file'
         ]);
 
         $advert = Advert::findOrFail($request->advert_id);
@@ -359,6 +303,7 @@ class HomeController extends Controller
         }
         return $photo_id;
     }
+
 
     public function delete_advert(Advert $advert)
     {

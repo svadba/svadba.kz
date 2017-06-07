@@ -55,9 +55,8 @@
             <div class="ui teal pointing below label">
                 Описание объявления
             </div>
-            <textarea name="description" id="description" cols="30" rows="10" class="col-xs-12" minlength="500"
-                      maxlength="1500" placeholder="Текст объявления" required
-                      style="float:none;">{{$advert->description}}</textarea>
+            <textarea name="description" id="description" cols="30" rows="10" class="col-xs-12" minlength="200"
+                      placeholder="Текст объявления" required style="float:none;">{{$advert->description}}</textarea>
             <button class="pull-right ui right labeled icon button">
                 <i class="right arrow icon"></i>
                 Следующий шаг

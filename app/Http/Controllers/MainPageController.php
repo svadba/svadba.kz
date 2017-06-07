@@ -27,7 +27,7 @@ class MainPageController extends Controller
            'cities' => $cities,
            'sn' => 'main_page',
            'title' => 'Главная',
-           'description' => ''
+           'description' => 'Организация свадьбы в Астане, Алмате, Актау, Актобе, Атырау, Караганде, Костанае, Кызылорде, Павлодаре, Семее, Таразе, Уральске, Усть-Каменогорске, Шымкенте'
        ]);
     }
 

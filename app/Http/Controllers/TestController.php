@@ -14,7 +14,8 @@ use App\Services\YoutubeService as Youtube;
 
 class TestController extends Controller
 {
-    public function test_method(){
+    public function test_method()
+    {
         set_time_limit(0);
         /*
         $adverts = ['110', '111', '112', '113', '114', '115', '116', '117', '118', '121', '122', '123', '124', '125', '126', '136', '138'];
@@ -87,12 +88,17 @@ class TestController extends Controller
         }])
         ->get();*/
 
-    return Advert::with('musics', 'photos', 'videos', 'advert_categor', 'advert_cits.cit')->get();
+        return Advert::where('id', 1576)->with('musics', 'photos', 'videos', 'advert_categor', 'advert_cits.cit')->get();
 
     }
 
     public function test_youtube()
     {
-        return Youtube::getAuthToken();
+        $adverts = Advert::all();
+        foreach ($adverts as $adv):
+            $adv->allow_type_id = 1;
+            $adv->save();
+        endforeach;
+        return 'true';
     }
 }

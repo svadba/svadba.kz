@@ -1,21 +1,23 @@
-@extends('layouts.app')
+@extends('layouts.log')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ secure_url('/register') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
-
+    <div class="ui middle aligned center aligned grid" style="height: 100%;background-color: #DADADA;">
+        <div class="column" style="max-width: 450px;">
+            <h2 class="ui teal image header">
+                <img src="{{secure_asset('images/logo.png')}}" class="image">
+                <div class="content">
+                    Регистрация
+                </div>
+            </h2>
+            <form class="ui large form" role="form" method="POST" action="{{ secure_url('/register') }}">
+                {{ csrf_field() }}
+                <div class="ui stacked raised segments">
+                    <div class="ui segment">
+                        <div class="field{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input id="name" type="text" name="name" value="{{ old('name') }}"
+                                       placeholder="Введите свое имя">
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -23,13 +25,11 @@
                                 @endif
                             </div>
                         </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
+                        <div class="field{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <div class="ui left icon input">
+                                <i class="at icon"></i>
+                                <input id="email" type="email" name="email" value="{{ old('email') }}"
+                                       placeholder="Введите свой email">
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -37,13 +37,10 @@
                                 @endif
                             </div>
                         </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
-
+                        <div class="field{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input id="password" type="password" name="password" placeholder="Пароль">
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -51,13 +48,11 @@
                                 @endif
                             </div>
                         </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-
+                        <div class="field{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input id="password-confirm" type="password" name="password_confirmation"
+                                       placeholder="Подтвердите пароль">
                                 @if ($errors->has('password_confirmation'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password_confirmation') }}</strong>
@@ -65,18 +60,13 @@
                                 @endif
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i> Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        <button class="ui fluid large teal submit button">Зарегистрироваться</button>
+                    </div>
                 </div>
-            </div>
+
+                <div class="ui error message"></div>
+
+            </form>
         </div>
     </div>
-</div>
 @endsection
